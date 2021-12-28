@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MuscleTracking</string>
+    <string name="tv_msg">Enter your name</string>
+</resources>
