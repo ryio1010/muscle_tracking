@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MuscleTracking">
         <activity
+            android:name=".LogTrainingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TopActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

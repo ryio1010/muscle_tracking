@@ -10,4 +10,15 @@
 
     <string name="bt_login">LOGIN</string>
     <string name="txt_to_register">アカウントをお持ちでない方はこちらから登録！</string>
+
+    <string name="label_top">Welcome To MuscleTracking!</string>
+    <string name="bt_log">記録する</string>
+    <string name="bt_show_history">記録を見る</string>
+    
+    
+    <string name="label_training_muscle_groups">トレーニング部位</string>
+    <string name="label_training_menus">トレーニングメニュー</string>
+    <string name="label_training_weight">重量</string>
+    <string name="label_training_count">回数</string>
+    <string name="bt_log_confirm">登録する</string>
 </resources>
