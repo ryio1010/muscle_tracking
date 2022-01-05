@@ -54,12 +54,7 @@ class LogTrainingActivity : AppCompatActivity() {
         "nnnn",
         "oooo"
     )
-
-    private var _addTrainingMenu: MutableList<MutableMap<String, Any>> = mutableListOf()
-    private val _from = arrayOf("parts", "menu", "weight", "count")
-    private val _to =
-        intArrayOf(R.id.trainingParts, R.id.trainingMenu, R.id.trainingWeight, R.id.trainingCount)
-
+    val globalApplication = GlobalApplication.getInstance()
     private val addTrainingMenus: MutableList<MutableMap<String, Any>> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,15 +90,16 @@ class LogTrainingActivity : AppCompatActivity() {
 
         // set listener of add button
         val addButton = findViewById<Button>(R.id.btAddLog)
-        addButton.setOnClickListener{
+        addButton.setOnClickListener {
             val inputMuscleGroups =
                 findViewById<Spinner>(R.id.spinnerMuscleGroups).selectedItem.toString()
             val inputTrainingMenu =
                 findViewById<Spinner>(R.id.spinnerTrainingMenus).selectedItem.toString()
-            val inputTrainingWeight = findViewById<TextView>(R.id.inputTrainingWeight).text.toString()
+            val inputTrainingWeight =
+                findViewById<TextView>(R.id.inputTrainingWeight).text.toString()
             val inputTrainingCount = findViewById<TextView>(R.id.inputTrainingCount).text.toString()
 
-            if (inputTrainingWeight.isNotEmpty() and inputTrainingCount.isNotEmpty()){
+            if (inputTrainingWeight.isNotEmpty() and inputTrainingCount.isNotEmpty()) {
                 var menu = mutableMapOf<String, Any>(
                     "parts" to inputMuscleGroups,
                     "menu" to inputTrainingMenu,
@@ -115,6 +111,18 @@ class LogTrainingActivity : AppCompatActivity() {
             }
         }
 
+        // set listener of register button
+        val registerButton = findViewById<Button>(R.id.btRegisterLog)
+        registerButton.setOnClickListener {
+            if (addTrainingMenus.size > 0) {
+                for (menu in addTrainingMenus) {
+                    globalApplication._addTrainingMenu.add(menu)
+                }
+                addTrainingMenus.clear()
+                adapter.notifyDataSetChanged()
+                Toast.makeText(this, "Registerd!!", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private inner class spinnerSelectedMuscleGroupsListener : AdapterView.OnItemSelectedListener {
