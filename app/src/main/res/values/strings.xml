@@ -22,4 +22,6 @@
     <string name="label_training_count">回数</string>
     <string name="bt_log_add">ADD</string>
     <string name="bt_log_confirm">登録する</string>
+
+    <string name="bt_filter">フィルター</string>
 </resources>

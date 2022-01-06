@@ -2,10 +2,12 @@ package com.example.muscletracking
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class LogWatchActivity : AppCompatActivity() {
     val globalApplication = GlobalApplication.getInstance()
+    private var logTrainingHistories = globalApplication._addTrainingMenu
+    private var tmpLogTrainingHistories = logTrainingHistories.toMutableList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +33,32 @@ class LogWatchActivity : AppCompatActivity() {
         spinnerMuscleGroups.adapter = adapterMuscleGroups
 
 
-        //set recycleview of training menus
+        // set recycleview of training menus
         val logHistories = findViewById<RecyclerView>(R.id.rvLogHistories)
         val layout = LinearLayoutManager(this@LogWatchActivity)
         logHistories.layoutManager = layout
-        val adapter = RecyclerListAdapter(globalApplication._addTrainingMenu)
+        val adapter = RecyclerListAdapter(tmpLogTrainingHistories)
         logHistories.adapter = adapter
         val decorator = DividerItemDecoration(this@LogWatchActivity, layout.orientation)
         logHistories.addItemDecoration(decorator)
+
+        // set listener of filter button
+        val filterButton = findViewById<Button>(R.id.btFilter)
+        filterButton.setOnClickListener {
+            tmpLogTrainingHistories = logTrainingHistories.toMutableList()
+            val muscleGroup = spinnerMuscleGroups.selectedItem.toString()
+            var filteredLogHistories : MutableList<MutableMap<String, Any>> = mutableListOf()
+            for (history in tmpLogTrainingHistories){
+                if (history.values.contains(muscleGroup)){
+                    filteredLogHistories.add(history)
+                }
+            }
+            tmpLogTrainingHistories.clear()
+            for (history in filteredLogHistories){
+                tmpLogTrainingHistories.add(history)
+            }
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private inner class RecyclerListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
