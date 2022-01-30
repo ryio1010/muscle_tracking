@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MuscleTracking">
         <activity
+            android:name=".UserRegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".LogWatchActivity"
             android:exported="false" />
         <activity

@@ -1,15 +1,18 @@
 <resources>
     <string name="app_name">MuscleTracking</string>
 
-    <string name="label_login">LOGIN</string>
+    <string name="label_login">ログイン</string>
+    <string name="label_register_user">新規登録</string>
 
     <string name="label_id">ユーザーID</string>
     <string name="input_id">ユーザーID</string>
     <string name="label_pw">パスワード</string>
     <string name="input_pw">パスワード</string>
 
-    <string name="bt_login">LOGIN</string>
-    <string name="txt_to_register">アカウントをお持ちでない方はこちらから登録！</string>
+    <string name="bt_login">ログイン</string>
+    <string name="bt_register_user">新規登録</string>
+    <string name="txt_to_register">アカウントをお持ちでない方はこちら!!</string>
+    <string name="txt_to_register_highlight">こちら!!</string>
 
     <string name="label_top">Welcome To MuscleTracking!</string>
     <string name="bt_log">記録する</string>
