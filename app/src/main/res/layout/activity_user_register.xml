@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/labelId"
+        android:id="@+id/labelRegisterUserId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/labelLogin" />
 
     <EditText
-        android:id="@+id/inputId"
+        android:id="@+id/inputRegisterUserId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -35,19 +35,19 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelId" />
+        app:layout_constraintTop_toBottomOf="@+id/labelRegisterUserId" />
 
     <TextView
-        android:id="@+id/labelPw"
+        android:id="@+id/labelRegisterUserPw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/label_pw"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputId" />
+        app:layout_constraintTop_toBottomOf="@+id/inputRegisterUserId" />
 
     <EditText
-        android:id="@+id/inputPw"
+        android:id="@+id/inputRegisterUserPw"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -55,7 +55,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelPw" />
+        app:layout_constraintTop_toBottomOf="@+id/labelRegisterUserPw" />
 
     <Button
         android:id="@+id/btRegisterUser"
@@ -65,5 +65,5 @@
         android:text="@string/bt_register_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPw" />
+        app:layout_constraintTop_toBottomOf="@+id/inputRegisterUserPw" />
 </androidx.constraintlayout.widget.ConstraintLayout>

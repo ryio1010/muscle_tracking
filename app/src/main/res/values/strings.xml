@@ -13,6 +13,7 @@
     <string name="bt_register_user">新規登録</string>
     <string name="txt_to_register">アカウントをお持ちでない方はこちら!!</string>
     <string name="txt_to_register_highlight">こちら!!</string>
+    <string name="txt_regist_user_complete">新規ユーザー登録完了！！</string>
 
     <string name="label_top">Welcome To MuscleTracking!</string>
     <string name="bt_log">記録する</string>

@@ -54,9 +54,12 @@ class MainActivity : AppCompatActivity() {
 
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
-                    ds.color = ContextCompat.getColor(this@MainActivity, R.color.design_default_color_primary)
+                    ds.color = ContextCompat.getColor(
+                        this@MainActivity,
+                        R.color.design_default_color_primary
+                    )
                 }
-            },startPos, startPos + highLightText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }, startPos, startPos + highLightText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
 }
