@@ -27,23 +27,29 @@ class UserRegisterActivity : AppCompatActivity() {
             val registerUserId = registerUserIdComponent.text.toString()
             val registerUserPw = registerUserPwComponent.text.toString()
 
-            // api request
-            val client: OkHttpClient = OkHttpClient()
-            val url: String = "http://0.0.0.0:8080/api/register/$registerUserId"
-            val request: Request = Request.Builder().url(url).build()
+            if (false){
+                // api request
+                val client: OkHttpClient = OkHttpClient()
+                val url: String = "http://0.0.0.0:8080/api/register/$registerUserId"
+                val request: Request = Request.Builder().url(url).build()
 
-            client.newCall(request).enqueue(object : Callback {
-                override fun onResponse(call: Call, response: Response) {
-                    Log.d("debug", response.body!!.string())
-                    val intent =
-                        Intent(this@UserRegisterActivity, RegisterUserCompleteActivity::class.java)
-                    startActivity(intent)
-                }
+                client.newCall(request).enqueue(object : Callback {
+                    override fun onResponse(call: Call, response: Response) {
+                        Log.d("debug", response.body!!.string())
+                        val intent =
+                            Intent(this@UserRegisterActivity, RegisterUserCompleteActivity::class.java)
+                        startActivity(intent)
+                    }
 
-                override fun onFailure(call: Call, e: IOException) {
-                    Log.d("debug", e.toString())
-                }
-            })
+                    override fun onFailure(call: Call, e: IOException) {
+                        Log.d("debug", e.toString())
+                    }
+                })
+            }
+            val intent =
+                Intent(this@UserRegisterActivity, RegisterUserCompleteActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }
