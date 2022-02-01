@@ -1,24 +1,38 @@
 package com.example.muscletracking
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
 
-class LogWatchActivity : AppCompatActivity() {
+class SelectLogActivity : AppCompatActivity() {
     val globalApplication = GlobalApplication.getInstance()
     private var logTrainingHistories = globalApplication._addTrainingMenu
     private var tmpLogTrainingHistories = logTrainingHistories.toMutableList()
+    private lateinit var selectedCalendarDate:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_log_watch)
+        setContentView(R.layout.activity_select_log)
 
+        // get chosen calendar
+        val sdf = SimpleDateFormat("yyyymmdd")
+        val calendarView = findViewById<CalendarView>(R.id.selectLogCalendar)
+        calendarView.setOnDateChangeListener { view, year, month, day ->
+            var dateLong = view.date
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = dateLong
+            var date = calendar.time
+            Toast.makeText(this,sdf.format(date),Toast.LENGTH_SHORT).show()
+        }
 
         // set spinner of muscle groups
         val spinnerMuscleGroups = findViewById<Spinner>(R.id.spinnerMuscleGroups)
@@ -26,6 +40,14 @@ class LogWatchActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_spinner_item, globalApplication.muscleGroups)
         adapterMuscleGroups.setDropDownViewResource(android.R.layout.simple_spinner_item)
         spinnerMuscleGroups.adapter = adapterMuscleGroups
+
+
+        // set listener of search button
+        val searchLogButton = findViewById<Button>(R.id.btSearchLog)
+        searchLogButton.setOnClickListener {
+            val intent = Intent(this@SelectLogActivity,LogWatchActivity::class.java)
+            startActivity(intent)
+        }
 
 
 //        // set recycleview of training menus
@@ -71,15 +93,21 @@ class LogWatchActivity : AppCompatActivity() {
     }
 
     private inner class RecyclerListAdapter(private val _listData: MutableList<MutableMap<String, Any>>) :
-        RecyclerView.Adapter<LogWatchActivity.RecyclerListViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogWatchActivity.RecyclerListViewHolder {
-            val inflater = LayoutInflater.from(this@LogWatchActivity)
+        RecyclerView.Adapter<SelectLogActivity.RecyclerListViewHolder>() {
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): SelectLogActivity.RecyclerListViewHolder {
+            val inflater = LayoutInflater.from(this@SelectLogActivity)
             val view = inflater.inflate(R.layout.row, parent, false)
             val holder = RecyclerListViewHolder(view)
             return holder
         }
 
-        override fun onBindViewHolder(holder: LogWatchActivity.RecyclerListViewHolder, position: Int) {
+        override fun onBindViewHolder(
+            holder: SelectLogActivity.RecyclerListViewHolder,
+            position: Int
+        ) {
             val item = _listData[position]
             val trainingParts = item["parts"] as String
             val trainingMenu = item["menu"] as String

@@ -3,7 +3,6 @@ package com.example.muscletracking
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -33,7 +32,7 @@ class TopActivity : AppCompatActivity() {
                    startActivity(intent)
                }
                R.id.btShowHistory -> {
-                   val intent = Intent(this@TopActivity,LogWatchActivity::class.java)
+                   val intent = Intent(this@TopActivity,SelectLogActivity::class.java)
                    startActivity(intent)
                }
                else -> {

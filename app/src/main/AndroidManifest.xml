@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.muscletracking">
+    package="com.example.muscletracking" >
 
-    <uses-permission
-        android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MuscleTracking">
+        android:theme="@style/Theme.MuscleTracking"
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name=".LogWatchActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterUserCompleteActivity"
             android:exported="false" />
@@ -20,7 +22,7 @@
             android:name=".UserRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LogWatchActivity"
+            android:name=".SelectLogActivity"
             android:exported="false" />
         <activity
             android:name=".LogTrainingActivity"
@@ -30,7 +32,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
