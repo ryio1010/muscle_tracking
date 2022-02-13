@@ -1,4 +1,4 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.register
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,16 +7,35 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.muscletracking.R
+import com.example.muscletracking.RegisterUserCompleteActivity
+import com.example.muscletracking.databinding.ActivityUserRegisterBinding
+import com.example.muscletracking.viewmodel.user.UserRegisterViewModel
 import okhttp3.*
 import java.io.IOException
 
 class UserRegisterActivity : AppCompatActivity() {
+    private val userRegisterViewModel : UserRegisterViewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(UserRegisterViewModel::class.java)
+    }
+    private lateinit var activityUserRegisterBinding: ActivityUserRegisterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_register)
+        activityUserRegisterBinding = DataBindingUtil.setContentView(this,R.layout.activity_user_register)
+        activityUserRegisterBinding.also {
+            it.registerViewModel = userRegisterViewModel
+            it.lifecycleOwner = this
+        }
 
-        val registerUserButton = findViewById<Button>(R.id.btRegisterUser)
-        registerUserButton.setOnClickListener(RegisterUserButtonListener())
+        userRegisterViewModel.enableRegisterFlag.observe(this) {
+            activityUserRegisterBinding.btRegisterUser.isEnabled = it
+        }
+        // listener登録
+        activityUserRegisterBinding.btRegisterUser.setOnClickListener(RegisterUserButtonListener())
     }
 
     private inner class RegisterUserButtonListener : View.OnClickListener {
@@ -27,10 +46,9 @@ class UserRegisterActivity : AppCompatActivity() {
             val registerUserId = registerUserIdComponent.text.toString()
             val registerUserPw = registerUserPwComponent.text.toString()
 
-            if (false){
                 // api request
                 val client: OkHttpClient = OkHttpClient()
-                val url: String = "http://0.0.0.0:8080/api/register/$registerUserId"
+                val url: String = "http://10.0.2.2:8080/api/register/$registerUserId"
                 val request: Request = Request.Builder().url(url).build()
 
                 client.newCall(request).enqueue(object : Callback {
@@ -45,7 +63,7 @@ class UserRegisterActivity : AppCompatActivity() {
                         Log.d("debug", e.toString())
                     }
                 })
-            }
+
             val intent =
                 Intent(this@UserRegisterActivity, RegisterUserCompleteActivity::class.java)
             startActivity(intent)

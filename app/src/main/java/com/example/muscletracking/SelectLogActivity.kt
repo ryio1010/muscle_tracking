@@ -1,37 +1,44 @@
 package com.example.muscletracking
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class SelectLogActivity : AppCompatActivity() {
     val globalApplication = GlobalApplication.getInstance()
     private var logTrainingHistories = globalApplication._addTrainingMenu
     private var tmpLogTrainingHistories = logTrainingHistories.toMutableList()
-    private lateinit var selectedCalendarDate:String
+    private lateinit var selectedCalendarDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_log)
 
         // get chosen calendar
-        val sdf = SimpleDateFormat("yyyymmdd")
+        val sdf = SimpleDateFormat("yyyyMMdd")
         val calendarView = findViewById<CalendarView>(R.id.selectLogCalendar)
         calendarView.setOnDateChangeListener { view, year, month, day ->
-            var dateLong = view.date
             val calendar = Calendar.getInstance()
-            calendar.timeInMillis = dateLong
-            var date = calendar.time
-            Toast.makeText(this,sdf.format(date),Toast.LENGTH_SHORT).show()
+            calendar.set(year, month, day)
+            val selectedDate = calendar.time
+            selectedCalendarDate = sdf.format(selectedDate)
+            Toast.makeText(this, selectedCalendarDate, Toast.LENGTH_SHORT).show()
         }
 
         // set spinner of muscle groups
@@ -45,7 +52,16 @@ class SelectLogActivity : AppCompatActivity() {
         // set listener of search button
         val searchLogButton = findViewById<Button>(R.id.btSearchLog)
         searchLogButton.setOnClickListener {
-            val intent = Intent(this@SelectLogActivity,LogWatchActivity::class.java)
+            val client = OkHttpClient.Builder().build()
+
+            val logInfoService = Retrofit.Builder()
+                .baseUrl("http://0.0.0.0:8080")
+                .client(client)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
+                .create(ApiService::class.java)
+
+            val intent = Intent(this@SelectLogActivity, LogWatchActivity::class.java)
             startActivity(intent)
         }
 

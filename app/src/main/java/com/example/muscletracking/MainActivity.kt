@@ -11,11 +11,31 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.muscletracking.model.user.User
+import com.example.muscletracking.view.register.UserRegisterActivity
+import com.example.muscletracking.viewmodel.user.UserViewModel
 
 class MainActivity : AppCompatActivity() {
+//    private lateinit var db: AppDatabase
+//    private lateinit var dao: UserDao
+    private lateinit var userViewModel : UserViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+
+//        db = AppDatabase.getInstance(applicationContext)
+//        dao = db.userDao()
+
+        // observer登録
+        userViewModel.userList.observe(this, Observer {
+            Toast.makeText(this,it[0].userName,Toast.LENGTH_SHORT).show()
+        })
+
 
         val linkText = findViewById<TextView>(R.id.txtToRegister)
         linkText.apply {
@@ -32,9 +52,17 @@ class MainActivity : AppCompatActivity() {
             val uidInputView = findViewById<TextView>(R.id.inputId)
             val userName = uidInputView.text.toString()
 
-            val intent = Intent(this@MainActivity, TopActivity::class.java)
-            intent.putExtra("userName", userName)
-            startActivity(intent)
+            // TODO:User情報取得API実行
+            // ViewModelに定義して呼び出し
+            if (userName != ""){
+                userViewModel.insertUser(User(0,userName))
+                userViewModel.selectAllUsers()
+
+                val intent = Intent(this@MainActivity, TopActivity::class.java)
+                intent.putExtra("userName", userName)
+                startActivity(intent)
+            }
+
         }
     }
 
@@ -62,4 +90,26 @@ class MainActivity : AppCompatActivity() {
             }, startPos, startPos + highLightText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
+
+//    private fun insertUser(user: User) {
+//        CoroutineScope(Dispatchers.Main).launch {
+//            withContext(Dispatchers.Default) {
+//                dao.insertUser(
+//                    user
+//                )
+//            }
+//        }
+//    }
+//
+//    private fun selectAllUsers(): MutableList<User> {
+//        var userList = mutableListOf<User>()
+//        CoroutineScope(Dispatchers.Main).launch {
+//            withContext(Dispatchers.Default) {
+//                userList = dao.getAllUser()
+//                Log.d("debug","userAll "+ userList.toString())
+//            }
+//        }
+//        Log.d("debug","userList "+userList.toString())
+//        return userList
+//    }
 }
