@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.example.muscletracking.view.log.LogTrainingActivity
 
 class TopActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,7 @@ class TopActivity : AppCompatActivity() {
         override fun onClick(view: View) {
            when(view.id) {
                R.id.btLog -> {
-                   val intent = Intent(this@TopActivity,LogTrainingActivity::class.java)
+                   val intent = Intent(this@TopActivity, LogTrainingActivity::class.java)
                    startActivity(intent)
                }
                R.id.btShowHistory -> {

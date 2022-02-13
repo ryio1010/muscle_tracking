@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.muscletracking.AppDatabase
 import com.example.muscletracking.model.user.User
 import com.example.muscletracking.repository.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -14,15 +13,10 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class UserViewModel(app: Application) : AndroidViewModel(app) {
-    lateinit var repository: UserRepository
-    lateinit var user : User
+    private val repository: UserRepository = UserRepository(app)
 
     var userList : MutableLiveData<List<User>> = MutableLiveData<List<User>>()
-
-    init {
-        val userDao = AppDatabase.getInstance(app).userDao()
-        repository = UserRepository(userDao)
-    }
+    var selectUser:MutableLiveData<User> = MutableLiveData<User>()
 
     // coroutine用
     private var parentJob = Job()
@@ -46,6 +40,7 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun selectUserByName(userName:String) = scope.launch(Dispatchers.IO) {
-        user = repository.getUserByName(userName)
+        val user = repository.getUserByName(userName)
+        selectUser.postValue(user)
     }
 }

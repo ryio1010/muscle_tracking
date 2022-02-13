@@ -1,23 +1,16 @@
 package com.example.muscletracking
 
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.muscletracking.view.log.LogWatchActivity
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 class SelectLogActivity : AppCompatActivity() {
@@ -54,12 +47,12 @@ class SelectLogActivity : AppCompatActivity() {
         searchLogButton.setOnClickListener {
             val client = OkHttpClient.Builder().build()
 
-            val logInfoService = Retrofit.Builder()
-                .baseUrl("http://0.0.0.0:8080")
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
-                .create(ApiService::class.java)
+//            val logInfoService = Retrofit.Builder()
+//                .baseUrl("http://0.0.0.0:8080")
+//                .client(client)
+//                .addConverterFactory(MoshiConverterFactory.create())
+//                .build()
+//                .create(ApiService::class.java)
 
             val intent = Intent(this@SelectLogActivity, LogWatchActivity::class.java)
             startActivity(intent)

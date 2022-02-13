@@ -18,8 +18,6 @@ import com.example.muscletracking.view.register.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
 class MainActivity : AppCompatActivity() {
-//    private lateinit var db: AppDatabase
-//    private lateinit var dao: UserDao
     private lateinit var userViewModel : UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,26 +88,4 @@ class MainActivity : AppCompatActivity() {
             }, startPos, startPos + highLightText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
     }
-
-//    private fun insertUser(user: User) {
-//        CoroutineScope(Dispatchers.Main).launch {
-//            withContext(Dispatchers.Default) {
-//                dao.insertUser(
-//                    user
-//                )
-//            }
-//        }
-//    }
-//
-//    private fun selectAllUsers(): MutableList<User> {
-//        var userList = mutableListOf<User>()
-//        CoroutineScope(Dispatchers.Main).launch {
-//            withContext(Dispatchers.Default) {
-//                userList = dao.getAllUser()
-//                Log.d("debug","userAll "+ userList.toString())
-//            }
-//        }
-//        Log.d("debug","userList "+userList.toString())
-//        return userList
-//    }
 }

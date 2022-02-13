@@ -1,4 +1,4 @@
-package com.example.muscletracking.dao
+package com.example.muscletracking.dao.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -51,7 +51,7 @@ dependencies {
 
 
     // moshi
-    def moshi_version = "1.5.0"
+    def moshi_version = "1.12.0"
     def kotlin_version = "1.6.10"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"

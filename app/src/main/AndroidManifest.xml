@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".LogWatchActivity"
+            android:name=".view.log.LogWatchActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterUserCompleteActivity"
@@ -26,7 +26,7 @@
             android:name=".SelectLogActivity"
             android:exported="false" />
         <activity
-            android:name=".LogTrainingActivity"
+            android:name=".view.log.LogTrainingActivity"
             android:exported="false" />
         <activity
             android:name=".TopActivity"

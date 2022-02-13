@@ -1,8 +1,7 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.log
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,8 @@ import android.widget.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.muscletracking.GlobalApplication
+import com.example.muscletracking.R
 
 class LogTrainingActivity : AppCompatActivity() {
     private val muscleGroups = mutableListOf(

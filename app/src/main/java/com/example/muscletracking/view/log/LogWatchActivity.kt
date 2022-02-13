@@ -1,4 +1,4 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.log
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.muscletracking.GlobalApplication
+import com.example.muscletracking.R
 
 class LogWatchActivity : AppCompatActivity() {
     val globalApplication = GlobalApplication.getInstance()
@@ -71,15 +73,15 @@ class LogWatchActivity : AppCompatActivity() {
     }
 
     private inner class RecyclerListAdapter(private val _listData: MutableList<MutableMap<String, Any>>) :
-        RecyclerView.Adapter<LogWatchActivity.RecyclerListViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogWatchActivity.RecyclerListViewHolder {
+        RecyclerView.Adapter<RecyclerListViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerListViewHolder {
             val inflater = LayoutInflater.from(this@LogWatchActivity)
             val view = inflater.inflate(R.layout.row, parent, false)
             val holder = RecyclerListViewHolder(view)
             return holder
         }
 
-        override fun onBindViewHolder(holder: LogWatchActivity.RecyclerListViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: RecyclerListViewHolder, position: Int) {
             val item = _listData[position]
             val trainingParts = item["parts"] as String
             val trainingMenu = item["menu"] as String
