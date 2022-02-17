@@ -18,51 +18,42 @@ import okhttp3.*
 import java.io.IOException
 
 class UserRegisterActivity : AppCompatActivity() {
-    private val userRegisterViewModel : UserRegisterViewModel by lazy {
+    private val userRegisterViewModel: UserRegisterViewModel by lazy {
         ViewModelProvider.NewInstanceFactory().create(UserRegisterViewModel::class.java)
     }
     private lateinit var activityUserRegisterBinding: ActivityUserRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityUserRegisterBinding = DataBindingUtil.setContentView(this,R.layout.activity_user_register)
+
+        // databinding登録
+        activityUserRegisterBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_user_register)
         activityUserRegisterBinding.also {
             it.registerViewModel = userRegisterViewModel
             it.lifecycleOwner = this
         }
 
+        // observer登録
         userRegisterViewModel.enableRegisterFlag.observe(this) {
             activityUserRegisterBinding.btRegisterUser.isEnabled = it
         }
+
         // listener登録
         activityUserRegisterBinding.btRegisterUser.setOnClickListener(RegisterUserButtonListener())
     }
 
     private inner class RegisterUserButtonListener : View.OnClickListener {
         override fun onClick(view: View?) {
+            // 入力情報の取得
             val registerUserIdComponent = findViewById<TextView>(R.id.inputRegisterUserId)
             val registerUserPwComponent = findViewById<TextView>(R.id.inputRegisterUserPw)
-
             val registerUserId = registerUserIdComponent.text.toString()
             val registerUserPw = registerUserPwComponent.text.toString()
 
-                // api request
-                val client: OkHttpClient = OkHttpClient()
-                val url: String = "http://10.0.2.2:8080/api/register/$registerUserId"
-                val request: Request = Request.Builder().url(url).build()
+            // api call
+            // 入力項目をパラメータにユーザーをDBに登録するAPIを実行
 
-                client.newCall(request).enqueue(object : Callback {
-                    override fun onResponse(call: Call, response: Response) {
-                        Log.d("debug", response.body!!.string())
-                        val intent =
-                            Intent(this@UserRegisterActivity, RegisterUserCompleteActivity::class.java)
-                        startActivity(intent)
-                    }
-
-                    override fun onFailure(call: Call, e: IOException) {
-                        Log.d("debug", e.toString())
-                    }
-                })
 
             val intent =
                 Intent(this@UserRegisterActivity, RegisterUserCompleteActivity::class.java)

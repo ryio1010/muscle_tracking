@@ -4,7 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.muscletracking.model.user.User
+import com.example.muscletracking.model.user.UserResponse
 import com.example.muscletracking.repository.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +20,7 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
 
     var userList : MutableLiveData<List<User>> = MutableLiveData<List<User>>()
     var selectUser:MutableLiveData<User> = MutableLiveData<User>()
+    val mUserInfo : MutableLiveData<UserResponse> = MutableLiveData()
 
     // coroutine用
     private var parentJob = Job()
@@ -40,7 +44,16 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun selectUserByName(userName:String) = scope.launch(Dispatchers.IO) {
-        val user = repository.getUserByName(userName)
+        val user = repository.getUserById(userName)
         selectUser.postValue(user)
+    }
+
+    fun login(userid:String,password:String) = scope.launch(Dispatchers.IO) {
+        val user = repository.login(userid,password)
+        if (user == null){
+            mUserInfo.postValue(null)
+        }else {
+            mUserInfo.postValue(user)
+        }
     }
 }

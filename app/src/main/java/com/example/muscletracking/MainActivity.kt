@@ -13,53 +13,69 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.muscletracking.model.user.User
 import com.example.muscletracking.view.register.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var userViewModel : UserViewModel
+
+    private val userViewModel: UserViewModel by lazy {
+        ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory(application)).get(UserViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-
-//        db = AppDatabase.getInstance(applicationContext)
-//        dao = db.userDao()
-
         // observer登録
         userViewModel.userList.observe(this, Observer {
-            Toast.makeText(this,it[0].userName,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, it[0].userName, Toast.LENGTH_SHORT).show()
+        })
+
+        userViewModel.mUserInfo.observe(this, Observer {
+            if (it != null) {
+                Toast.makeText(this, it.userid, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "ERROR!!", Toast.LENGTH_SHORT).show()
+            }
         })
 
 
+        // 新規登録画面へのリンク登録
         val linkText = findViewById<TextView>(R.id.txtToRegister)
         linkText.apply {
             text = createLinkSpannable()
             movementMethod = LinkMovementMethod.getInstance()
         }
 
+        // ログインボタン押下のリスナー登録
         val loginButton = findViewById<Button>(R.id.btLogin)
         loginButton.setOnClickListener(LoginButtonListener())
     }
 
     private inner class LoginButtonListener : View.OnClickListener {
         override fun onClick(view: View) {
+            // 入力情報の取得
             val uidInputView = findViewById<TextView>(R.id.inputId)
-            val userName = uidInputView.text.toString()
+            val pwInputView = findViewById<TextView>(R.id.inputPw)
+            val userid = uidInputView.text.toString()
+            val password = pwInputView.text.toString()
 
-            // TODO:User情報取得API実行
-            // ViewModelに定義して呼び出し
-            if (userName != ""){
-                userViewModel.insertUser(User(0,userName))
-                userViewModel.selectAllUsers()
+            // TODO:ログインAPI実行
 
-                val intent = Intent(this@MainActivity, TopActivity::class.java)
-                intent.putExtra("userName", userName)
-                startActivity(intent)
-            }
+            // api実行
+            userViewModel.login(userid, password)
+
+            // okならローカルDBにユーザー情報の登録
+//            if (userName != ""){
+//                userViewModel.insertUser(User(0,userName))
+//                userViewModel.selectAllUsers()
+//
+//                val intent = Intent(this@MainActivity, TopActivity::class.java)
+//                intent.putExtra("userName", userName)
+//                startActivity(intent)
+//            }
 
         }
     }

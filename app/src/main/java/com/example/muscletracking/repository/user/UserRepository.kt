@@ -1,10 +1,12 @@
 package com.example.muscletracking.repository.user
 
 import android.app.Application
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.example.muscletracking.config.db.AppDatabase
 import com.example.muscletracking.config.api.RetrofitClient
 import com.example.muscletracking.model.user.User
+import com.example.muscletracking.model.user.UserResponse
 
 class UserRepository(app: Application) {
 
@@ -17,8 +19,8 @@ class UserRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getUserByName(userName: String): User {
-        return userDao.getUserById(userName)
+    suspend fun getUserById(userId: String): User {
+        return userDao.getUserById(userId)
     }
 
     @WorkerThread
@@ -27,10 +29,12 @@ class UserRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getUserInfo(userName: String): com.example.muscletracking.config.api.User {
-        val user = retrofitClient.getUserByName(userName).execute().body()
-        return user!!
+    suspend fun login(userid: String, password: String): UserResponse? {
+        val response = retrofitClient.login(userid, password).execute()
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
     }
-
-
 }
