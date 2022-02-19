@@ -21,6 +21,7 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     var userList : MutableLiveData<List<User>> = MutableLiveData<List<User>>()
     var selectUser:MutableLiveData<User> = MutableLiveData<User>()
     val mUserInfo : MutableLiveData<UserResponse> = MutableLiveData()
+    val isUserRegistered : MutableLiveData<Boolean> = MutableLiveData()
 
     // coroutine用
     private var parentJob = Job()
@@ -55,5 +56,10 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
         }else {
             mUserInfo.postValue(user)
         }
+    }
+
+    fun register(userId: String,userName: String,password: String) = scope.launch(Dispatchers.IO) {
+        val registerFlag = repository.register(userId,userName,password)
+        isUserRegistered.postValue(registerFlag)
     }
 }

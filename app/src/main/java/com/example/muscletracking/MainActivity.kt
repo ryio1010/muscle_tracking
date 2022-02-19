@@ -13,20 +13,23 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.example.muscletracking.model.user.User
-import com.example.muscletracking.view.register.UserRegisterActivity
+import com.example.muscletracking.view.user.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by lazy {
-        ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory(application)).get(UserViewModel::class.java)
+        ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
+            UserViewModel::class.java
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // エラー情報textview
+        val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
 
         // observer登録
         userViewModel.userList.observe(this, Observer {
@@ -36,8 +39,12 @@ class MainActivity : AppCompatActivity() {
         userViewModel.mUserInfo.observe(this, Observer {
             if (it != null) {
                 Toast.makeText(this, it.userid, Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@MainActivity, TopActivity::class.java)
+                intent.putExtra("userName", it.username)
+                startActivity(intent)
             } else {
-                Toast.makeText(this, "ERROR!!", Toast.LENGTH_SHORT).show()
+                tvErrorMessage.setText(R.string.msg_can_not_login)
+                tvErrorMessage.visibility = TextView.VISIBLE
             }
         })
 
@@ -62,21 +69,24 @@ class MainActivity : AppCompatActivity() {
             val userid = uidInputView.text.toString()
             val password = pwInputView.text.toString()
 
-            // TODO:ログインAPI実行
+            // エラー情報textview
+            val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
+            tvErrorMessage.visibility = TextView.INVISIBLE
 
-            // api実行
-            userViewModel.login(userid, password)
-
-            // okならローカルDBにユーザー情報の登録
-//            if (userName != ""){
-//                userViewModel.insertUser(User(0,userName))
-//                userViewModel.selectAllUsers()
-//
-//                val intent = Intent(this@MainActivity, TopActivity::class.java)
-//                intent.putExtra("userName", userName)
-//                startActivity(intent)
-//            }
-
+            when {
+                userid.isEmpty() -> {
+                    tvErrorMessage.setText(R.string.msg_no_input_userid)
+                    tvErrorMessage.visibility = TextView.VISIBLE
+                }
+                password.isEmpty() -> {
+                    tvErrorMessage.setText(R.string.msg_no_input_password)
+                    tvErrorMessage.visibility = TextView.VISIBLE
+                }
+                else -> {
+                    // api実行
+                    userViewModel.login(userid, password)
+                }
+            }
         }
     }
 

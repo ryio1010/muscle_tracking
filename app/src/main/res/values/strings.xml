@@ -6,6 +6,8 @@
 
     <string name="label_id">ユーザーID</string>
     <string name="input_id">ユーザーID</string>
+    <string name="label_name">ユーザー名</string>
+    <string name="input_name">ユーザー名</string>
     <string name="label_pw">パスワード</string>
     <string name="input_pw">パスワード</string>
 
@@ -28,4 +30,10 @@
     <string name="bt_log_confirm">登録する</string>
 
     <string name="bt_search_log">検索</string>
+
+    <string name="msg_no_input_userid">ユーザーIDを入力してください</string>
+    <string name="msg_no_input_username">ユーザー名を入力してください</string>
+    <string name="msg_no_input_password">パスワードを入力してください</string>
+    <string name="msg_can_not_login">ユーザー名とパスワードが一致しません</string>
+    <string name="msg_can_not_register">新規登録ができませんでした</string>
 </resources>

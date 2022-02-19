@@ -9,20 +9,21 @@ interface ApiService {
 
     @GET("user/{username}")
     fun getUserByName(
-        @Path("username") userName:String
+        @Path("username") userName: String
     ): Call<UserResponse>
 
     @FormUrlEncoded
     @POST("user/register")
-    fun registerUser(
+    fun register(
+        @Field("userid") userId: String,
         @Field("username") userName: String,
         @Field("password") password: String
-    ):Call<UserResponse>
+    ): Call<Boolean>
 
     @FormUrlEncoded
     @POST("user/login")
     fun login(
         @Field("userid") userid: String,
         @Field("password") password: String
-    ):Call<UserResponse>
+    ): Call<UserResponse>
 }

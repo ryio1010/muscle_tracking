@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="registerViewModel"
-            type="com.example.muscletracking.viewmodel.user.UserRegisterViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/registerUser"
         android:layout_width="match_parent"
@@ -27,13 +21,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvRegisterErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelLogin" />
+
+        <TextView
             android:id="@+id/labelRegisterUserId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="8dp"
             android:text="@string/label_id"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelLogin" />
+            app:layout_constraintTop_toBottomOf="@+id/tvRegisterErrorMessage" />
 
         <EditText
             android:id="@+id/inputRegisterUserId"
@@ -41,11 +43,29 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={registerViewModel.userid}"
+            android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelRegisterUserId" />
+
+        <TextView
+            android:id="@+id/labelRegisterUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/label_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputRegisterUserId" />
+
+        <EditText
+            android:id="@+id/inputRegisterUserName"
+            android:layout_width="393dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelRegisterUserName" />
 
         <TextView
             android:id="@+id/labelRegisterUserPw"
@@ -54,7 +74,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/label_pw"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputRegisterUserId" />
+            app:layout_constraintTop_toBottomOf="@+id/inputRegisterUserName" />
 
         <EditText
             android:id="@+id/inputRegisterUserPw"
@@ -63,7 +83,6 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPassword"
-            android:text="@={registerViewModel.password}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelRegisterUserPw" />
@@ -72,9 +91,8 @@
             android:id="@+id/btRegisterUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="@string/bt_register_user"
-            android:enabled="@{registerViewModel.enableRegisterFlag}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputRegisterUserPw" />

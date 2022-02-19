@@ -20,7 +20,7 @@
             android:name=".RegisterUserCompleteActivity"
             android:exported="false" />
         <activity
-            android:name=".view.register.UserRegisterActivity"
+            android:name=".view.user.UserRegisterActivity"
             android:exported="false" />
         <activity
             android:name=".SelectLogActivity"

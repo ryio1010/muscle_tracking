@@ -28,6 +28,9 @@ class UserRepository(app: Application) {
         userDao.insertUser(user)
     }
 
+    /**
+     * login
+     */
     @WorkerThread
     suspend fun login(userid: String, password: String): UserResponse? {
         val response = retrofitClient.login(userid, password).execute()
@@ -35,6 +38,16 @@ class UserRepository(app: Application) {
             response.body()
         } else {
             null
+        }
+    }
+
+    @WorkerThread
+    suspend fun register(userid:String,username:String,password: String) : Boolean? {
+        val response = retrofitClient.register(userid,username,password).execute()
+        return if(response.isSuccessful) {
+            response.body()
+        }else {
+            false
         }
     }
 }
