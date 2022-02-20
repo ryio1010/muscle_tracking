@@ -26,4 +26,14 @@ interface ApiService {
         @Field("userid") userid: String,
         @Field("password") password: String
     ): Call<UserResponse>
+
+    @FormUrlEncoded
+    @PUT("user")
+    fun updateUserInfo(
+        @Field("userid") userid: String,
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("height") height: String,
+        @Field("weight") weight: String
+    ): Call<UserResponse>
 }

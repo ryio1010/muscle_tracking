@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.muscletracking.dao.user.UserDao
 import com.example.muscletracking.model.user.User
 
-@Database(entities = [User::class], version = 3, exportSchema = false)
+@Database(entities = [User::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 

@@ -6,19 +6,16 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class User(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "userid")
-    val userId:Int,
+    val userId:String,
 
     @ColumnInfo(name = "username")
     val userName:String,
 
-//    @ColumnInfo(name = "height")
-//    val height:Double,
-//
-//    @ColumnInfo(name = "weight")
-//    val weight:Double,
-//
-//    @ColumnInfo(name = "age")
-//    val age:Int
+    @ColumnInfo(name = "height")
+    val height:Double,
+
+    @ColumnInfo(name = "weight")
+    val weight:Double,
 )

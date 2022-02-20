@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MuscleTracking"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".view.user.UserInputHeightAndWeightActivity"
+            android:exported="false" />
         <activity
             android:name=".view.log.LogWatchActivity"
             android:exported="false" />

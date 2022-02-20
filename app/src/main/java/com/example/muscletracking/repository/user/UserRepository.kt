@@ -41,13 +41,33 @@ class UserRepository(app: Application) {
         }
     }
 
+    /**
+     * register
+     */
     @WorkerThread
-    suspend fun register(userid:String,username:String,password: String) : Boolean? {
-        val response = retrofitClient.register(userid,username,password).execute()
-        return if(response.isSuccessful) {
+    suspend fun register(userid: String, username: String, password: String): Boolean? {
+        val response = retrofitClient.register(userid, username, password).execute()
+        return if (response.isSuccessful) {
             response.body()
-        }else {
+        } else {
             false
+        }
+    }
+
+    @WorkerThread
+    suspend fun updateUserInfo(
+        userid: String,
+        username: String,
+        password: String,
+        height: String,
+        weight: String
+    ): UserResponse? {
+        val response =
+            retrofitClient.updateUserInfo(userid, username, password, height, weight).execute()
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
         }
     }
 }

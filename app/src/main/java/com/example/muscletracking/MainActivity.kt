@@ -13,6 +13,8 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.muscletracking.model.user.User
+import com.example.muscletracking.view.user.UserInputHeightAndWeightActivity
 import com.example.muscletracking.view.user.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
@@ -38,10 +40,25 @@ class MainActivity : AppCompatActivity() {
 
         userViewModel.mUserInfo.observe(this, Observer {
             if (it != null) {
-                Toast.makeText(this, it.userid, Toast.LENGTH_SHORT).show()
-                val intent = Intent(this@MainActivity, TopActivity::class.java)
-                intent.putExtra("userName", it.username)
-                startActivity(intent)
+                if (it.isFirstLogin) {
+                    // 身長・体重入力画面へ遷移
+                    val intent =
+                        Intent(this@MainActivity, UserInputHeightAndWeightActivity::class.java)
+                    intent.putExtra("userid", it.userid)
+                    intent.putExtra("username", it.username)
+                    startActivity(intent)
+                } else {
+                    // ローカルDBにユーザー情報を登録
+                    val userInfo = userViewModel.selectUserById(it.userid)
+                    if (userInfo == null) {
+                        val userInfoForDB = User(it.userid, it.username, it.height, it.weight)
+                        userViewModel.insertUser(userInfoForDB)
+                    }
+                    // トップ画面へ遷移
+                    val intent = Intent(this@MainActivity, TopActivity::class.java)
+                    intent.putExtra("userName", it.username)
+                    startActivity(intent)
+                }
             } else {
                 tvErrorMessage.setText(R.string.msg_can_not_login)
                 tvErrorMessage.visibility = TextView.VISIBLE

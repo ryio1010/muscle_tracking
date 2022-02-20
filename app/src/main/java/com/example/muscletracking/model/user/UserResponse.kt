@@ -5,5 +5,6 @@ data class UserResponse(
     val username:String,
     val password:String,
     val height:Double,
-    val weight:Double
+    val weight:Double,
+    val isFirstLogin:Boolean
 )
