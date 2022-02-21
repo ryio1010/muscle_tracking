@@ -20,7 +20,7 @@
     <string name="bt_register_user">新規登録</string>
     <string name="txt_to_register">アカウントをお持ちでない方はこちら!!</string>
     <string name="txt_to_register_highlight">こちら!!</string>
-    <string name="txt_regist_user_complete">新規ユーザー登録完了！！</string>
+    <string name="txt_register_user_complete">新規ユーザー登録完了！！</string>
 
     <string name="label_top">Welcome To MuscleTracking!</string>
     <string name="bt_log">記録する</string>
@@ -44,4 +44,12 @@
     <string name="msg_can_not_login">ユーザー名とパスワードが一致しません</string>
     <string name="msg_can_not_register">新規登録ができませんでした</string>
     <string name="msg_can_not_update">更新ができませんでした</string>
+
+    <string name="menu_home">ホーム</string>
+    <string name="menu_log_history">ログ履歴</string>
+    <string name="menu_log">ログ</string>
+
+    <string name="hello_home_fragment">Hello HOME fragment</string>
+    <string name="hello_log_fragment">Hello LOG fragment</string>
+    <string name="hello_log_history_fragment">Hello LOG_HISTORY fragment</string>
 </resources>

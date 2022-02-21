@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MuscleTracking"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.user.UserInputHeightAndWeightActivity"
             android:exported="false" />
         <activity

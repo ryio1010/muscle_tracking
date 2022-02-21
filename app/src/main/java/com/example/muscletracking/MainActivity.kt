@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                         userViewModel.insertUser(userInfoForDB)
                     }
                     // トップ画面へ遷移
-                    val intent = Intent(this@MainActivity, TopActivity::class.java)
+                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
                     intent.putExtra("userName", it.username)
                     startActivity(intent)
                 }
