@@ -7,11 +7,9 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @GET("user/{username}")
-    fun getUserByName(
-        @Path("username") userName: String
-    ): Call<UserResponse>
-
+    /**
+     * 新規ユーザー登録API
+     */
     @FormUrlEncoded
     @POST("user/register")
     fun register(
@@ -20,6 +18,9 @@ interface ApiService {
         @Field("password") password: String
     ): Call<Boolean>
 
+    /**
+     * ユーザーログインAPI
+     */
     @FormUrlEncoded
     @POST("user/login")
     fun login(
@@ -27,6 +28,9 @@ interface ApiService {
         @Field("password") password: String
     ): Call<UserResponse>
 
+    /**
+     * ユーザー情報更新API
+     */
     @FormUrlEncoded
     @PUT("user")
     fun updateUserInfo(

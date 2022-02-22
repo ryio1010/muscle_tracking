@@ -40,17 +40,17 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
         repository.insertUser(user)
     }
 
-    fun selectAllUsers() = scope.launch(Dispatchers.IO) {
-        val users = repository.getUserAll()
-        Log.d("debug", users.toString())
-        userList.postValue(users)
-    }
-
+    /**
+     * ローカルDB　UserテーブルId検索
+     */
     fun selectUserById(userId: String) = scope.launch(Dispatchers.IO) {
         val user = repository.getUserById(userId)
         selectUser.postValue(user)
     }
 
+    /**
+     * loginAPI実行
+     */
     fun login(userid: String, password: String) = scope.launch(Dispatchers.IO) {
         val user = repository.login(userid, password)
         if (user == null) {
@@ -60,12 +60,18 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /**
+     * registerAPI実行
+     */
     fun register(userId: String, userName: String, password: String) =
         scope.launch(Dispatchers.IO) {
             val registerFlag = repository.register(userId, userName, password)
             isUserRegistered.postValue(registerFlag)
         }
 
+    /**
+     * updateAPI実行
+     */
     fun updateUserInfo(
         userId: String,
         userName: String,

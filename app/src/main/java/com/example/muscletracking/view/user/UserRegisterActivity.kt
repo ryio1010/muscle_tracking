@@ -6,12 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.muscletracking.R
-import com.example.muscletracking.RegisterUserCompleteActivity
-import com.example.muscletracking.databinding.ActivityUserRegisterBinding
 import com.example.muscletracking.viewmodel.user.UserViewModel
 import okhttp3.*
 
@@ -30,6 +27,7 @@ class UserRegisterActivity : AppCompatActivity() {
         // エラー情報Textview
         val tvErrorMessage = findViewById<TextView>(R.id.tvRegisterErrorMessage)
 
+        // observer登録
         userViewModel.isUserRegistered.observe(this, Observer {
             if (it) {
                 val intent =

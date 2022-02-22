@@ -7,18 +7,28 @@ import com.example.muscletracking.model.user.User
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user")
-    fun getAllUser(): List<User>
 
+    /**
+     * Idによるユーザー検索
+     */
     @Query("SELECT * FROM user WHERE userid = :userId")
     fun getUserById(userId:String) : User
 
+    /**
+     * ユーザー登録
+     */
     @Insert
     fun insertUser(user: User)
 
+    /**
+     * ユーザー情報更新
+     */
     @Update
     fun updateUser(user:User)
 
+    /**
+     * ユーザー削除
+     */
     @Delete
     fun deleteUser(user:User)
 }

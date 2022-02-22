@@ -8,8 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.muscletracking.HomeActivity
 import com.example.muscletracking.R
-import com.example.muscletracking.TopActivity
 import com.example.muscletracking.model.user.User
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
@@ -29,6 +29,7 @@ class UserInputHeightAndWeightActivity : AppCompatActivity() {
         val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessageForHeightAndWeight)
         tvErrorMessage.visibility = TextView.INVISIBLE
 
+        // observer登録
         userViewModel.mUserInfoUpdate.observe(this, Observer {
             if (it != null) {
                 val userInfo = userViewModel.selectUserById(it.userid)
@@ -39,7 +40,7 @@ class UserInputHeightAndWeightActivity : AppCompatActivity() {
                 }
                 // トップ画面へ遷移
                 val intent =
-                    Intent(this@UserInputHeightAndWeightActivity, TopActivity::class.java)
+                    Intent(this@UserInputHeightAndWeightActivity, HomeActivity::class.java)
                 intent.putExtra("userName", it.username)
                 startActivity(intent)
             }else {

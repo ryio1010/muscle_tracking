@@ -13,23 +13,24 @@ class UserRepository(app: Application) {
     private val userDao = AppDatabase.getInstance(app).userDao()
     private val retrofitClient = RetrofitClient.getApiService()
 
-    @WorkerThread
-    suspend fun getUserAll(): List<User> {
-        return userDao.getAllUser()
-    }
-
+    /**
+     * IdによるローカルDB検索
+     */
     @WorkerThread
     suspend fun getUserById(userId: String): User {
         return userDao.getUserById(userId)
     }
 
+    /**
+     * ローカルDBに登録処理
+     */
     @WorkerThread
     suspend fun insertUser(user: User) {
         userDao.insertUser(user)
     }
 
     /**
-     * login
+     * loginAPI
      */
     @WorkerThread
     suspend fun login(userid: String, password: String): UserResponse? {
@@ -42,7 +43,7 @@ class UserRepository(app: Application) {
     }
 
     /**
-     * register
+     * registerAPI
      */
     @WorkerThread
     suspend fun register(userid: String, username: String, password: String): Boolean? {
@@ -54,6 +55,9 @@ class UserRepository(app: Application) {
         }
     }
 
+    /**
+     * updateAPI
+     */
     @WorkerThread
     suspend fun updateUserInfo(
         userid: String,

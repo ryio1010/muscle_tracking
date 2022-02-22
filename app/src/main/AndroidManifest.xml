@@ -19,22 +19,10 @@
             android:name=".view.user.UserInputHeightAndWeightActivity"
             android:exported="false" />
         <activity
-            android:name=".view.log.LogWatchActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterUserCompleteActivity"
+            android:name=".view.user.RegisterUserCompleteActivity"
             android:exported="false" />
         <activity
             android:name=".view.user.UserRegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SelectLogActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.log.LogTrainingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TopActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

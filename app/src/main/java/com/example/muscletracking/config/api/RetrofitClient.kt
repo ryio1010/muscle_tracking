@@ -11,13 +11,16 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private var apiService: ApiService
+    // TODO:今後設定ファイルに移管
     private const val BASE_URL: String = "http://10.0.2.2:8080/api/"
 
     init {
+        // moshiの初期設定
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
 
+        // retrofitの初期設定
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -31,6 +34,7 @@ object RetrofitClient {
         return apiService
     }
 
+    // TODO: okhttpclient定義の見直し
     private fun getClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
