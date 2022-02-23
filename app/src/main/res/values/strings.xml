@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">MuscleTracking</string>
 
+    <!-- タイトル -->
     <string name="label_login">ログイン</string>
     <string name="label_register_user">新規登録</string>
     <string name="label_input_height_and_weight">身長体重入力</string>
+    <string name="label_top">Welcome To MuscleTracking!</string>
 
+    <!-- 入力 -->
     <string name="label_id">ユーザーID</string>
     <string name="input_id">ユーザーID</string>
     <string name="label_name">ユーザー名</string>
@@ -15,28 +18,25 @@
     <string name="input_height">身長</string>
     <string name="label_weight">体重</string>
     <string name="input_weight">体重</string>
+    <string name="label_calendar">日付</string>
+    <string name="label_training_weight">重量</string>
+    <string name="label_training_count">回数</string>
+    <string name="label_training_muscle_groups">トレーニング部位</string>
+    <string name="label_training_menus">トレーニングメニュー</string>
 
+    <!-- ボタンテキスト -->
     <string name="bt_login">ログイン</string>
     <string name="bt_register_user">新規登録</string>
+    <string name="bt_log">記録する</string>
+    <string name="bt_show_history">記録を見る</string>
+    <string name="bt_log_add">ADD</string>
+    <string name="bt_confirm">登録する</string>
+    <string name="bt_search_log">検索</string>
     <string name="txt_to_register">アカウントをお持ちでない方はこちら!!</string>
     <string name="txt_to_register_highlight">こちら!!</string>
     <string name="txt_register_user_complete">新規ユーザー登録完了！！</string>
 
-    <string name="label_top">Welcome To MuscleTracking!</string>
-    <string name="bt_log">記録する</string>
-    <string name="bt_show_history">記録を見る</string>
-
-
-    <string name="label_training_muscle_groups">トレーニング部位</string>
-    <string name="label_training_menus">トレーニングメニュー</string>
-    <string name="label_calendar">日付</string>
-    <string name="label_training_weight">重量</string>
-    <string name="label_training_count">回数</string>
-    <string name="bt_log_add">ADD</string>
-    <string name="bt_confirm">登録する</string>
-
-    <string name="bt_search_log">検索</string>
-
+    <!-- バリデーションメッセージ -->
     <string name="msg_no_input_userid">ユーザーIDを入力してください</string>
     <string name="msg_no_input_username">ユーザー名を入力してください</string>
     <string name="msg_no_input_password">パスワードを入力してください</string>
@@ -46,6 +46,7 @@
     <string name="msg_can_not_register">新規登録ができませんでした</string>
     <string name="msg_can_not_update">更新ができませんでした</string>
 
+    <!-- メニュー -->
     <string name="menu_home">ホーム</string>
     <string name="menu_log_history">ログ履歴</string>
     <string name="menu_log">ログ</string>
