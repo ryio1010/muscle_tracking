@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     // トップ画面へ遷移
                     val intent = Intent(this@MainActivity, HomeActivity::class.java)
-                    intent.putExtra("userName", it.username)
+                    intent.putExtra("userId", it.userid)
                     startActivity(intent)
                 }
             } else {

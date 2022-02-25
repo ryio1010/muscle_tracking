@@ -50,40 +50,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerTrainingMenu" />
 
-    <Spinner
-        android:id="@+id/spinnerCalendar"
-        android:layout_width="0dp"
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:minHeight="48dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelCalendar" />
+        app:layout_constraintTop_toBottomOf="@+id/labelCalendar">
+
+        <TextView
+            android:id="@+id/tvTrainingDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="3"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btSelectDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/bt_select" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:id="@+id/labelTrainingWeight"
-        android:layout_width="361dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/label_training_weight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCalendar" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat" />
 
-    <Spinner
-        android:id="@+id/spinnerTrainingWeight"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/etTrainingWeight"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:minHeight="48dp"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelTrainingWeight" />
 
@@ -95,19 +113,18 @@
         android:layout_marginEnd="16dp"
         android:text="@string/label_training_count"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTrainingWeight" />
+        app:layout_constraintTop_toBottomOf="@+id/etTrainingWeight" />
 
-    <Spinner
-        android:id="@+id/spinnerTrainingCount"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/etTrainingCount"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:minHeight="48dp"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelTrainingCount" />
 
@@ -121,6 +138,6 @@
         android:text="@string/bt_confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTrainingCount" />
+        app:layout_constraintTop_toBottomOf="@+id/etTrainingCount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
