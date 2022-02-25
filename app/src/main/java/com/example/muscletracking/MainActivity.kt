@@ -8,8 +8,11 @@ import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,6 +32,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        // toolbarの設置
+        val root = findViewById<ViewGroup>(R.id.activity_main_container)
+        val toolbar = LayoutInflater.from(this).inflate(R.layout.toolbar, root, false) as Toolbar
+        root.addView(toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // エラー情報textview
         val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
@@ -56,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     // トップ画面へ遷移
                     val intent = Intent(this@MainActivity, HomeActivity::class.java)
-                    intent.putExtra("userName", it.username)
+                    intent.putExtra("userId", it.userid)
                     startActivity(intent)
                 }
             } else {

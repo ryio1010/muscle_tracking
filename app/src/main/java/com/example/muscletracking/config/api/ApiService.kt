@@ -1,5 +1,6 @@
 package com.example.muscletracking.config.api
 
+import com.example.muscletracking.model.menu.MenuResponse
 import com.example.muscletracking.model.user.UserResponse
 import retrofit2.Call
 import retrofit2.Response
@@ -40,4 +41,12 @@ interface ApiService {
         @Field("height") height: String,
         @Field("weight") weight: String
     ): Call<UserResponse>
+
+    /**
+     * トレーニングメニュー取得API
+     */
+    @GET("menu/{userId}")
+    fun getAllMenu(
+        @Path("userId") userId: String
+    ): Call<List<MenuResponse>>
 }

@@ -12,11 +12,14 @@
         <entry key="app/src/main/res/layout/activity_top.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_user_input_height_and_weight.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_user_register.xml" value="0.3241436925647452" />
+        <entry key="app/src/main/res/layout/fragment_date_picker_fragment.xml" value="0.5978632478632478" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.370718462823726" />
         <entry key="app/src/main/res/layout/fragment_log.xml" value="0.3763575605680869" />
         <entry key="app/src/main/res/layout/fragment_log_history.xml" value="0.3763575605680869" />
         <entry key="app/src/main/res/layout/row.xml" value="0.29074074074074074" />
+        <entry key="app/src/main/res/layout/toolbar.xml" value="0.6490036231884058" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.4046296296296296" />
+        <entry key="app/src/main/res/menu/setting_menu.xml" value="0.6491452991452992" />
       </map>
     </option>
   </component>

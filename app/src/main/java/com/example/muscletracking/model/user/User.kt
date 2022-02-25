@@ -8,14 +8,14 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey
     @ColumnInfo(name = "userid")
-    val userId:String,
+    val userId: String,
 
     @ColumnInfo(name = "username")
-    val userName:String,
+    val userName: String,
 
     @ColumnInfo(name = "height")
-    val height:Double,
+    val height: Double,
 
     @ColumnInfo(name = "weight")
-    val weight:Double,
+    val weight: Double,
 )

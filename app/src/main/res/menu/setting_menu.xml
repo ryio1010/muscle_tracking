@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuMasterFragment"
+        android:title="@string/menu_training_menu_master" />
+    <item
+        android:id="@+id/menuDarkModeFragment"
+        android:title="@string/menu_dark_mode" />
+</menu>
