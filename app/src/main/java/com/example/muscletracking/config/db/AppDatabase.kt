@@ -5,14 +5,21 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.muscletracking.dao.menu.MenuDao
+import com.example.muscletracking.dao.musclepart.MusclePartDao
 import com.example.muscletracking.dao.user.UserDao
 import com.example.muscletracking.model.menu.Menu
+import com.example.muscletracking.model.musclepart.MusclePart
 import com.example.muscletracking.model.user.User
 
-@Database(entities = [User::class, Menu::class], version = 5, exportSchema = false)
+@Database(
+    entities = [User::class, Menu::class, MusclePart::class],
+    version = 6,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun menuDao(): MenuDao
+    abstract fun musclePartDao(): MusclePartDao
 
     companion object {
         private const val dbName = "mt_db"
