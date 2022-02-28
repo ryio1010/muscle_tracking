@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.muscletracking.model.musclepart.MusclePart
 import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
@@ -53,7 +54,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             Log.d("debug", allMusclePart.toString())
                 val fragmentTransaction = parentFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
-                    R.id.addLogFragment,
+                    R.id.flHomeContainer,
                     TrainingMenuListFragment.newInstance()
                 )
                 fragmentTransaction.addToBackStack(null)

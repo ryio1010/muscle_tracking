@@ -1,5 +1,6 @@
 package com.example.muscletracking.config.api
 
+import com.example.muscletracking.model.log.LogResponse
 import com.example.muscletracking.model.menu.MenuResponse
 import com.example.muscletracking.model.musclepart.MusclePartResponse
 import com.example.muscletracking.model.user.UserResponse
@@ -56,4 +57,17 @@ interface ApiService {
      */
     @GET("musclepart")
     fun getAllMusclePart():Call<List<MusclePartResponse>>
+
+    @GET("log/{userId}")
+    fun getAllLog(@Path("userId") userId:String):Call<List<LogResponse>>
+
+    @FormUrlEncoded
+    @POST("log/add")
+    fun addLog(
+        @Field("menuid") menuId:Int,
+        @Field("trainingweight") trainingWeight:Double,
+        @Field("trainingcount") trainingCount:Int,
+        @Field("trainingdate") trainingDate:String,
+        @Field("userid") userId:String
+    ):Call<Boolean>
 }
