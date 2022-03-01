@@ -1,6 +1,8 @@
 package com.example.muscletracking.config.api
 
+import com.example.muscletracking.model.log.LogResponse
 import com.example.muscletracking.model.menu.MenuResponse
+import com.example.muscletracking.model.musclepart.MusclePartResponse
 import com.example.muscletracking.model.user.UserResponse
 import retrofit2.Call
 import retrofit2.Response
@@ -49,4 +51,23 @@ interface ApiService {
     fun getAllMenu(
         @Path("userId") userId: String
     ): Call<List<MenuResponse>>
+
+    /**
+     * トレーニング部位取得API
+     */
+    @GET("musclepart")
+    fun getAllMusclePart():Call<List<MusclePartResponse>>
+
+    @GET("log/{userId}")
+    fun getAllLog(@Path("userId") userId:String):Call<List<LogResponse>>
+
+    @FormUrlEncoded
+    @POST("log/add")
+    fun addLog(
+        @Field("menuName") menuName:String,
+        @Field("trainingweight") trainingWeight:Double,
+        @Field("trainingcount") trainingCount:Int,
+        @Field("trainingdate") trainingDate:String,
+        @Field("userid") userId:String
+    ):Call<Boolean>
 }
