@@ -30,7 +30,7 @@ class TrainingLogViewAdapter(
             list[position].trainingWeight.toString()
         holder.itemView.findViewById<TextView>(R.id.tvTrainingCountOfLog).text =
             list[position].trainingCount.toString()
-//        holder.itemView.findViewById<TextView>(R.id.tvTrainingMenuOfLog).text = list[position].trainingMenu
+        holder.itemView.findViewById<TextView>(R.id.tvTrainingMenuOfLog).text = list[position].menuName
         holder.itemView.setOnClickListener {
             listener.onClickItem(it, list[position])
         }

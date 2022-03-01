@@ -33,14 +33,14 @@ class LogRepository(app: Application) {
 
     @WorkerThread
     suspend fun insertLog(
-        menuId: Int,
+        menuName: String,
         trainingWeight: Double,
         trainingCount: Int,
         trainingDate: String,
         userId: String
     ): Boolean? {
         val response =
-            retrofitClient.addLog(menuId, trainingWeight, trainingCount, trainingDate, userId)
+            retrofitClient.addLog(menuName, trainingWeight, trainingCount, trainingDate, userId)
                 .execute()
         return if (response.isSuccessful) {
             return response.body()

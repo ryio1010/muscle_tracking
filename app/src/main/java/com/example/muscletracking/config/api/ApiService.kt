@@ -64,7 +64,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("log/add")
     fun addLog(
-        @Field("menuid") menuId:Int,
+        @Field("menuName") menuName:String,
         @Field("trainingweight") trainingWeight:Double,
         @Field("trainingcount") trainingCount:Int,
         @Field("trainingdate") trainingDate:String,

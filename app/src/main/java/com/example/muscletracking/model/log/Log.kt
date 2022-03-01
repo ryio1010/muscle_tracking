@@ -10,8 +10,8 @@ data class Log(
     @ColumnInfo(name = "id")
     val logId:Int,
 
-    @ColumnInfo(name = "menuid")
-    val menuId:Int,
+    @ColumnInfo(name = "menuname")
+    val menuName:String,
 
     @ColumnInfo(name = "trainingweight")
     val trainingWeight:Double,
