@@ -17,6 +17,11 @@ class LogRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun getLogByMenu(menuName: String): List<Log> {
+        return logDao.getLogByMenu(menuName)
+    }
+
+    @WorkerThread
     suspend fun insertLogOfDB(log: Log) {
         return logDao.insertLog(log)
     }

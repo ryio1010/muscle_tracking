@@ -20,6 +20,10 @@
         android:name="com.example.muscletracking.view.home.log.LogFragment"
         android:label="fragment_log"
         tools:layout="@layout/fragment_log" >
+
+        <argument
+            android:name="trainingMenu"
+            app:argType="string" />
         <action
             android:id="@+id/action_logFragment_to_trainingPartListFragment"
             app:destination="@id/trainingPartListFragment" />
@@ -36,5 +40,13 @@
         android:id="@+id/trainingMenuListFragment"
         android:name="com.example.muscletracking.view.home.log.TrainingMenuListFragment"
         android:label="fragment_training_menu_list"
-        tools:layout="@layout/fragment_training_menu_list" />
+        tools:layout="@layout/fragment_training_menu_list" >
+
+        <argument
+            android:name="musclePart"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_trainingMenuListFragment_to_logFragment"
+            app:destination="@id/logFragment" />
+    </fragment>
 </navigation>

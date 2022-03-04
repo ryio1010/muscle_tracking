@@ -11,9 +11,11 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.muscletracking.R
 import com.example.muscletracking.viewmodel.log.LogViewModel
 import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,6 +32,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
     }
 
     private val logViewModel: LogViewModel by lazy {
+
         ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory(activity!!.application)
@@ -53,6 +56,8 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_log, container, false)
+
+        val menu = view.findViewById<TextView>(R.id.tvTrainingMenu)
 
         // ボタンListener登録
         val btAddLog = view.findViewById<Button>(R.id.logRegisterButton)

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,8 @@ import com.example.muscletracking.model.menu.Menu
 import com.example.muscletracking.viewmodel.menu.MenuViewModel
 
 class TrainingMenuListFragment : Fragment() {
+
+    private val args: TrainingMenuListFragmentArgs by navArgs()
 
     private val menuViewModel by lazy {
         ViewModelProvider(
@@ -38,7 +42,7 @@ class TrainingMenuListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        menuViewModel.getAllMenuByMusclePartFromDB(musclePart = "胸")
+        menuViewModel.getAllMenuByMusclePartFromDB(args.musclePart)
         menuViewModel.menuListByPartOfDB.observe(this, Observer {
             this.recyclerView = view.findViewById(R.id.rvTrainingMenu)
             this.recyclerView?.apply {
@@ -47,9 +51,9 @@ class TrainingMenuListFragment : Fragment() {
                 itemAnimator = DefaultItemAnimator()
                 adapter = TrainingMenuListAdapter(
                     generateList(it),
-                    object :TrainingMenuListAdapter.ListListener {
+                    object : TrainingMenuListAdapter.ListListener {
                         override fun onClickItem(tappedView: View, menu: Menu) {
-                            TODO("Not yet implemented")
+                            findNavController().navigate(R.id.action_trainingMenuListFragment_to_logFragment)
                         }
                     }
                 )
@@ -64,7 +68,7 @@ class TrainingMenuListFragment : Fragment() {
         this.recyclerView = null
     }
 
-    private fun generateList(menus:List<Menu>):List<Menu> {
+    private fun generateList(menus: List<Menu>): List<Menu> {
         val list = mutableListOf<Menu>()
         for (menu in menus) {
             list.add(menu)
