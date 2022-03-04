@@ -9,7 +9,7 @@ interface LogDao {
     @Query("SELECT * FROM log")
     fun getAllLog():List<Log>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLog(log:Log)
 
     @Update

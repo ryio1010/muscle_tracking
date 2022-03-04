@@ -1,4 +1,4 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.home.top
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

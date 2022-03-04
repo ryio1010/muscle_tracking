@@ -32,13 +32,21 @@
                 android:layout_toRightOf="@+id/ivTrainingPart"
                 android:orientation="vertical">
 
-
                 <TextView
-                    android:id="@+id/tvTrainingPart"
+                    android:id="@+id/tvTrainingPartId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="佐藤"
                     android:textSize="14sp"
-                    android:text="佐藤" />
+                    android:visibility="invisible"/>
+
+
+                <TextView
+                    android:id="@+id/tvTrainingPartName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="佐藤"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </RelativeLayout>

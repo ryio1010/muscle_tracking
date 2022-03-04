@@ -5,7 +5,6 @@ import com.example.muscletracking.model.menu.MenuResponse
 import com.example.muscletracking.model.musclepart.MusclePartResponse
 import com.example.muscletracking.model.user.UserResponse
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -64,10 +63,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST("log/add")
     fun addLog(
+        @Field("menuId") menuId:String,
         @Field("menuName") menuName:String,
-        @Field("trainingweight") trainingWeight:Double,
-        @Field("trainingcount") trainingCount:Int,
-        @Field("trainingdate") trainingDate:String,
-        @Field("userid") userId:String
+        @Field("trainingWeight") trainingWeight: String,
+        @Field("trainingCount") trainingCount: String,
+        @Field("trainingDate") trainingDate:String,
+        @Field("userId") userId:String
     ):Call<Boolean>
 }

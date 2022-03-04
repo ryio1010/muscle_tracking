@@ -5,7 +5,7 @@
     android:id="@+id/addLogFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogFragment">
+    tools:context=".view.home.log.LogFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/searchLogContainer"

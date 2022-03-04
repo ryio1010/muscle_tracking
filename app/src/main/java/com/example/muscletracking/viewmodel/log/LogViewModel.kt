@@ -46,13 +46,14 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun addLog(
+        menuId: String,
         menuName: String,
-        trainingWeight: Double,
-        trainingCount: Int,
+        trainingWeight: String,
+        trainingCount: String,
         trainingDate: String,
         userId: String
     ) = scope.launch(Dispatchers.IO) {
-        repository.insertLog(menuName, trainingWeight, trainingCount, trainingDate, userId)
+        repository.insertLog(menuId, menuName, trainingWeight, trainingCount, trainingDate, userId)
         isLogAdded.postValue(true)
     }
 }

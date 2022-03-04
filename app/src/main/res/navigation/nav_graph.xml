@@ -7,17 +7,34 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.muscletracking.HomeFragment"
+        android:name="com.example.muscletracking.view.home.top.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/logHistoryFragment"
-        android:name="com.example.muscletracking.LogHistoryFragment"
+        android:name="com.example.muscletracking.view.home.loghistory.LogHistoryFragment"
         android:label="fragment_log_history"
         tools:layout="@layout/fragment_log_history" />
     <fragment
         android:id="@+id/logFragment"
-        android:name="com.example.muscletracking.LogFragment"
+        android:name="com.example.muscletracking.view.home.log.LogFragment"
         android:label="fragment_log"
-        tools:layout="@layout/fragment_log" />
+        tools:layout="@layout/fragment_log" >
+        <action
+            android:id="@+id/action_logFragment_to_trainingPartListFragment"
+            app:destination="@id/trainingPartListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingPartListFragment"
+        android:name="com.example.muscletracking.view.home.log.TrainingPartListFragment"
+        android:label="TrainingPartListFragment" >
+        <action
+            android:id="@+id/action_trainingPartListFragment_to_trainingMenuListFragment"
+            app:destination="@id/trainingMenuListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingMenuListFragment"
+        android:name="com.example.muscletracking.view.home.log.TrainingMenuListFragment"
+        android:label="fragment_training_menu_list"
+        tools:layout="@layout/fragment_training_menu_list" />
 </navigation>

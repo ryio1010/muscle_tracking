@@ -17,6 +17,7 @@ class MenuViewModel(app:Application) : AndroidViewModel(app) {
 
     val menuList : MutableLiveData<List<MenuResponse>> = MutableLiveData()
     val menuListOfDB : MutableLiveData<List<Menu>> = MutableLiveData()
+    val menuListByPartOfDB : MutableLiveData<List<Menu>> = MutableLiveData()
 
     // coroutine用
     private var parentJob = Job()
@@ -36,6 +37,16 @@ class MenuViewModel(app:Application) : AndroidViewModel(app) {
         val allMenu = repository.getAllMenuFromDB()
         menuListOfDB.postValue(allMenu)
     }
+
+    /**
+     * トレーニングメニュー取得（ローカルDB）
+     * 引数：MusclePart
+     */
+    fun getAllMenuByMusclePartFromDB(musclePart:String) = scope.launch(Dispatchers.IO) {
+        val allMenu = repository.getMenuFromDBByMusclePart(musclePart)
+        menuListByPartOfDB.postValue(allMenu)
+    }
+
 
     /**
      * トレーニングメニューInsert（ローカルDB）

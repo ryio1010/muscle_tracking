@@ -1,20 +1,20 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.home.loghistory
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
-import com.example.muscletracking.model.log.LogResponse
+import com.example.muscletracking.R
+import com.example.muscletracking.model.log.Log
 
 class TrainingLogViewAdapter(
-    private val list: List<LogResponse>,
+    private val list: List<Log>,
     private val listener: ListListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface ListListener {
-        fun onClickItem(tappedView: View, logResponse: LogResponse)
+        fun onClickItem(tappedView: View, log: Log)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

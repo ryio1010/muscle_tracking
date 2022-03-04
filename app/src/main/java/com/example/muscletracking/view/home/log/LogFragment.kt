@@ -1,4 +1,4 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.home.log
 
 import android.os.Bundle
 import android.util.Log
@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import com.example.muscletracking.model.musclepart.MusclePart
+import androidx.navigation.fragment.findNavController
+import com.example.muscletracking.R
+import com.example.muscletracking.viewmodel.log.LogViewModel
 import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
-import com.example.muscletracking.viewmodel.user.UserViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,6 +26,15 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             ViewModelProvider.AndroidViewModelFactory(activity!!.application)
         ).get(
             MusclePartViewModel::class.java
+        )
+    }
+
+    private val logViewModel: LogViewModel by lazy {
+        ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(activity!!.application)
+        ).get(
+            LogViewModel::class.java
         )
     }
 
@@ -44,6 +54,32 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_log, container, false)
 
+        // ボタンListener登録
+        val btAddLog = view.findViewById<Button>(R.id.logRegisterButton)
+        btAddLog.setOnClickListener {
+            // 入力情報の取得
+            val inputTrainingMenu = view.findViewById<TextView>(R.id.tvTrainingMenu).text.toString()
+            val inputTrainingDate = view.findViewById<TextView>(R.id.tvTrainingDate).text.toString()
+            val inputTrainingWeight =
+                view.findViewById<EditText>(R.id.etTrainingWeight).text.toString()
+            val inputTrainingCount =
+                view.findViewById<EditText>(R.id.etTrainingCount).text.toString()
+
+            logViewModel.addLog(
+                "1",
+                "menuSample",
+                inputTrainingWeight,
+                inputTrainingCount,
+                inputTrainingDate,
+                "ryio1010"
+            )
+        }
+        logViewModel.isLogAdded.observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                logViewModel.getAllLog("ryio1010")
+            }
+        })
+
         btMenuSelect = view.findViewById<Button>(R.id.btSelectMenu)
         btMenuSelect.setOnClickListener {
             musclePartViewModel.getAllMusclePartFromDB()
@@ -52,13 +88,14 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
         musclePartViewModel.musclePartListOfDB.observe(this, androidx.lifecycle.Observer {
             val allMusclePart = it
             Log.d("debug", allMusclePart.toString())
-                val fragmentTransaction = parentFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.flHomeContainer,
-                    TrainingMenuListFragment.newInstance()
-                )
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
+            findNavController().navigate(R.id.action_logFragment_to_trainingPartListFragment)
+//            val fragmentTransaction = parentFragmentManager.beginTransaction()
+//            fragmentTransaction.replace(
+//                R.id.flHomeContainer,
+//                TrainingMenuListFragment.newInstance()
+//            )
+//            fragmentTransaction.addToBackStack(null)
+//            fragmentTransaction.commit()
 
         })
 
@@ -71,12 +108,12 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
         btDateSelect = view.findViewById<Button>(R.id.btSelectDate)
         btDateSelect.setOnClickListener {
             val dialog = DatePickerFragment()
-            dialog.show(parentFragmentManager, "date_picker")
+            dialog.show(childFragmentManager, "date_picker")
         }
         return view
     }
 
     override fun selectedDate(year: Int, month: Int, dayOfMonth: Int) {
-        tvDate.setText("%04d/%02d/%02d".format(year, month + 1, dayOfMonth))
+        tvDate.text = "%04d/%02d/%02d".format(year, month + 1, dayOfMonth)
     }
 }

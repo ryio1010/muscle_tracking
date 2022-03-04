@@ -8,8 +8,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.model.menu.Menu
 import com.example.muscletracking.model.musclepart.MusclePart
+import com.example.muscletracking.viewmodel.log.LogViewModel
 import com.example.muscletracking.viewmodel.menu.MenuViewModel
 import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,6 +30,15 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
+    private val logViewModel: LogViewModel by lazy {
+        ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(application)
+        ).get(
+            LogViewModel::class.java
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -43,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
         menuViewModel.menuList.observe(this, Observer {
             val localMenuData = menuViewModel.getAllMenuFromDB()
             for (menuResponse in it) {
-                val menu = Menu(menuResponse.menuId,menuResponse.menuName,menuResponse.musclePart)
+                val menu = Menu(menuResponse.menuId, menuResponse.menuName, menuResponse.musclePart)
                 menuViewModel.insertMenu(menu)
             }
         })
@@ -52,10 +63,25 @@ class HomeActivity : AppCompatActivity() {
         musclePartViewModel.getAllMusclePart()
         musclePartViewModel.musclePartList.observe(this, androidx.lifecycle.Observer {
             for (musclePart in it) {
-                val musclePartEntity = MusclePart(musclePart.musclePartId,musclePart.musclePartName)
+                val musclePartEntity =
+                    MusclePart(musclePart.musclePartId, musclePart.musclePartName)
                 musclePartViewModel.insertMusclePart(musclePartEntity)
             }
         })
 
+        // トレーニングログ取得API
+        logViewModel.getAllLog(userId)
+        logViewModel.logList.observe(this, Observer {
+            for (log in it) {
+                val logEntity = Log(
+                    log.logId,
+                    log.menuName,
+                    log.trainingWeight,
+                    log.trainingCount,
+                    log.trainingDate
+                )
+                logViewModel.insertLogOfDB(logEntity)
+            }
+        })
     }
 }
