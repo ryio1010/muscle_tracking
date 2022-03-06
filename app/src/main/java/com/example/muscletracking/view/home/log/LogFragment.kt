@@ -84,6 +84,18 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
                 logViewModel.getAllLog("ryio1010")
             }
         })
+        logViewModel.logList.observe(this, androidx.lifecycle.Observer {
+            for (log in it) {
+                val logEntity = com.example.muscletracking.model.log.Log(
+                    log.logId,
+                    log.menuName,
+                    log.trainingWeight,
+                    log.trainingCount,
+                    log.trainingDate
+                )
+                logViewModel.insertLogOfDB(logEntity)
+            }
+        })
 
         btMenuSelect = view.findViewById<Button>(R.id.btSelectMenu)
         btMenuSelect.setOnClickListener {
@@ -119,6 +131,6 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
     }
 
     override fun selectedDate(year: Int, month: Int, dayOfMonth: Int) {
-        tvDate.text = "%04d/%02d/%02d".format(year, month + 1, dayOfMonth)
+        tvDate.text = "%04d%02d%02d".format(year, month + 1, dayOfMonth)
     }
 }
