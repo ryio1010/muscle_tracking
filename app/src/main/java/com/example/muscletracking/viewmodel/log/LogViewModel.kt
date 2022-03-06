@@ -17,6 +17,7 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
 
     val logList: MutableLiveData<List<LogResponse>> = MutableLiveData()
     val logListOfDB: MutableLiveData<List<Log>> = MutableLiveData()
+    val logListByMenu: MutableLiveData<List<Log>> = MutableLiveData()
     val isLogAdded: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -36,6 +37,16 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
         logListOfDB.postValue(allLog)
     }
 
+    fun getLogByMenu(menuName: String) = scope.launch(Dispatchers.IO) {
+        if (menuName.isNotEmpty()){
+            val allLog = repository.getLogByMenu(menuName)
+            logListByMenu.postValue(allLog)
+        }else {
+            val allLog = repository.getAllLogFromDB()
+            logListOfDB.postValue(allLog)
+        }
+    }
+
     fun insertLogOfDB(log: Log) = scope.launch(Dispatchers.IO) {
         repository.insertLogOfDB(log)
     }
@@ -46,13 +57,14 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun addLog(
+        menuId: String,
         menuName: String,
-        trainingWeight: Double,
-        trainingCount: Int,
+        trainingWeight: String,
+        trainingCount: String,
         trainingDate: String,
         userId: String
     ) = scope.launch(Dispatchers.IO) {
-        repository.insertLog(menuName, trainingWeight, trainingCount, trainingDate, userId)
+        repository.insertLog(menuId, menuName, trainingWeight, trainingCount, trainingDate, userId)
         isLogAdded.postValue(true)
     }
 }

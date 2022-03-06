@@ -1,4 +1,4 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.home.log
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,22 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.R
-import com.example.muscletracking.model.log.LogResponse
-import com.example.muscletracking.viewmodel.log.LogViewModel
-import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
+import com.example.muscletracking.model.menu.Menu
+import com.example.muscletracking.viewmodel.menu.MenuViewModel
 
-class LogHistoryFragment : Fragment() {
+class TrainingMenuListFragment : Fragment() {
 
-    private val logViewModel: LogViewModel by lazy {
+    private val args: TrainingMenuListFragmentArgs by navArgs()
+
+    private val menuViewModel by lazy {
         ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory(activity!!.application)
         ).get(
-            LogViewModel::class.java
+            MenuViewModel::class.java
         )
     }
 
@@ -33,31 +36,30 @@ class LogHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_log_history, container, false)
+        return inflater.inflate(R.layout.fragment_training_menu_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        logViewModel.getAllLog("ryio1010")
-        logViewModel.logList.observe(this, Observer {
-            this.recyclerView = view.findViewById(R.id.rvTrainingLog)
+        menuViewModel.getAllMenuByMusclePartFromDB(args.musclePart)
+        menuViewModel.menuListByPartOfDB.observe(this, Observer {
+            this.recyclerView = view.findViewById(R.id.rvTrainingMenu)
             this.recyclerView?.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
                 itemAnimator = DefaultItemAnimator()
-                adapter = TrainingLogViewAdapter(
+                adapter = TrainingMenuListAdapter(
                     generateList(it),
-                    object : TrainingLogViewAdapter.ListListener {
-                        override fun onClickItem(tappedView: View, logResponse: LogResponse) {
-                            onClickItem(tappedView,logResponse)
+                    object : TrainingMenuListAdapter.ListListener {
+                        override fun onClickItem(tappedView: View, menu: Menu) {
+                            findNavController().navigate(R.id.action_trainingMenuListFragment_to_logFragment)
                         }
                     }
                 )
+
             }
         })
-
-
     }
 
     override fun onDestroyView() {
@@ -66,22 +68,21 @@ class LogHistoryFragment : Fragment() {
         this.recyclerView = null
     }
 
-    private fun generateList(logResponses: List<LogResponse>): List<LogResponse> {
-        val list = mutableListOf<LogResponse>()
-        for(logResponse in logResponses) {
-            list.add(logResponse)
+    private fun generateList(menus: List<Menu>): List<Menu> {
+        val list = mutableListOf<Menu>()
+        for (menu in menus) {
+            list.add(menu)
         }
         return list
     }
 
-    private fun onClickedItem(tappedView:View,logResponse:LogResponse)  {
-
-    }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LogHistoryFragment().apply {
-            }
+        fun newInstance(): TrainingMenuListFragment {
+            return TrainingMenuListFragment()
+        }
+
+
     }
 }

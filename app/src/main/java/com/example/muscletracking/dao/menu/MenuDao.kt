@@ -9,7 +9,10 @@ interface MenuDao {
     @Query("SELECT * FROM menu")
     fun getAllMenu(): List<Menu>
 
-    @Insert
+    @Query("SELECT * FROM menu WHERE musclePart = :musclePart")
+    fun getMenuByMusclePart(musclePart:String):List<Menu>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMenu(menu: Menu)
 
     @Update

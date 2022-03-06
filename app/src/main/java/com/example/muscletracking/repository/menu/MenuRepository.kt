@@ -21,6 +21,14 @@ class MenuRepository(app:Application) {
     }
 
     /**
+     * ローカルDB検索（引数：MusclePart）
+     */
+    @WorkerThread
+    suspend fun getMenuFromDBByMusclePart(musclePart:String):List<Menu> {
+        return menuDao.getMenuByMusclePart(musclePart)
+    }
+
+    /**
      * ローカルDB登録処理
      */
     @WorkerThread

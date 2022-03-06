@@ -1,8 +1,9 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.home.loghistory
 
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.muscletracking.R
 
 class TrainingLogViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
     val trainingDate = itemView.findViewById<TextView>(R.id.tvTrainingDateOfLog)
