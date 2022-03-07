@@ -43,6 +43,10 @@
         tools:layout="@layout/fragment_training_menu_list" >
 
         <argument
+            android:name="musclePartId"
+            app:argType="string" />
+
+        <argument
             android:name="musclePart"
             app:argType="string" />
         <action

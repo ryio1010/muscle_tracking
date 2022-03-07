@@ -54,11 +54,15 @@ class TrainingPartListFragment : Fragment() {
                     generateList(it),
                     object : TrainingPartListAdapter.ListListener {
                         override fun onClickItem(tappedView: View, musclePart: MusclePart) {
+                            val musclePartId =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingPartId).text.toString()
+
                             val musclePart =
                                 tappedView.findViewById<TextView>(R.id.tvTrainingPartName).text.toString()
+
                             val action =
                                 TrainingPartListFragmentDirections.actionTrainingPartListFragmentToTrainingMenuListFragment(
-                                    musclePart
+                                    musclePartId, musclePart
                                 )
                             findNavController().navigate(action)
                         }

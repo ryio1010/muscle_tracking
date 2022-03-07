@@ -16,6 +16,7 @@ class MenuViewModel(app:Application) : AndroidViewModel(app) {
     private val repository : MenuRepository = MenuRepository(app)
 
     val menuList : MutableLiveData<List<MenuResponse>> = MutableLiveData()
+    val addedMenuList : MutableLiveData<List<MenuResponse>> = MutableLiveData()
     val menuListOfDB : MutableLiveData<List<Menu>> = MutableLiveData()
     val menuListByPartOfDB : MutableLiveData<List<Menu>> = MutableLiveData()
 
@@ -64,6 +65,18 @@ class MenuViewModel(app:Application) : AndroidViewModel(app) {
             menuList.postValue(null)
         }else {
             menuList.postValue(allMenu)
+        }
+    }
+
+    /**
+     * トレーニングメニュー追加API実行
+     */
+    fun addMenu(musclePartId: String,menuName:String) = scope.launch(Dispatchers.IO) {
+        val allMenu = repository.addMenu(musclePartId, menuName)
+        if (allMenu==null) {
+            addedMenuList.postValue(null)
+        }else {
+            addedMenuList.postValue(allMenu)
         }
     }
 }

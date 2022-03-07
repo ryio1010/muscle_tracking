@@ -49,4 +49,17 @@ class MenuRepository(app:Application) {
             null
         }
     }
+
+    /**
+     * トレーニングメニュー追加API
+     */
+    @WorkerThread
+    suspend fun addMenu(musclePartId:String,menuName:String):List<MenuResponse>? {
+        val response = retrofitClient.addMenu(musclePartId,menuName).execute()
+        return if (response.isSuccessful) {
+            return response.body()
+        }else {
+            null
+        }
+    }
 }

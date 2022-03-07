@@ -52,22 +52,32 @@ interface ApiService {
     ): Call<List<MenuResponse>>
 
     /**
+     * トレーニングメニュー追加API
+     */
+    @FormUrlEncoded
+    @POST("menu/add")
+    fun addMenu(
+        @Field("musclepartid") musclePartId: String,
+        @Field("menuname") menuName: String
+    ): Call<List<MenuResponse>>
+
+    /**
      * トレーニング部位取得API
      */
     @GET("musclepart")
-    fun getAllMusclePart():Call<List<MusclePartResponse>>
+    fun getAllMusclePart(): Call<List<MusclePartResponse>>
 
     @GET("log/{userId}")
-    fun getAllLog(@Path("userId") userId:String):Call<List<LogResponse>>
+    fun getAllLog(@Path("userId") userId: String): Call<List<LogResponse>>
 
     @FormUrlEncoded
     @POST("log/add")
     fun addLog(
-        @Field("menuId") menuId:String,
-        @Field("menuName") menuName:String,
+        @Field("menuId") menuId: String,
+        @Field("menuName") menuName: String,
         @Field("trainingWeight") trainingWeight: String,
         @Field("trainingCount") trainingCount: String,
-        @Field("trainingDate") trainingDate:String,
-        @Field("userId") userId:String
-    ):Call<Boolean>
+        @Field("trainingDate") trainingDate: String,
+        @Field("userId") userId: String
+    ): Call<Boolean>
 }
