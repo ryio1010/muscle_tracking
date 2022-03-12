@@ -71,8 +71,8 @@ class MenuViewModel(app:Application) : AndroidViewModel(app) {
     /**
      * トレーニングメニュー追加API実行
      */
-    fun addMenu(musclePartId: String,menuName:String) = scope.launch(Dispatchers.IO) {
-        val allMenu = repository.addMenu(musclePartId, menuName)
+    fun addMenu(musclePartId: String,menuName:String,userId: String) = scope.launch(Dispatchers.IO) {
+        val allMenu = repository.addMenu(musclePartId, menuName,userId)
         if (allMenu==null) {
             addedMenuList.postValue(null)
         }else {

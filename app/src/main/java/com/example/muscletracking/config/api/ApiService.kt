@@ -58,7 +58,8 @@ interface ApiService {
     @POST("menu/add")
     fun addMenu(
         @Field("musclepartid") musclePartId: String,
-        @Field("menuname") menuName: String
+        @Field("menuname") menuName: String,
+        @Field("userid") userId:String
     ): Call<List<MenuResponse>>
 
     /**

@@ -54,8 +54,8 @@ class MenuRepository(app:Application) {
      * トレーニングメニュー追加API
      */
     @WorkerThread
-    suspend fun addMenu(musclePartId:String,menuName:String):List<MenuResponse>? {
-        val response = retrofitClient.addMenu(musclePartId,menuName).execute()
+    suspend fun addMenu(musclePartId:String,menuName:String,userId: String):List<MenuResponse>? {
+        val response = retrofitClient.addMenu(musclePartId,menuName,userId).execute()
         return if (response.isSuccessful) {
             return response.body()
         }else {

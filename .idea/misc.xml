@@ -13,8 +13,8 @@
         <entry key="app/src/main/res/layout/activity_top.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_user_input_height_and_weight.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_user_register.xml" value="0.3241436925647452" />
-        <entry key="app/src/main/res/layout/fragment_date_picker_fragment.xml" value="0.5978632478632478" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.370718462823726" />
+        <entry key="app/src/main/res/layout/fragment_date_picker_fragment.xml" value="0.4473684210526316" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_log.xml" value="0.3763575605680869" />
         <entry key="app/src/main/res/layout/fragment_log_history.xml" value="0.3763575605680869" />
         <entry key="app/src/main/res/layout/fragment_training_menu_list.xml" value="0.28654970760233917" />
