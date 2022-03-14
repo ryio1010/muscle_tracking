@@ -2,7 +2,7 @@
     <string name="app_name">MuscleTracking</string>
 
     <!-- タイトル -->
-    <string name="label_login">ログイン</string>
+    <string name="label_login">Login</string>
     <string name="label_register_user">新規登録</string>
     <string name="label_input_height_and_weight">身長体重入力</string>
     <string name="label_top">Welcome To MuscleTracking!</string>
@@ -25,7 +25,7 @@
     <string name="label_training_menus">トレーニングメニュー</string>
 
     <!-- ボタンテキスト -->
-    <string name="bt_login">ログイン</string>
+    <string name="bt_login">Login</string>
     <string name="bt_register_user">新規登録</string>
     <string name="bt_log">記録する</string>
     <string name="bt_show_history">記録を見る</string>
@@ -36,8 +36,8 @@
     <string name="bt_add_menu">メニュー追加</string>
 
     <!-- テキスト -->
-    <string name="txt_to_register">アカウントをお持ちでない方はこちら!!</string>
-    <string name="txt_to_register_highlight">こちら!!</string>
+    <string name="txt_to_register">アカウントをお持ちでないですか？ Sign Up</string>
+    <string name="txt_to_register_highlight">Sign Up</string>
     <string name="txt_register_user_complete">新規ユーザー登録完了！！</string>
 
     <!-- ダイアログ-->

@@ -62,12 +62,10 @@ class UserRepository(app: Application) {
     suspend fun updateUserInfo(
         userid: String,
         username: String,
-        password: String,
-        height: String,
-        weight: String
+        password: String
     ): UserResponse? {
         val response =
-            retrofitClient.updateUserInfo(userid, username, password, height, weight).execute()
+            retrofitClient.updateUserInfo(userid, username, password).execute()
         return if (response.isSuccessful) {
             response.body()
         } else {

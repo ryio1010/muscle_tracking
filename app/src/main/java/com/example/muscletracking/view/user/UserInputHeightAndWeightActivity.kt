@@ -32,16 +32,16 @@ class UserInputHeightAndWeightActivity : AppCompatActivity() {
         // observer登録
         userViewModel.mUserInfoUpdate.observe(this, Observer {
             if (it != null) {
-                val userInfo = userViewModel.selectUserById(it.userid)
+                val userInfo = userViewModel.selectUserById(it.userId)
                 if (userInfo == null) {
                     // ローカルDBにユーザー情報を登録
-                    val userInfoForDB = User(it.userid, it.username, it.height, it.weight)
+                    val userInfoForDB = User(it.userId, it.userName)
                     userViewModel.insertUser(userInfoForDB)
                 }
                 // トップ画面へ遷移
                 val intent =
                     Intent(this@UserInputHeightAndWeightActivity, HomeActivity::class.java)
-                intent.putExtra("userName", it.username)
+                intent.putExtra("userName", it.userName)
                 startActivity(intent)
             }else {
                 tvErrorMessage.setText(R.string.msg_can_not_update)
@@ -79,7 +79,7 @@ class UserInputHeightAndWeightActivity : AppCompatActivity() {
                 }
                 else -> {
                     // ユーザー情報更新API
-                    userViewModel.updateUserInfo(userid, username, username, height, weight)
+                    userViewModel.updateUserInfo(userid, username, username)
                 }
             }
         }

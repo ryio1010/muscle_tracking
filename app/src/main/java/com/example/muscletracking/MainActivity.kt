@@ -8,16 +8,12 @@ import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.muscletracking.model.user.User
-import com.example.muscletracking.view.user.UserInputHeightAndWeightActivity
 import com.example.muscletracking.view.user.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
@@ -33,49 +29,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // TODO: ユーザー名、パスワードのバリデーション追加（英数字記号のみ）
+        // TODO:　Toolbarの設置
+        // TODO:　デザイン強化
+        // TODO:　ログインAPIのレスポンス確認
 
         // toolbarの設置
-        val root = findViewById<ViewGroup>(R.id.activity_main_container)
-        val toolbar = LayoutInflater.from(this).inflate(R.layout.toolbar, root, false) as Toolbar
-        root.addView(toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        // エラー情報textview
-        val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
-
-        // observer登録
-        userViewModel.userList.observe(this, Observer {
-            Toast.makeText(this, it[0].userName, Toast.LENGTH_SHORT).show()
-        })
-
-        userViewModel.mUserInfo.observe(this, Observer {
-            if (it != null) {
-                if (it.isFirstLogin) {
-                    // 身長・体重入力画面へ遷移
-                    val intent =
-                        Intent(this@MainActivity, UserInputHeightAndWeightActivity::class.java)
-                    intent.putExtra("userid", it.userid)
-                    intent.putExtra("username", it.username)
-                    startActivity(intent)
-                } else {
-                    // ローカルDBにユーザー情報を登録
-                    val userInfo = userViewModel.selectUserById(it.userid)
-                    if (userInfo == null) {
-                        val userInfoForDB = User(it.userid, it.username, it.height, it.weight)
-                        userViewModel.insertUser(userInfoForDB)
-                    }
-                    // トップ画面へ遷移
-                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
-                    intent.putExtra("userId", it.userid)
-                    startActivity(intent)
-                }
-            } else {
-                tvErrorMessage.setText(R.string.msg_can_not_login)
-                tvErrorMessage.visibility = TextView.VISIBLE
-            }
-        })
-
+//        val root = findViewById<ViewGroup>(R.id.activity_main_container)
+//        val toolbar = LayoutInflater.from(this).inflate(R.layout.toolbar, root, false) as Toolbar
+//        root.addView(toolbar)
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // 新規登録画面へのリンク登録
         val linkText = findViewById<TextView>(R.id.txtToRegister)
@@ -87,22 +51,44 @@ class MainActivity : AppCompatActivity() {
         // ログインボタン押下のリスナー登録
         val loginButton = findViewById<Button>(R.id.btLogin)
         loginButton.setOnClickListener(LoginButtonListener())
+
+
+        // エラー情報textview
+        val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
+
+        // observer登録
+        // ログインAPI実行時
+        userViewModel.mUserInfo.observe(this, Observer {
+            if (it != null) {
+                // ローカルDBにユーザー情報を登録
+                val userInfoForDB = User(it.userId, it.userName)
+                userViewModel.insertUser(userInfoForDB)
+
+                // トップ画面へ遷移
+                val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                intent.putExtra("userId", it.userId)
+                startActivity(intent)
+
+            } else {
+                tvErrorMessage.setText(R.string.msg_can_not_login)
+                tvErrorMessage.visibility = TextView.VISIBLE
+            }
+        })
     }
 
+    // ログインボタン押下処理
     private inner class LoginButtonListener : View.OnClickListener {
         override fun onClick(view: View) {
             // 入力情報の取得
-            val uidInputView = findViewById<TextView>(R.id.inputId)
-            val pwInputView = findViewById<TextView>(R.id.inputPw)
-            val userid = uidInputView.text.toString()
-            val password = pwInputView.text.toString()
+            val userId = findViewById<TextView>(R.id.inputId).text.toString()
+            val password = findViewById<TextView>(R.id.inputPw).text.toString()
 
             // エラー情報textview
             val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
             tvErrorMessage.visibility = TextView.INVISIBLE
 
             when {
-                userid.isEmpty() -> {
+                userId.isEmpty() -> {
                     tvErrorMessage.setText(R.string.msg_no_input_userid)
                     tvErrorMessage.visibility = TextView.VISIBLE
                 }
@@ -111,8 +97,8 @@ class MainActivity : AppCompatActivity() {
                     tvErrorMessage.visibility = TextView.VISIBLE
                 }
                 else -> {
-                    // api実行
-                    userViewModel.login(userid, password)
+                    // ログインAPI実行
+                    userViewModel.login(userId, password)
                 }
             }
         }

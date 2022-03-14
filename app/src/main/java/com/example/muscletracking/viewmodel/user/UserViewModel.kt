@@ -16,7 +16,6 @@ import kotlin.coroutines.CoroutineContext
 class UserViewModel(app: Application) : AndroidViewModel(app) {
     private val repository: UserRepository = UserRepository(app)
 
-    var userList: MutableLiveData<List<User>> = MutableLiveData<List<User>>()
     var selectUser: MutableLiveData<User> = MutableLiveData<User>()
     val mUserInfo: MutableLiveData<UserResponse> = MutableLiveData()
     val mUserInfoUpdate: MutableLiveData<UserResponse> = MutableLiveData()
@@ -75,12 +74,10 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     fun updateUserInfo(
         userId: String,
         userName: String,
-        password: String,
-        height: String,
-        weight: String
+        password: String
     ) =
         scope.launch(Dispatchers.IO) {
-            val user = repository.updateUserInfo(userId, userName, password, height, weight)
+            val user = repository.updateUserInfo(userId, userName, password)
             mUserInfoUpdate.postValue(user)
         }
 }
