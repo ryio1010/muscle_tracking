@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         // TODO: ユーザー名、パスワードのバリデーション追加（英数字記号のみ）
         // TODO:　Toolbarの設置
         // TODO:　デザイン強化
-        // TODO:　ログインAPIのレスポンス確認
 
         // toolbarの設置
 //        val root = findViewById<ViewGroup>(R.id.activity_main_container)
@@ -59,19 +58,17 @@ class MainActivity : AppCompatActivity() {
         // observer登録
         // ログインAPI実行時
         userViewModel.mUserInfo.observe(this, Observer {
-            if (it != null) {
+            if (it == null) {
+                // TODO:　ログインAPIのレスポンスでの処理分岐
+            } else {
                 // ローカルDBにユーザー情報を登録
-                val userInfoForDB = User(it.userId, it.userName)
+                val userInfoForDB = User(it.userId, it.userName, it.password)
                 userViewModel.insertUser(userInfoForDB)
 
                 // トップ画面へ遷移
                 val intent = Intent(this@MainActivity, HomeActivity::class.java)
                 intent.putExtra("userId", it.userId)
                 startActivity(intent)
-
-            } else {
-                tvErrorMessage.setText(R.string.msg_can_not_login)
-                tvErrorMessage.visibility = TextView.VISIBLE
             }
         })
     }
@@ -104,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 新規登録繊維文字列ハイライト処理
+    // 新規登録遷移文字列ハイライト処理
     private fun createLinkSpannable(): SpannableStringBuilder {
         val highLightText = getString(R.string.txt_to_register_highlight)
         val introText = getString(R.string.txt_to_register)

@@ -15,7 +15,7 @@ import com.example.muscletracking.model.user.User
 
 @Database(
     entities = [User::class, Menu::class, MusclePart::class,Log::class],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

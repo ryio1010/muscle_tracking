@@ -21,6 +21,9 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     val mUserInfoUpdate: MutableLiveData<UserResponse> = MutableLiveData()
     val isUserRegistered: MutableLiveData<Boolean> = MutableLiveData()
 
+    // TODO:　共通用のViewModelを作成し、継承させる
+    // TODO:　API実行時のコルーチンの使用について確認
+
     // coroutine用
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext
@@ -52,11 +55,7 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
      */
     fun login(userid: String, password: String) = scope.launch(Dispatchers.IO) {
         val user = repository.login(userid, password)
-        if (user == null) {
-            mUserInfo.postValue(null)
-        } else {
-            mUserInfo.postValue(user)
-        }
+        mUserInfo.postValue(user)
     }
 
     /**

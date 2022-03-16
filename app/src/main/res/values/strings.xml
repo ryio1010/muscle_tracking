@@ -38,7 +38,9 @@
     <!-- テキスト -->
     <string name="txt_to_register">アカウントをお持ちでないですか？ Sign Up</string>
     <string name="txt_to_register_highlight">Sign Up</string>
-    <string name="txt_register_user_complete">新規ユーザー登録完了！！</string>
+    <string name="txt_to_login">すでにアカウントをお持ちですか？ Log In</string>
+    <string name="txt_to_login_highlight">Log In</string>
+    <string name="txt_register_user_complete">ユーザー登録ありがとうございます！</string>
 
     <!-- ダイアログ-->
     <string name="txt_select_menu_add">メニューを入力してください</string>
@@ -52,8 +54,9 @@
     <string name="msg_no_input_height">身長を入力してください</string>
     <string name="msg_no_input_weight">体重を入力してください</string>
     <string name="msg_no_input_training_menu">メニューを選択してください</string>
-    <string name="msg_can_not_login">ユーザー名とパスワードが一致しません</string>
-    <string name="msg_can_not_register">新規登録ができませんでした</string>
+    <string name="msg_can_not_login">ユーザーIDとパスワードが一致しません</string>
+    <string name="msg_can_not_find_user">ユーザーIDが存在しません。新規登録してください。</string>
+    <string name="msg_can_not_register">このユーザーIDはすでに使われています。</string>
     <string name="msg_can_not_update">更新ができませんでした</string>
 
     <!-- メニュー -->

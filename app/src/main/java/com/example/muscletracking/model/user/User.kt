@@ -12,4 +12,7 @@ data class User(
 
     @ColumnInfo(name = "username")
     val userName: String,
+
+    @ColumnInfo(name = "password")
+    val password:String
 )

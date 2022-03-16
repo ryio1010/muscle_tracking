@@ -35,7 +35,7 @@ class UserInputHeightAndWeightActivity : AppCompatActivity() {
                 val userInfo = userViewModel.selectUserById(it.userId)
                 if (userInfo == null) {
                     // ローカルDBにユーザー情報を登録
-                    val userInfoForDB = User(it.userId, it.userName)
+                    val userInfoForDB = User(it.userId, it.userName,it.password)
                     userViewModel.insertUser(userInfoForDB)
                 }
                 // トップ画面へ遷移
