@@ -52,7 +52,6 @@ class HomeActivity : AppCompatActivity() {
         val userId = intent.getStringExtra("userId")
         menuViewModel.getAllMenu(userId!!)
         menuViewModel.menuList.observe(this, Observer {
-            val localMenuData = menuViewModel.getAllMenuFromDB()
             for (menuResponse in it) {
                 val menu = Menu(menuResponse.menuId, menuResponse.menuName, menuResponse.musclePart)
                 menuViewModel.insertMenu(menu)

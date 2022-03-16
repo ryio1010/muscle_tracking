@@ -13,9 +13,6 @@ data class User(
     @ColumnInfo(name = "username")
     val userName: String,
 
-    @ColumnInfo(name = "height")
-    val height: Double,
-
-    @ColumnInfo(name = "weight")
-    val weight: Double,
+    @ColumnInfo(name = "password")
+    val password:String
 )

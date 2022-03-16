@@ -10,6 +10,8 @@ import com.example.muscletracking.model.user.UserResponse
 
 class UserRepository(app: Application) {
 
+    // TODO:　レスポンスコードによる処理分岐
+
     private val userDao = AppDatabase.getInstance(app).userDao()
     private val retrofitClient = RetrofitClient.getApiService()
 
@@ -35,11 +37,7 @@ class UserRepository(app: Application) {
     @WorkerThread
     suspend fun login(userid: String, password: String): UserResponse? {
         val response = retrofitClient.login(userid, password).execute()
-        return if (response.isSuccessful) {
-            response.body()
-        } else {
-            null
-        }
+        return response.body()
     }
 
     /**
@@ -49,8 +47,10 @@ class UserRepository(app: Application) {
     suspend fun register(userid: String, username: String, password: String): Boolean? {
         val response = retrofitClient.register(userid, username, password).execute()
         return if (response.isSuccessful) {
+            Log.d("debug", response.code().toString())
             response.body()
         } else {
+            Log.d("debug", response.code().toString())
             false
         }
     }
@@ -62,12 +62,10 @@ class UserRepository(app: Application) {
     suspend fun updateUserInfo(
         userid: String,
         username: String,
-        password: String,
-        height: String,
-        weight: String
+        password: String
     ): UserResponse? {
         val response =
-            retrofitClient.updateUserInfo(userid, username, password, height, weight).execute()
+            retrofitClient.updateUserInfo(userid, username, password).execute()
         return if (response.isSuccessful) {
             response.body()
         } else {

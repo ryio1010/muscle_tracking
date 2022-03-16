@@ -1,13 +1,18 @@
 package com.example.muscletracking.view.home.log
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +34,7 @@ class TrainingMenuListFragment : Fragment() {
         )
     }
 
+    private var menuList = mutableListOf<Menu>()
     private var recyclerView: RecyclerView? = null
 
     override fun onCreateView(
@@ -36,30 +42,98 @@ class TrainingMenuListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_training_menu_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_training_menu_list, container, false)
+
+
+        // メニュー登録ボタン押下処理
+        val btAddMenu = view.findViewById<Button>(R.id.btAddMenu)
+        btAddMenu.setOnClickListener {
+            val myedit = EditText(activity)
+            val dialog = AlertDialog.Builder(activity)
+            dialog.setTitle(R.string.txt_select_menu_add)
+            dialog.setView(myedit)
+
+            // positivebutton押下処理
+            dialog.setPositiveButton(
+                R.string.bt_dialog_add_menu,
+                DialogInterface.OnClickListener { _, _ ->
+                    // メニュー追加API実行
+                    val input = myedit.text.toString()
+                    menuViewModel.addMenu(args.musclePartId, input, "ryio1010")
+                })
+
+            // negativebutton押下処理
+            dialog.setNegativeButton(R.string.bt_dialog_cancel, null)
+            dialog.show()
+        }
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        menuViewModel.getAllMenuByMusclePartFromDB(args.musclePart)
-        menuViewModel.menuListByPartOfDB.observe(this, Observer {
-            this.recyclerView = view.findViewById(R.id.rvTrainingMenu)
-            this.recyclerView?.apply {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context)
-                itemAnimator = DefaultItemAnimator()
-                adapter = TrainingMenuListAdapter(
-                    generateList(it),
-                    object : TrainingMenuListAdapter.ListListener {
-                        override fun onClickItem(tappedView: View, menu: Menu) {
-                            findNavController().navigate(R.id.action_trainingMenuListFragment_to_logFragment)
-                        }
-                    }
-                )
+        // observer登録
+
+        // メニュー追加API実行時
+        menuViewModel.addedMenuList.observe(this, Observer {
+            if (it.isEmpty()) {
+
+            } else {
+                // ローカルDBInsert
+                for (menu in it) {
+                    val addMenu = Menu(menu.menuId, menu.menuName, menu.musclePart)
+                    menuViewModel.insertMenu(addMenu)
+                }
+
+                // リスト更新
+                menuList.clear()
+                for (menu in it) {
+                    val listMenu = Menu(menu.menuId, menu.menuName, menu.musclePart)
+                    menuList.add(listMenu)
+                }
+                recyclerView?.adapter?.notifyDataSetChanged()
 
             }
         })
+
+        // ローカルDBメニュー全件取得時（トレーニング部位別）
+        menuViewModel.menuListByPartOfDB.observe(this, Observer {
+            if (menuList.isEmpty()) {
+                // 初回
+                Log.d("debug","メニュー初回表示時の処理です")
+                this.recyclerView = view.findViewById(R.id.rvTrainingMenu)
+                this.recyclerView?.apply {
+                    setHasFixedSize(true)
+                    layoutManager = LinearLayoutManager(context)
+                    itemAnimator = DefaultItemAnimator()
+                    adapter = TrainingMenuListAdapter(
+                        generateList(it),
+                        object : TrainingMenuListAdapter.ListListener {
+                            override fun onClickItem(tappedView: View, menu: Menu) {
+                                // findNavController().navigate(R.id.action_trainingMenuListFragment_to_logFragment)
+                            }
+                        }
+                    )
+                }
+            }
+//            else {
+//                // メニュー追加時
+//                    Log.d("debug","メニュー追加時の処理に入りました")
+//                    Log.d("debug", recyclerView?.adapter?.toString().toString())
+//                    Log.d("debug", it.toString())
+//                menuList.clear()
+//                for (menu in it) {
+//                    menuList.add(menu)
+//                }
+//                recyclerView?.adapter?.notifyDataSetChanged()
+//            }
+
+        })
+
+        // トレーニング部位別メニュー取得
+        menuViewModel.getAllMenuByMusclePartFromDB(args.musclePart)
+
     }
 
     override fun onDestroyView() {
@@ -69,11 +143,11 @@ class TrainingMenuListFragment : Fragment() {
     }
 
     private fun generateList(menus: List<Menu>): List<Menu> {
-        val list = mutableListOf<Menu>()
+        menuList = mutableListOf<Menu>()
         for (menu in menus) {
-            list.add(menu)
+            menuList.add(menu)
         }
-        return list
+        return menuList
     }
 
 

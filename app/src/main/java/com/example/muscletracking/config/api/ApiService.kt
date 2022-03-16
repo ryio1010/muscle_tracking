@@ -15,8 +15,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("user/register")
     fun register(
-        @Field("userid") userId: String,
-        @Field("username") userName: String,
+        @Field("userId") userId: String,
+        @Field("userName") userName: String,
         @Field("password") password: String
     ): Call<Boolean>
 
@@ -26,7 +26,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("user/login")
     fun login(
-        @Field("userid") userid: String,
+        @Field("userId") userid: String,
         @Field("password") password: String
     ): Call<UserResponse>
 
@@ -36,11 +36,9 @@ interface ApiService {
     @FormUrlEncoded
     @PUT("user")
     fun updateUserInfo(
-        @Field("userid") userid: String,
-        @Field("username") username: String,
+        @Field("userId") userid: String,
+        @Field("userName") username: String,
         @Field("password") password: String,
-        @Field("height") height: String,
-        @Field("weight") weight: String
     ): Call<UserResponse>
 
     /**
@@ -52,22 +50,39 @@ interface ApiService {
     ): Call<List<MenuResponse>>
 
     /**
+     * トレーニングメニュー追加API
+     */
+    @FormUrlEncoded
+    @POST("menu/add")
+    fun addMenu(
+        @Field("musclePartId") musclePartId: String,
+        @Field("menuName") menuName: String,
+        @Field("userId") userId: String
+    ): Call<List<MenuResponse>>
+
+    /**
      * トレーニング部位取得API
      */
     @GET("musclepart")
-    fun getAllMusclePart():Call<List<MusclePartResponse>>
+    fun getAllMusclePart(): Call<List<MusclePartResponse>>
 
+    /**
+     * ログ履歴取得API
+     */
     @GET("log/{userId}")
-    fun getAllLog(@Path("userId") userId:String):Call<List<LogResponse>>
+    fun getAllLog(@Path("userId") userId: String): Call<List<LogResponse>>
 
+    /**
+     * ログ履歴追加API
+     */
     @FormUrlEncoded
     @POST("log/add")
     fun addLog(
-        @Field("menuId") menuId:String,
-        @Field("menuName") menuName:String,
+        @Field("menuId") menuId: String,
+        @Field("menuName") menuName: String,
         @Field("trainingWeight") trainingWeight: String,
         @Field("trainingCount") trainingCount: String,
-        @Field("trainingDate") trainingDate:String,
-        @Field("userId") userId:String
-    ):Call<Boolean>
+        @Field("trainingDate") trainingDate: String,
+        @Field("userId") userId: String
+    ): Call<Boolean>
 }

@@ -17,7 +17,7 @@ interface UserDao {
     /**
      * ユーザー登録
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)
 
     /**

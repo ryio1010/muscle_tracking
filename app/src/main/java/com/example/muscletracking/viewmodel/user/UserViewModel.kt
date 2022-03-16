@@ -16,11 +16,13 @@ import kotlin.coroutines.CoroutineContext
 class UserViewModel(app: Application) : AndroidViewModel(app) {
     private val repository: UserRepository = UserRepository(app)
 
-    var userList: MutableLiveData<List<User>> = MutableLiveData<List<User>>()
     var selectUser: MutableLiveData<User> = MutableLiveData<User>()
     val mUserInfo: MutableLiveData<UserResponse> = MutableLiveData()
     val mUserInfoUpdate: MutableLiveData<UserResponse> = MutableLiveData()
     val isUserRegistered: MutableLiveData<Boolean> = MutableLiveData()
+
+    // TODO:　共通用のViewModelを作成し、継承させる
+    // TODO:　API実行時のコルーチンの使用について確認
 
     // coroutine用
     private var parentJob = Job()
@@ -53,11 +55,7 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
      */
     fun login(userid: String, password: String) = scope.launch(Dispatchers.IO) {
         val user = repository.login(userid, password)
-        if (user == null) {
-            mUserInfo.postValue(null)
-        } else {
-            mUserInfo.postValue(user)
-        }
+        mUserInfo.postValue(user)
     }
 
     /**
@@ -75,12 +73,10 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     fun updateUserInfo(
         userId: String,
         userName: String,
-        password: String,
-        height: String,
-        weight: String
+        password: String
     ) =
         scope.launch(Dispatchers.IO) {
-            val user = repository.updateUserInfo(userId, userName, password, height, weight)
+            val user = repository.updateUserInfo(userId, userName, password)
             mUserInfoUpdate.postValue(user)
         }
 }

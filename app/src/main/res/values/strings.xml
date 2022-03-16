@@ -2,7 +2,7 @@
     <string name="app_name">MuscleTracking</string>
 
     <!-- タイトル -->
-    <string name="label_login">ログイン</string>
+    <string name="label_login">Login</string>
     <string name="label_register_user">新規登録</string>
     <string name="label_input_height_and_weight">身長体重入力</string>
     <string name="label_top">Welcome To MuscleTracking!</string>
@@ -25,7 +25,7 @@
     <string name="label_training_menus">トレーニングメニュー</string>
 
     <!-- ボタンテキスト -->
-    <string name="bt_login">ログイン</string>
+    <string name="bt_login">Login</string>
     <string name="bt_register_user">新規登録</string>
     <string name="bt_log">記録する</string>
     <string name="bt_show_history">記録を見る</string>
@@ -33,9 +33,19 @@
     <string name="bt_confirm">登録する</string>
     <string name="bt_search_log">検索</string>
     <string name="bt_select">選択</string>
-    <string name="txt_to_register">アカウントをお持ちでない方はこちら!!</string>
-    <string name="txt_to_register_highlight">こちら!!</string>
-    <string name="txt_register_user_complete">新規ユーザー登録完了！！</string>
+    <string name="bt_add_menu">メニュー追加</string>
+
+    <!-- テキスト -->
+    <string name="txt_to_register">アカウントをお持ちでないですか？ Sign Up</string>
+    <string name="txt_to_register_highlight">Sign Up</string>
+    <string name="txt_to_login">すでにアカウントをお持ちですか？ Log In</string>
+    <string name="txt_to_login_highlight">Log In</string>
+    <string name="txt_register_user_complete">ユーザー登録ありがとうございます！</string>
+
+    <!-- ダイアログ-->
+    <string name="txt_select_menu_add">メニューを入力してください</string>
+    <string name="bt_dialog_add_menu">追加</string>
+    <string name="bt_dialog_cancel">キャンセル</string>
 
     <!-- バリデーションメッセージ -->
     <string name="msg_no_input_userid">ユーザーIDを入力してください</string>
@@ -44,8 +54,9 @@
     <string name="msg_no_input_height">身長を入力してください</string>
     <string name="msg_no_input_weight">体重を入力してください</string>
     <string name="msg_no_input_training_menu">メニューを選択してください</string>
-    <string name="msg_can_not_login">ユーザー名とパスワードが一致しません</string>
-    <string name="msg_can_not_register">新規登録ができませんでした</string>
+    <string name="msg_can_not_login">ユーザーIDとパスワードが一致しません</string>
+    <string name="msg_can_not_find_user">ユーザーIDが存在しません。新規登録してください。</string>
+    <string name="msg_can_not_register">このユーザーIDはすでに使われています。</string>
     <string name="msg_can_not_update">更新ができませんでした</string>
 
     <!-- メニュー -->
@@ -55,9 +66,5 @@
     <string name="menu_training_menu_master">トレーニングメニュー管理</string>
     <string name="menu_dark_mode">ダークモード切り替え</string>
 
-    <string name="hello_home_fragment">Hello HOME fragment</string>
-    <string name="hello_log_fragment">Hello LOG fragment</string>
-    <string name="hello_log_history_fragment">Hello LOG_HISTORY fragment</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
