@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.R
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.log.LogViewModel
+import kotlin.math.log10
 
 class LogHistoryFragment : Fragment() {
 
@@ -39,15 +40,21 @@ class LogHistoryFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_log_history, container, false)
 
+        // observer登録
+        // トレーニングメニュー検索ボタン押下時
         logViewModel.logListByMenu.observe(this, Observer {
+
             val tvError = view.findViewById<TextView>(R.id.tvNoResult)
             tvError.visibility = TextView.INVISIBLE
-            logList.clear()
-            if (it.isEmpty()){
 
-                tvError.text = "検索結果がありません。"
+            logList.clear()
+
+            if (it.isEmpty()) {
+                // 検索結果なし
+                tvError.setText(R.string.txt_no_find_log_history)
                 tvError.visibility = TextView.VISIBLE
-            }else {
+            } else {
+
                 for (log in it) {
                     logList.add(log)
                 }
@@ -55,11 +62,19 @@ class LogHistoryFragment : Fragment() {
             recyclerView?.adapter?.notifyDataSetChanged()
         })
 
+        // listener登録
+        // 検索ボタン押下処理
         val btSearchLog = view.findViewById<Button>(R.id.btSearchLog)
         btSearchLog.setOnClickListener {
             val searchTrainingMenu =
                 view.findViewById<EditText>(R.id.etSearchTrainingMenu).text.toString()
             logViewModel.getLogByMenu(searchTrainingMenu)
+        }
+
+        // クリアボタン押下時
+        val btClearLog = view.findViewById<Button>(R.id.btClear)
+        btClearLog.setOnClickListener {
+            logViewModel.getAllLogFromDB()
         }
 
         return view

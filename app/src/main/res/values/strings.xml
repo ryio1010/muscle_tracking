@@ -32,6 +32,7 @@
     <string name="bt_log_add">ADD</string>
     <string name="bt_confirm">登録する</string>
     <string name="bt_search_log">検索</string>
+    <string name="bt_clear">クリア</string>
     <string name="bt_select">選択</string>
     <string name="bt_add_menu">メニュー追加</string>
 
@@ -41,6 +42,7 @@
     <string name="txt_to_login">すでにアカウントをお持ちですか？ Log In</string>
     <string name="txt_to_login_highlight">Log In</string>
     <string name="txt_register_user_complete">ユーザー登録ありがとうございます！</string>
+    <string name="txt_no_find_log_history">検索結果がありません。</string>
 
     <!-- ダイアログ-->
     <string name="txt_select_menu_add">メニューを入力してください</string>

@@ -38,13 +38,8 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun getLogByMenu(menuName: String) = scope.launch(Dispatchers.IO) {
-        if (menuName.isNotEmpty()){
             val allLog = repository.getLogByMenu(menuName)
             logListByMenu.postValue(allLog)
-        }else {
-            val allLog = repository.getAllLogFromDB()
-            logListOfDB.postValue(allLog)
-        }
     }
 
     fun insertLogOfDB(log: Log) = scope.launch(Dispatchers.IO) {
