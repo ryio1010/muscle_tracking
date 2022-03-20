@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.R
@@ -39,12 +40,13 @@ class LogHistoryFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_log_history, container, false)
+        val tvError = view.findViewById<TextView>(R.id.tvNoResult)
+        tvError.visibility = TextView.INVISIBLE
 
         // observer登録
         // トレーニングメニュー検索ボタン押下時
         logViewModel.logListByMenu.observe(this, Observer {
 
-            val tvError = view.findViewById<TextView>(R.id.tvNoResult)
             tvError.visibility = TextView.INVISIBLE
 
             logList.clear()
@@ -74,6 +76,10 @@ class LogHistoryFragment : Fragment() {
         // クリアボタン押下時
         val btClearLog = view.findViewById<Button>(R.id.btClear)
         btClearLog.setOnClickListener {
+            tvError.visibility = TextView.INVISIBLE
+
+            val inputView = view.findViewById<EditText>(R.id.etSearchTrainingMenu)
+            inputView.setText("")
             logViewModel.getAllLogFromDB()
         }
 
@@ -85,11 +91,14 @@ class LogHistoryFragment : Fragment() {
 
         logViewModel.getAllLogFromDB()
         logViewModel.logListOfDB.observe(this, Observer {
+            val dividerItemDecoration =
+                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
             this.recyclerView = view.findViewById(R.id.rvTrainingLog)
             this.recyclerView?.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
                 itemAnimator = DefaultItemAnimator()
+                addItemDecoration(dividerItemDecoration)
                 adapter = TrainingLogViewAdapter(
                     generateList(it),
                     object : TrainingLogViewAdapter.ListListener {

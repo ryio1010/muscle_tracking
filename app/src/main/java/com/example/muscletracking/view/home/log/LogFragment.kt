@@ -72,7 +72,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
 
             logViewModel.addLog(
                 "1",
-                "menuSample",
+                inputTrainingMenu,
                 inputTrainingWeight,
                 inputTrainingCount,
                 inputTrainingDate,

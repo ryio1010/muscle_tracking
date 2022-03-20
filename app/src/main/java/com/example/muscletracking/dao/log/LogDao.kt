@@ -6,10 +6,10 @@ import com.example.muscletracking.model.log.Log
 @Dao
 interface LogDao {
 
-    @Query("SELECT * FROM log")
+    @Query("SELECT * FROM log order by trainingdate desc")
     fun getAllLog():List<Log>
 
-    @Query("SELECT * FROM log WHERE menuname = :menuName")
+    @Query("SELECT * FROM log WHERE menuname = :menuName order by trainingdate desc")
     fun getLogByMenu(menuName:String):List<Log>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

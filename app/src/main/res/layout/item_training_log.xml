@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/ivTrainingLog"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -39,7 +38,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20220301"
-                    android:textSize="14sp" />
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,31 +52,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="ベンチプレス"
-                        android:textSize="14sp" />
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end">
+                        android:gravity="right">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/tvTrainingWeightOfLog"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
                                 android:text="92.5"
-                                android:textSize="14sp" />
+                                android:textSize="20sp" />
 
                             <TextView
                                 android:id="@+id/tvTrainingWeightUnitOfLog"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="kg"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
@@ -83,21 +86,23 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/tvTrainingCountOfLog"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
                                 android:text="5"
-                                android:textSize="14sp" />
+                                android:textSize="20sp" />
 
                             <TextView
                                 android:id="@+id/tvTrainingCountUnitOfLog"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="回"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
 
                         </LinearLayout>
                     </LinearLayout>
