@@ -7,15 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".view.home.log.LogFragment">
 
+
     <FrameLayout
         android:id="@+id/flHomeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/labelTrainingMenu"
@@ -29,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:id="@+id/trainingMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +50,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_weight="3"
-            android:text="ダンベルプレス" />
+            android:gravity="center_vertical"
+            android:text="ダンベルプレス"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btSelectMenu"
@@ -58,7 +62,7 @@
             android:text="@string/bt_select" />
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/labelCalendar"
@@ -72,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trainingMenuContainer" />
 
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:id="@+id/trainingDateContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,7 +94,9 @@
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_weight="3" />
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btSelectDate"
@@ -100,53 +106,66 @@
             android:text="@string/bt_select" />
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/labelTrainingWeight"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/label_training_weight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainingDateContainer" />
-
-    <EditText
-        android:id="@+id/etTrainingWeight"
+    <LinearLayout
+        android:id="@+id/trainingWeightContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelTrainingWeight" />
+        app:layout_constraintTop_toBottomOf="@id/trainingDateContainer">
 
-    <TextView
-        android:id="@+id/labelTrainingCount"
-        android:layout_width="361dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/label_training_count"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTrainingWeight" />
+        <EditText
+            android:id="@+id/etTrainingWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:hint="@string/label_training_weight"
+            android:inputType="numberDecimal" />
 
-    <EditText
-        android:id="@+id/etTrainingCount"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical"
+            android:text="kg"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/trainingCountContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelTrainingCount" />
+        app:layout_constraintTop_toBottomOf="@+id/trainingWeightContainer">
+
+        <EditText
+            android:id="@+id/etTrainingCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:hint="@string/label_training_count"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical"
+            android:text="回"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/logRegisterButton"
@@ -158,6 +177,6 @@
         android:text="@string/bt_confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTrainingCount" />
+        app:layout_constraintTop_toBottomOf="@+id/trainingCountContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

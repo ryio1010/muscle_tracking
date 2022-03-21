@@ -1,5 +1,7 @@
 package com.example.muscletracking.config.api
 
+import com.example.muscletracking.model.bodycomp.BodyComp
+import com.example.muscletracking.model.bodycomp.BodyCompResponse
 import com.example.muscletracking.model.log.LogResponse
 import com.example.muscletracking.model.menu.MenuResponse
 import com.example.muscletracking.model.musclepart.MusclePartResponse
@@ -85,4 +87,36 @@ interface ApiService {
         @Field("trainingDate") trainingDate: String,
         @Field("userId") userId: String
     ): Call<Boolean>
+
+    /**
+     * 体組成データ取得API
+     */
+    @GET("bodycomp/{userId}")
+    fun getAllBodyComp(@Path("userId") userId: String): Call<List<BodyCompResponse>>
+
+    /**
+     * 体組成データ追加API
+     */
+    @FormUrlEncoded
+    @POST("bodycomp/add")
+    fun addBodyComp(
+        @Field("height") height: String,
+        @Field("weight") weight: String,
+        @Field("bfp") bfp: String,
+        @Field("bodyCompDate") bodyCompDate: String,
+        @Field("userId") userId: String
+    ): Call<BodyCompResponse>
+
+    /**
+     * 体組成データ更新API
+     */
+    @FormUrlEncoded
+    @PUT("bodycomp/{bodyCompId}")
+    fun updateBodyComp(
+        @Path("bodyCompId") bodyCompId: Int,
+        @Field("height") height: String,
+        @Field("weight") weight: String,
+        @Field("bfp") bfp: String,
+        @Field("userId") userId: String
+    ): Call<BodyCompResponse>
 }

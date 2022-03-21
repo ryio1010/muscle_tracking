@@ -1,5 +1,7 @@
 package com.example.muscletracking.view.home.log
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -72,7 +74,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
 
             logViewModel.addLog(
                 "1",
-                "menuSample",
+                inputTrainingMenu,
                 inputTrainingWeight,
                 inputTrainingCount,
                 inputTrainingDate,
@@ -83,6 +85,16 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             if (it) {
                 logViewModel.getAllLog("ryio1010")
             }
+            val dialog = AlertDialog.Builder(activity)
+            dialog.setTitle("登録完了！")
+            dialog.setPositiveButton(
+                "修正",
+                DialogInterface.OnClickListener { _, _ ->
+
+                }
+            )
+            dialog.setNegativeButton("完了",null)
+            dialog.show()
         })
         logViewModel.logList.observe(this, androidx.lifecycle.Observer {
             for (log in it) {

@@ -6,6 +6,7 @@
     <string name="label_register_user">新規登録</string>
     <string name="label_input_height_and_weight">身長体重入力</string>
     <string name="label_top">Welcome To MuscleTracking!</string>
+    <string name="label_body_comp">体組成</string>
 
     <!-- 入力 -->
     <string name="label_id">ユーザーID</string>
@@ -23,6 +24,10 @@
     <string name="label_training_count">回数</string>
     <string name="label_training_muscle_groups">トレーニング部位</string>
     <string name="label_training_menus">トレーニングメニュー</string>
+    <string name="label_bmi">BMI</string>
+    <string name="label_bfp">体脂肪率</string>
+    <string name="label_lbm">除脂肪体重</string>
+
 
     <!-- ボタンテキスト -->
     <string name="bt_login">Login</string>
@@ -32,6 +37,7 @@
     <string name="bt_log_add">ADD</string>
     <string name="bt_confirm">登録する</string>
     <string name="bt_search_log">検索</string>
+    <string name="bt_clear">クリア</string>
     <string name="bt_select">選択</string>
     <string name="bt_add_menu">メニュー追加</string>
 
@@ -41,6 +47,7 @@
     <string name="txt_to_login">すでにアカウントをお持ちですか？ Log In</string>
     <string name="txt_to_login_highlight">Log In</string>
     <string name="txt_register_user_complete">ユーザー登録ありがとうございます！</string>
+    <string name="txt_no_find_log_history">検索結果がありません。</string>
 
     <!-- ダイアログ-->
     <string name="txt_select_menu_add">メニューを入力してください</string>
