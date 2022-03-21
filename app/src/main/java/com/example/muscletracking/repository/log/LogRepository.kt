@@ -22,6 +22,11 @@ class LogRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun getTodayLog(today:String):List<Log> {
+        return logDao.getTodayLog(today)
+    }
+
+    @WorkerThread
     suspend fun insertLogOfDB(log: Log) {
         return logDao.insertLog(log)
     }

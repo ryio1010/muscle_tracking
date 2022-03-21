@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.model.menu.Menu
 import com.example.muscletracking.model.musclepart.MusclePart
+import com.example.muscletracking.viewmodel.bodycomp.BodyCompViewModel
 import com.example.muscletracking.viewmodel.log.LogViewModel
 import com.example.muscletracking.viewmodel.menu.MenuViewModel
 import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
@@ -36,6 +36,15 @@ class HomeActivity : AppCompatActivity() {
             ViewModelProvider.AndroidViewModelFactory(application)
         ).get(
             LogViewModel::class.java
+        )
+    }
+
+    private val bodyCompViewModel: BodyCompViewModel by lazy {
+        ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(application)
+        ).get(
+            BodyCompViewModel::class.java
         )
     }
 
@@ -80,6 +89,23 @@ class HomeActivity : AppCompatActivity() {
                     log.trainingDate
                 )
                 logViewModel.insertLogOfDB(logEntity)
+            }
+        })
+
+        // 体組成データ取得API
+        bodyCompViewModel.getAllBodyComp(userId)
+        bodyCompViewModel.bodyCompList.observe(this, Observer {
+            for (bodyComp in it) {
+                val bodyCompEntity = BodyComp(
+                    bodyComp.bodyCompId,
+                    bodyComp.height,
+                    bodyComp.weight,
+                    bodyComp.bfp,
+                    bodyComp.bmi,
+                    bodyComp.lbm,
+                    bodyComp.bodyCompDate
+                )
+                bodyCompViewModel.insertBodyCompDb(bodyCompEntity)
             }
         })
     }
