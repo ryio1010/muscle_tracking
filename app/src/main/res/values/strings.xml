@@ -36,7 +36,9 @@
     <string name="bt_log">記録する</string>
     <string name="bt_show_history">記録を見る</string>
     <string name="bt_log_add">ADD</string>
-    <string name="bt_confirm">登録する</string>
+    <string name="bt_confirm">登録</string>
+    <string name="bt_modify">修正</string>
+    <string name="bt_delete">削除</string>
     <string name="bt_search_log">検索</string>
     <string name="bt_clear">クリア</string>
     <string name="bt_select">選択</string>

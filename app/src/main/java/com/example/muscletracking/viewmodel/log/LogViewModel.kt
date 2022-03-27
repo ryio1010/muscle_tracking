@@ -18,8 +18,10 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
     val logList: MutableLiveData<List<LogResponse>> = MutableLiveData()
     val logListOfDB: MutableLiveData<List<Log>> = MutableLiveData()
     val logListByMenu: MutableLiveData<List<Log>> = MutableLiveData()
-    val todayLogList: MutableLiveData<List<Log>> = MutableLiveData()
+    val logListByDate: MutableLiveData<List<Log>> = MutableLiveData()
+    val updatedLog: MutableLiveData<LogResponse> = MutableLiveData()
     val isLogAdded: MutableLiveData<Boolean> = MutableLiveData()
+    val isLogDeleted: MutableLiveData<Boolean> = MutableLiveData()
 
 
     // coroutine用
@@ -43,13 +45,21 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
         logListByMenu.postValue(allLog)
     }
 
-    fun getTodayLog(today: String) = scope.launch(Dispatchers.IO) {
-        val todayLog = repository.getTodayLog(today)
-        todayLogList.postValue(todayLog)
+    fun getLogByDate(trainingDate: String) = scope.launch(Dispatchers.IO) {
+        val todayLog = repository.getLogByDate(trainingDate)
+        logListByDate.postValue(todayLog)
     }
 
     fun insertLogOfDB(log: Log) = scope.launch(Dispatchers.IO) {
         repository.insertLogOfDB(log)
+    }
+
+    fun updateLogOfDB(log: Log) = scope.launch(Dispatchers.IO) {
+        repository.updateLogOfDB(log)
+    }
+
+    fun deleteLogOfDB(log: Log) = scope.launch(Dispatchers.IO) {
+        repository.deleteLogOfDB(log)
     }
 
     fun getAllLog(userId: String) = scope.launch(Dispatchers.IO) {
@@ -67,5 +77,31 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
     ) = scope.launch(Dispatchers.IO) {
         repository.insertLog(menuId, menuName, trainingWeight, trainingCount, trainingDate, userId)
         isLogAdded.postValue(true)
+    }
+
+    fun updateLog(
+        logId: String,
+        menuId: String,
+        menuName: String,
+        trainingWeight: String,
+        trainingCount: String,
+        trainingDate: String,
+        userId: String
+    ) = scope.launch(Dispatchers.IO) {
+        val log = repository.updateLog(
+            logId,
+            menuId,
+            menuName,
+            trainingWeight,
+            trainingCount,
+            trainingDate,
+            userId
+        )
+        updatedLog.postValue(log)
+    }
+
+    fun deleteLog(logId: String) = scope.launch(Dispatchers.IO) {
+        val deleteFlag = repository.deleteLog(logId)
+        isLogDeleted.postValue(deleteFlag)
     }
 }

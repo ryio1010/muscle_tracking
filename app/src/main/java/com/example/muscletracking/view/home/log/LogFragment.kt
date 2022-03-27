@@ -47,11 +47,6 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
     private lateinit var btDateSelect: Button
     private lateinit var btMenuSelect: Button
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -136,14 +131,6 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             val allMusclePart = it
             Log.d("debug", allMusclePart.toString())
             findNavController().navigate(R.id.action_logFragment_to_trainingPartListFragment)
-//            val fragmentTransaction = parentFragmentManager.beginTransaction()
-//            fragmentTransaction.replace(
-//                R.id.flHomeContainer,
-//                TrainingMenuListFragment.newInstance()
-//            )
-//            fragmentTransaction.addToBackStack(null)
-//            fragmentTransaction.commit()
-
         })
 
         // 日付設定

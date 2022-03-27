@@ -22,13 +22,23 @@ class LogRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun getTodayLog(today:String):List<Log> {
-        return logDao.getTodayLog(today)
+    suspend fun getLogByDate(trainingDate: String): List<Log> {
+        return logDao.getLogByDate(trainingDate)
     }
 
     @WorkerThread
     suspend fun insertLogOfDB(log: Log) {
         return logDao.insertLog(log)
+    }
+
+    @WorkerThread
+    suspend fun updateLogOfDB(log: Log) {
+        return logDao.updateLog(log)
+    }
+
+    @WorkerThread
+    suspend fun deleteLogOfDB(log: Log) {
+        return logDao.deleteLog(log)
     }
 
     @WorkerThread
@@ -65,6 +75,38 @@ class LogRepository(app: Application) {
         } else {
             false
         }
+    }
+
+    @WorkerThread
+    suspend fun updateLog(
+        logId: String,
+        menuId: String,
+        menuName: String,
+        trainingWeight: String,
+        trainingCount: String,
+        trainingDate: String,
+        userId: String
+    ): LogResponse? {
+        val response = retrofitClient.updateLog(
+            logId,
+            menuId,
+            menuName,
+            trainingWeight,
+            trainingCount,
+            trainingDate,
+            userId
+        ).execute()
+        return if (response.isSuccessful) {
+            return response.body()
+        } else {
+            null
+        }
+    }
+
+    @WorkerThread
+    suspend fun deleteLog(logId:String):Boolean? {
+        val response = retrofitClient.deleteLog(logId).execute()
+        return response.body()
     }
 
 }

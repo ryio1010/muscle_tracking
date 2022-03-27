@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_log.xml" value="0.3763575605680869" />
         <entry key="app/src/main/res/layout/fragment_log_history.xml" value="0.3763575605680869" />
+        <entry key="app/src/main/res/layout/fragment_log_watch.xml" value="0.30994152046783624" />
         <entry key="app/src/main/res/layout/fragment_training_menu_list.xml" value="0.28654970760233917" />
         <entry key="app/src/main/res/layout/fragment_training_part_list.xml" value="0.31683375104427736" />
         <entry key="app/src/main/res/layout/item_added_training.xml" value="0.25925925925925924" />

@@ -12,8 +12,8 @@ interface LogDao {
     @Query("SELECT * FROM log WHERE menuname = :menuName order by trainingdate desc")
     fun getLogByMenu(menuName:String):List<Log>
 
-    @Query("SELECT * FROM log WHERE trainingdate = :today")
-    fun getTodayLog(today:String):List<Log>
+    @Query("SELECT * FROM log WHERE trainingdate = :trainingDate")
+    fun getLogByDate(trainingDate:String):List<Log>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLog(log:Log)

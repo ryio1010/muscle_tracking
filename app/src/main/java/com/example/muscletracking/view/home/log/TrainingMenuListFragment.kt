@@ -103,7 +103,7 @@ class TrainingMenuListFragment : Fragment() {
         menuViewModel.menuListByPartOfDB.observe(this, Observer {
             if (menuList.isEmpty()) {
                 // 初回
-                Log.d("debug","メニュー初回表示時の処理です")
+                Log.d("debug", "メニュー初回表示時の処理です")
                 this.recyclerView = view.findViewById(R.id.rvTrainingMenu)
                 this.recyclerView?.apply {
                     setHasFixedSize(true)
@@ -113,13 +113,18 @@ class TrainingMenuListFragment : Fragment() {
                         generateList(it),
                         object : TrainingMenuListAdapter.ListListener {
                             override fun onClickItem(tappedView: View, menu: Menu) {
-                                val selectedMenuId = tappedView.findViewById<TextView>(R.id.tvTrainingMenuId).text.toString()
-                                val selectedMenu = tappedView.findViewById<TextView>(R.id.tvTrainingMenu).text.toString()
+                                val selectedMenuId =
+                                    tappedView.findViewById<TextView>(R.id.tvTrainingMenuId).text.toString()
+                                val selectedMenu =
+                                    tappedView.findViewById<TextView>(R.id.tvTrainingMenu).text.toString()
 
                                 val bundle = Bundle()
-                                bundle.putString("selectedMenuId",selectedMenuId)
-                                bundle.putString("selectedMenu",selectedMenu)
-                                findNavController().navigate(R.id.action_trainingMenuListFragment_to_logFragment,bundle)
+                                bundle.putString("selectedMenuId", selectedMenuId)
+                                bundle.putString("selectedMenu", selectedMenu)
+                                findNavController().navigate(
+                                    R.id.action_trainingMenuListFragment_to_logFragment,
+                                    bundle
+                                )
                             }
                         }
                     )
