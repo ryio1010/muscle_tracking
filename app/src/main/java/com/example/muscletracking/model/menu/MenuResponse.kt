@@ -3,5 +3,5 @@ package com.example.muscletracking.model.menu
 data class MenuResponse(
     val menuId: Int,
     val menuName: String,
-    val musclePart: String,
+    val musclePartName: String,
 )

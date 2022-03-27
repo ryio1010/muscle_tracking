@@ -7,5 +7,6 @@ import com.example.muscletracking.R
 
 class TrainingMenuViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
     val trainingPart = itemView.findViewById<TextView>(R.id.tvTrainingPartOfMenu)
+    val trainingMenuId = itemView.findViewById<TextView>(R.id.tvTrainingMenuId)
     val trainingMenu = itemView.findViewById<TextView>(R.id.tvTrainingMenu)
 }

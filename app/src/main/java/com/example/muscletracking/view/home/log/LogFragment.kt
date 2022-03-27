@@ -58,22 +58,29 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_log, container, false)
+        val inputTrainingMenuContainer = view.findViewById<TextView>(R.id.tvTrainingMenu)
+        val inputTrainingDateContainer = view.findViewById<TextView>(R.id.tvTrainingDate)
+        val inputTrainingWeightContainer = view.findViewById<TextView>(R.id.etTrainingWeight)
+        val inputTrainingCountContainer = view.findViewById<TextView>(R.id.etTrainingCount)
 
-        val menu = view.findViewById<TextView>(R.id.tvTrainingMenu)
+        val bundle = arguments
+        inputTrainingMenuContainer.text = bundle?.getString("selectedMenu")
+        val selectedMenuId = bundle?.getString("selectedMenuId")
+
 
         // ボタンListener登録
         val btAddLog = view.findViewById<Button>(R.id.logRegisterButton)
         btAddLog.setOnClickListener {
             // 入力情報の取得
-            val inputTrainingMenu = view.findViewById<TextView>(R.id.tvTrainingMenu).text.toString()
-            val inputTrainingDate = view.findViewById<TextView>(R.id.tvTrainingDate).text.toString()
+            val inputTrainingMenu = inputTrainingMenuContainer.text.toString()
+            val inputTrainingDate = inputTrainingDateContainer.text.toString()
             val inputTrainingWeight =
-                view.findViewById<EditText>(R.id.etTrainingWeight).text.toString()
+                inputTrainingWeightContainer.text.toString()
             val inputTrainingCount =
-                view.findViewById<EditText>(R.id.etTrainingCount).text.toString()
+                inputTrainingCountContainer.text.toString()
 
             logViewModel.addLog(
-                "1",
+                selectedMenuId!!,
                 inputTrainingMenu,
                 inputTrainingWeight,
                 inputTrainingCount,
@@ -85,15 +92,26 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             if (it) {
                 logViewModel.getAllLog("ryio1010")
             }
+            val dialogContext =
+                LayoutInflater.from(activity).inflate(R.layout.item_added_training, null)
+            dialogContext.findViewById<TextView>(R.id.tvAddedTrainingDate).text =
+                inputTrainingDateContainer.text.toString()
+            dialogContext.findViewById<TextView>(R.id.tvAddedTrainingMenu).text =
+                inputTrainingMenuContainer.text.toString()
+            dialogContext.findViewById<TextView>(R.id.tvAddedTrainingWeight).text =
+                inputTrainingWeightContainer.text.toString()
+            dialogContext.findViewById<TextView>(R.id.tvAddedTrainingCount).text =
+                inputTrainingCountContainer.text.toString()
+
             val dialog = AlertDialog.Builder(activity)
-            dialog.setTitle("登録完了！")
+            dialog.setView(dialogContext)
             dialog.setPositiveButton(
                 "修正",
                 DialogInterface.OnClickListener { _, _ ->
 
                 }
             )
-            dialog.setNegativeButton("完了",null)
+            dialog.setNegativeButton("完了", null)
             dialog.show()
         })
         logViewModel.logList.observe(this, androidx.lifecycle.Observer {

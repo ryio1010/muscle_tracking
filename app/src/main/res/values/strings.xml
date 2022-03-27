@@ -24,6 +24,7 @@
     <string name="label_training_count">回数</string>
     <string name="label_training_muscle_groups">トレーニング部位</string>
     <string name="label_training_menus">トレーニングメニュー</string>
+    <string name="label_training_menus_short">メニュー</string>
     <string name="label_bmi">BMI</string>
     <string name="label_bfp">体脂肪率</string>
     <string name="label_lbm">除脂肪体重</string>

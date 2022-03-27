@@ -62,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
         menuViewModel.getAllMenu(userId!!)
         menuViewModel.menuList.observe(this, Observer {
             for (menuResponse in it) {
-                val menu = Menu(menuResponse.menuId, menuResponse.menuName, menuResponse.musclePart)
+                val menu = Menu(menuResponse.menuId, menuResponse.menuName, menuResponse.musclePartName)
                 menuViewModel.insertMenu(menu)
             }
         })

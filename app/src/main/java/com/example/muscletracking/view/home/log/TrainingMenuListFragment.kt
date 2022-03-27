@@ -10,9 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,14 +84,14 @@ class TrainingMenuListFragment : Fragment() {
             } else {
                 // ローカルDBInsert
                 for (menu in it) {
-                    val addMenu = Menu(menu.menuId, menu.menuName, menu.musclePart)
+                    val addMenu = Menu(menu.menuId, menu.menuName, menu.musclePartName)
                     menuViewModel.insertMenu(addMenu)
                 }
 
                 // リスト更新
                 menuList.clear()
                 for (menu in it) {
-                    val listMenu = Menu(menu.menuId, menu.menuName, menu.musclePart)
+                    val listMenu = Menu(menu.menuId, menu.menuName, menu.musclePartName)
                     menuList.add(listMenu)
                 }
                 recyclerView?.adapter?.notifyDataSetChanged()
@@ -111,7 +113,13 @@ class TrainingMenuListFragment : Fragment() {
                         generateList(it),
                         object : TrainingMenuListAdapter.ListListener {
                             override fun onClickItem(tappedView: View, menu: Menu) {
-                                // findNavController().navigate(R.id.action_trainingMenuListFragment_to_logFragment)
+                                val selectedMenuId = tappedView.findViewById<TextView>(R.id.tvTrainingMenuId).text.toString()
+                                val selectedMenu = tappedView.findViewById<TextView>(R.id.tvTrainingMenu).text.toString()
+
+                                val bundle = Bundle()
+                                bundle.putString("selectedMenuId",selectedMenuId)
+                                bundle.putString("selectedMenu",selectedMenu)
+                                findNavController().navigate(R.id.action_trainingMenuListFragment_to_logFragment,bundle)
                             }
                         }
                     )
