@@ -20,7 +20,7 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
     val logListByMenu: MutableLiveData<List<Log>> = MutableLiveData()
     val logListByDate: MutableLiveData<List<Log>> = MutableLiveData()
     val updatedLog: MutableLiveData<LogResponse> = MutableLiveData()
-    val isLogAdded: MutableLiveData<Boolean> = MutableLiveData()
+    val addedLog: MutableLiveData<LogResponse> = MutableLiveData()
     val isLogDeleted: MutableLiveData<Boolean> = MutableLiveData()
 
 
@@ -75,8 +75,8 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
         trainingDate: String,
         userId: String
     ) = scope.launch(Dispatchers.IO) {
-        repository.insertLog(menuId, menuName, trainingWeight, trainingCount, trainingDate, userId)
-        isLogAdded.postValue(true)
+        val log = repository.insertLog(menuId, menuName, trainingWeight, trainingCount, trainingDate, userId)
+        addedLog.postValue(log)
     }
 
     fun updateLog(

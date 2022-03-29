@@ -59,7 +59,7 @@ class LogRepository(app: Application) {
         trainingCount: String,
         trainingDate: String,
         userId: String
-    ): Boolean? {
+    ): LogResponse? {
         val response =
             retrofitClient.addLog(
                 menuId,
@@ -73,7 +73,7 @@ class LogRepository(app: Application) {
         return if (response.isSuccessful) {
             return response.body()
         } else {
-            false
+            null
         }
     }
 
@@ -104,7 +104,7 @@ class LogRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun deleteLog(logId:String):Boolean? {
+    suspend fun deleteLog(logId: String): Boolean? {
         val response = retrofitClient.deleteLog(logId).execute()
         return response.body()
     }

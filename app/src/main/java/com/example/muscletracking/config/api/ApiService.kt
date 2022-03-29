@@ -86,7 +86,7 @@ interface ApiService {
         @Field("trainingCount") trainingCount: String,
         @Field("trainingDate") trainingDate: String,
         @Field("userId") userId: String
-    ): Call<Boolean>
+    ): Call<LogResponse>
 
     /**
      * ログ更新API
@@ -100,7 +100,7 @@ interface ApiService {
         @Field("trainingWeight") trainingWeight: String,
         @Field("trainingCount") trainingCount: String,
         @Field("trainingDate") trainingDate: String,
-        @Field("userId") userId: String
+        @Field("userId") userId:String
     ): Call<LogResponse>
 
     /**

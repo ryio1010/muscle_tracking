@@ -93,10 +93,9 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
         deleteButton.setOnClickListener {
             // API実行して、前の画面に戻る
             logViewModel.deleteLog("1")
-            findNavController().popBackStack()
         }
         logViewModel.isLogDeleted.observe(this, Observer {
-            // logViewModel.deleteLogOfDB()
+            //logViewModel.deleteLogOfDB()
         })
 
 

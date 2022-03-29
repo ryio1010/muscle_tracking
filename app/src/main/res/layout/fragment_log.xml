@@ -7,29 +7,25 @@
     android:layout_height="match_parent"
     tools:context=".view.home.log.LogFragment">
 
-
-    <FrameLayout
-        android:id="@+id/flHomeContainer"
+    <TextView
+        android:id="@+id/tvErrorMessageForAddLog"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/labelTrainingMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/label_training_menus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvErrorMessageForAddLog" />
 
     <LinearLayout
         android:id="@+id/trainingMenuContainer"
@@ -124,7 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:hint="@string/label_training_weight"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -132,7 +129,6 @@
             android:layout_weight="0.5"
             android:gravity="center_vertical"
             android:text="kg"
-            android:textAlignment="center"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -161,10 +157,20 @@
             android:layout_weight="0.5"
             android:gravity="center_vertical"
             android:text="回"
-            android:textAlignment="center"
             android:textSize="20sp" />
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/etTrainingMemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/txt_hint_log_memo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trainingCountContainer" />
 
 
     <Button
@@ -172,11 +178,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/bt_confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainingCountContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/etTrainingMemo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,7 +65,6 @@ class HomeFragment : Fragment() {
 
         bodyCompViewModel.getLatestBodyCompOfDb()
         bodyCompViewModel.latestBodyComp.observe(this, androidx.lifecycle.Observer {
-            android.util.Log.d("debug", it.toString())
             if (it == null) {
                 needsInsertion = true
                 userNameView.text = "ryo"
@@ -168,8 +167,8 @@ class HomeFragment : Fragment() {
         cv.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
             val date = "%04d%02d%02d".format(year, month + 1, dayOfMonth)
             val bundle = Bundle()
-            bundle.putString("trainingDate",date)
-            findNavController().navigate(R.id.action_homeFragment_to_logHistoryFragment,bundle)
+            bundle.putString("trainingDate", date)
+            findNavController().navigate(R.id.action_homeFragment_to_logHistoryFragment, bundle)
         }
 
         return view
@@ -190,22 +189,20 @@ class HomeFragment : Fragment() {
                 layoutManager = LinearLayoutManager(context)
                 itemAnimator = DefaultItemAnimator()
                 addItemDecoration(dividerItemDecoration)
-                adapter = TrainingLogViewAdapter(
+                adapter = TrainingTodayLogViewAdapter(
                     generateList(it),
-                    object : TrainingLogViewAdapter.ListListener {
+                    object : TrainingTodayLogViewAdapter.ListListener {
                         override fun onClickItem(tappedView: View, log: Log) {
                             val trainingMenu =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingMenuOfLog).text.toString()
-                            val trainingDate =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingDateOfLog).text.toString()
+                                tappedView.findViewById<TextView>(R.id.tvTrainingMenuOfTodayLog).text.toString()
                             val trainingWeight =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingWeightOfLog).text.toString()
+                                tappedView.findViewById<TextView>(R.id.tvTrainingWeightOfTodayLog).text.toString()
                             val trainingCount =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingCountOfLog).text.toString()
+                                tappedView.findViewById<TextView>(R.id.tvTrainingCountOfTodayLog).text.toString()
 
                             val bundle = Bundle()
                             bundle.putString("trainingMenu", trainingMenu)
-                            bundle.putString("trainingDate", trainingDate)
+                            bundle.putString("trainingDate", today)
                             bundle.putString("trainingWeight", trainingWeight)
                             bundle.putString("trainingCount", trainingCount)
 
