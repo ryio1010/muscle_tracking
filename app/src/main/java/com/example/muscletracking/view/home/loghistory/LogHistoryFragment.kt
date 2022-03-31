@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ListAdapter
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.R
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.log.LogViewModel
-import kotlin.math.log10
 
 class LogHistoryFragment : Fragment() {
 
@@ -89,7 +88,15 @@ class LogHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        logViewModel.getAllLogFromDB()
+        val bundle = arguments
+        val trainingDate = bundle?.getString("trainingDate")
+        if (bundle == null) {
+            logViewModel.getAllLogFromDB()
+        } else {
+            logViewModel.getLogByDate(trainingDate!!)
+        }
+
+
         logViewModel.logListOfDB.observe(this, Observer {
             val dividerItemDecoration =
                 DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
@@ -103,6 +110,63 @@ class LogHistoryFragment : Fragment() {
                     generateList(it),
                     object : TrainingLogViewAdapter.ListListener {
                         override fun onClickItem(tappedView: View, log: Log) {
+                            val trainingMenu =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingMenuOfLog).text.toString()
+                            val trainingDate =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingDateOfLog).text.toString()
+                            val trainingWeight =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingWeightOfLog).text.toString()
+                            val trainingCount =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingCountOfLog).text.toString()
+
+                            val bundle = Bundle()
+                            bundle.putString("trainingMenu", trainingMenu)
+                            bundle.putString("trainingDate", trainingDate)
+                            bundle.putString("trainingWeight", trainingWeight)
+                            bundle.putString("trainingCount", trainingCount)
+
+                            findNavController().navigate(
+                                R.id.action_logHistoryFragment_to_logWatchFragment,
+                                bundle
+                            )
+                        }
+                    }
+                )
+            }
+        })
+
+        logViewModel.logListByDate.observe(this, Observer {
+            val dividerItemDecoration =
+                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+            this.recyclerView = view.findViewById(R.id.rvTrainingLog)
+            this.recyclerView?.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                itemAnimator = DefaultItemAnimator()
+                addItemDecoration(dividerItemDecoration)
+                adapter = TrainingLogViewAdapter(
+                    generateList(it),
+                    object : TrainingLogViewAdapter.ListListener {
+                        override fun onClickItem(tappedView: View, log: Log) {
+                            val trainingMenu =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingMenuOfLog).text.toString()
+                            val trainingDate =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingDateOfLog).text.toString()
+                            val trainingWeight =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingWeightOfLog).text.toString()
+                            val trainingCount =
+                                tappedView.findViewById<TextView>(R.id.tvTrainingCountOfLog).text.toString()
+
+                            val bundle = Bundle()
+                            bundle.putString("trainingMenu", trainingMenu)
+                            bundle.putString("trainingDate", trainingDate)
+                            bundle.putString("trainingWeight", trainingWeight)
+                            bundle.putString("trainingCount", trainingCount)
+
+                            findNavController().navigate(
+                                R.id.action_logHistoryFragment_to_logWatchFragment,
+                                bundle
+                            )
                         }
                     }
                 )

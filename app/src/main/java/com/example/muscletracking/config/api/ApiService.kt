@@ -86,7 +86,29 @@ interface ApiService {
         @Field("trainingCount") trainingCount: String,
         @Field("trainingDate") trainingDate: String,
         @Field("userId") userId: String
-    ): Call<Boolean>
+    ): Call<LogResponse>
+
+    /**
+     * ログ更新API
+     */
+    @FormUrlEncoded
+    @PUT("log")
+    fun updateLog(
+        @Field("logId") logId: String,
+        @Field("menuId") menuId: String,
+        @Field("menuName") menuName: String,
+        @Field("trainingWeight") trainingWeight: String,
+        @Field("trainingCount") trainingCount: String,
+        @Field("trainingDate") trainingDate: String,
+        @Field("userId") userId:String
+    ): Call<LogResponse>
+
+    /**
+     * ログ履歴削除API
+     */
+    @DELETE("log/delete/{logId}")
+    fun deleteLog(@Path("logId") logId: String): Call<Boolean>
+
 
     /**
      * 体組成データ取得API

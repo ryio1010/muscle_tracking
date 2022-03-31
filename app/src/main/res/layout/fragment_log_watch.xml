@@ -7,40 +7,33 @@
     android:layout_height="match_parent"
     tools:context=".view.home.log.LogFragment">
 
-    <TextView
-        android:id="@+id/tvErrorMessageForAddLog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/labelTrainingMenu"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/label_training_menus"
+    <FrameLayout
+        android:id="@+id/flHomeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvErrorMessageForAddLog" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
-        android:id="@+id/trainingMenuContainer"
+        android:id="@+id/watchTrainingMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelTrainingMenu">
+        app:layout_constraintTop_toTopOf="@+id/flHomeContainer">
 
         <TextView
-            android:id="@+id/tvTrainingMenu"
+            android:id="@+id/tvWatchTrainingMenu"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
@@ -51,7 +44,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/btSelectMenu"
+            android:id="@+id/btWatchSelectMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -60,20 +53,9 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/labelCalendar"
-        android:layout_width="361dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/label_calendar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainingMenuContainer" />
-
 
     <LinearLayout
-        android:id="@+id/trainingDateContainer"
+        android:id="@+id/watchTrainingDateContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -82,10 +64,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelCalendar">
+        app:layout_constraintTop_toBottomOf="@+id/watchTrainingMenuContainer">
 
         <TextView
-            android:id="@+id/tvTrainingDate"
+            android:id="@+id/tvWatchTrainingDate"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
@@ -95,7 +77,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/btSelectDate"
+            android:id="@+id/btWatchSelectDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -105,46 +87,45 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/trainingWeightContainer"
+        android:id="@+id/watchTrainingWeightContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/trainingDateContainer">
+        app:layout_constraintTop_toBottomOf="@id/watchTrainingDateContainer">
 
         <EditText
-            android:id="@+id/etTrainingWeight"
+            android:id="@+id/etWatchTrainingWeight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:hint="@string/label_training_weight"
-            android:inputType="numberDecimal"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:inputType="numberDecimal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:gravity="center_vertical"
             android:text="kg"
+            android:textAlignment="center"
             android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/trainingCountContainer"
+        android:id="@+id/watchTrainingCountContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainingWeightContainer">
+        app:layout_constraintTop_toBottomOf="@+id/watchTrainingWeightContainer">
 
         <EditText
-            android:id="@+id/etTrainingCount"
+            android:id="@+id/etWatchTrainingCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -155,34 +136,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:gravity="center_vertical"
             android:text="回"
+            android:textAlignment="center"
             android:textSize="20sp" />
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etTrainingMemo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/txt_hint_log_memo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainingCountContainer" />
-
-
-    <Button
-        android:id="@+id/logRegisterButton"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/bt_confirm"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTrainingMemo" />
+        app:layout_constraintTop_toBottomOf="@+id/watchTrainingCountContainer">
+
+        <Button
+            android:id="@+id/btLogModify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bt_modify" />
+
+        <Button
+            android:id="@+id/btLogDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bt_delete" />
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

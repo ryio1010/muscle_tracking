@@ -24,6 +24,7 @@
     <string name="label_training_count">回数</string>
     <string name="label_training_muscle_groups">トレーニング部位</string>
     <string name="label_training_menus">トレーニングメニュー</string>
+    <string name="label_training_menus_short">メニュー</string>
     <string name="label_bmi">BMI</string>
     <string name="label_bfp">体脂肪率</string>
     <string name="label_lbm">除脂肪体重</string>
@@ -35,7 +36,9 @@
     <string name="bt_log">記録する</string>
     <string name="bt_show_history">記録を見る</string>
     <string name="bt_log_add">ADD</string>
-    <string name="bt_confirm">登録する</string>
+    <string name="bt_confirm">登録</string>
+    <string name="bt_modify">修正</string>
+    <string name="bt_delete">削除</string>
     <string name="bt_search_log">検索</string>
     <string name="bt_clear">クリア</string>
     <string name="bt_select">選択</string>
@@ -48,6 +51,8 @@
     <string name="txt_to_login_highlight">Log In</string>
     <string name="txt_register_user_complete">ユーザー登録ありがとうございます！</string>
     <string name="txt_no_find_log_history">検索結果がありません。</string>
+    <string name="txt_hint_log_memo">メモを入力</string>
+    <string name="txt_select">選択してください</string>
 
     <!-- ダイアログ-->
     <string name="txt_select_menu_add">メニューを入力してください</string>
@@ -60,6 +65,8 @@
     <string name="msg_no_input_password">パスワードを入力してください</string>
     <string name="msg_no_input_height">身長を入力してください</string>
     <string name="msg_no_input_weight">体重を入力してください</string>
+    <string name="msg_no_input_training_weight">重量を入力してください</string>
+    <string name="msg_no_input_training_count">回数を入力してください</string>
     <string name="msg_no_input_training_menu">メニューを選択してください</string>
     <string name="msg_can_not_login">ユーザーIDとパスワードが一致しません</string>
     <string name="msg_can_not_find_user">ユーザーIDが存在しません。新規登録してください。</string>

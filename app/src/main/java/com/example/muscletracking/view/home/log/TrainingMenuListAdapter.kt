@@ -31,6 +31,9 @@ class TrainingMenuListAdapter(
         holder.itemView.findViewById<TextView>(R.id.tvTrainingMenu).text =
             list[position].menuName
 
+        holder.itemView.findViewById<TextView>(R.id.tvTrainingMenuId).text =
+            list[position].menuId.toString()
+
         holder.itemView.setOnClickListener {
             listener.onClickItem(it, list[position])
         }

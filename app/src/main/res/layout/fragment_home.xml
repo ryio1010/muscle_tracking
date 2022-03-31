@@ -200,7 +200,7 @@
     </LinearLayout>
 
     <CalendarView
-        android:id="@+id/cvForTodayLog"
+        android:id="@+id/cvForLogByDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -217,7 +217,7 @@
         android:text="今日のトレーニング"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvForTodayLog" />
+        app:layout_constraintTop_toBottomOf="@+id/cvForLogByDate" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTodayLog"
