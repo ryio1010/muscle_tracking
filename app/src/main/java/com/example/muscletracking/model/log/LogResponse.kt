@@ -7,4 +7,5 @@ data class LogResponse(
     val trainingWeight:Double,
     val trainingCount: Int,
     val trainingDate:String,
+    val trainingMemo:String,
 )

@@ -26,8 +26,6 @@ class TrainingMenuListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.findViewById<TextView>(R.id.tvTrainingPartOfMenu).text =
-            list[position].musclePart
         holder.itemView.findViewById<TextView>(R.id.tvTrainingMenu).text =
             list[position].menuName
 

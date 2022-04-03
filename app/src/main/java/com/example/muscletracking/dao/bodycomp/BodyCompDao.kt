@@ -7,11 +7,14 @@ import com.example.muscletracking.model.bodycomp.BodyComp
 interface BodyCompDao {
 
     @Query("SELECT * FROM bodycomp order by date desc limit 1")
-    fun getLatestBodyComp():BodyComp
+    fun getLatestBodyComp(): BodyComp
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(bodyComp: BodyComp)
 
     @Update
     fun update(bodyComp: BodyComp)
+
+    @Query("DELETE FROM bodycomp")
+    fun deleteAll()
 }

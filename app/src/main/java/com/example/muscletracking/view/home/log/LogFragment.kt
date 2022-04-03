@@ -105,6 +105,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             val inputTrainingCount =
                 inputTrainingCountContainer.text.toString()
             val inputTrainingDate = dateForApi
+            val inputTrainingMemo = inputTrainingMemoContainer.text.toString()
 
             // 入力項目バリデーション
             when {
@@ -128,6 +129,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
                         inputTrainingWeight,
                         inputTrainingCount,
                         inputTrainingDate,
+                        inputTrainingMemo,
                         "ryio1010"
                     )
                 }
@@ -137,7 +139,15 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
         logViewModel.addedLog.observe(this, androidx.lifecycle.Observer {
             // ローカルDB更新
             val insertLog =
-                Log(it.logId, it.menuName, it.trainingWeight, it.trainingCount, it.trainingDate)
+                Log(
+                    it.logId,
+                    it.menuId,
+                    it.menuName,
+                    it.trainingWeight,
+                    it.trainingCount,
+                    it.trainingDate,
+                    it.trainingMemo
+                )
             logViewModel.insertLogOfDB(insertLog)
 
             // 追加完了ダイアログViewの設定

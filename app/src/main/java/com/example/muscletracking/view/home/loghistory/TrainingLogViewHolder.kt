@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.R
 
 class TrainingLogViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
+    val logId = itemView.findViewById<TextView>(R.id.tvLogIdInvisible)
     val trainingDate = itemView.findViewById<TextView>(R.id.tvTrainingDateOfLog)
     val trainingMenu = itemView.findViewById<TextView>(R.id.tvTrainingMenuOfLog)
     val trainingWeight = itemView.findViewById<TextView>(R.id.tvTrainingWeightOfLog)

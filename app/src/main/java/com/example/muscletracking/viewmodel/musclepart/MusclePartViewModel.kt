@@ -12,11 +12,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class MusclePartViewModel(app:Application): AndroidViewModel(app) {
+class MusclePartViewModel(app: Application) : AndroidViewModel(app) {
     private val musclePartRepository: MusclePartRepository = MusclePartRepository(app)
 
-    val musclePartList : MutableLiveData<List<MusclePartResponse>> = MutableLiveData()
-    val musclePartListOfDB : MutableLiveData<List<MusclePart>> = MutableLiveData()
+    val musclePartList: MutableLiveData<List<MusclePartResponse>> = MutableLiveData()
+    val musclePartListOfDB: MutableLiveData<List<MusclePart>> = MutableLiveData()
 
     // coroutine用
     private var parentJob = Job()
@@ -36,6 +36,10 @@ class MusclePartViewModel(app:Application): AndroidViewModel(app) {
 
     fun insertMusclePart(musclePart: MusclePart) = scope.launch(Dispatchers.IO) {
         musclePartRepository.insertMusclePart(musclePart)
+    }
+
+    fun deleteAllMusclePartOfDb() = scope.launch(Dispatchers.IO) {
+        musclePartRepository.deleteAllMusclePartOfDb()
     }
 
     fun getAllMusclePart() = scope.launch(Dispatchers.IO) {

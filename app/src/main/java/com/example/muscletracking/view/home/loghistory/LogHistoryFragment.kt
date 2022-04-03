@@ -110,20 +110,11 @@ class LogHistoryFragment : Fragment() {
                     generateList(it),
                     object : TrainingLogViewAdapter.ListListener {
                         override fun onClickItem(tappedView: View, log: Log) {
-                            val trainingMenu =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingMenuOfLog).text.toString()
-                            val trainingDate =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingDateOfLog).text.toString()
-                            val trainingWeight =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingWeightOfLog).text.toString()
-                            val trainingCount =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingCountOfLog).text.toString()
+                            val logId =
+                                tappedView.findViewById<TextView>(R.id.tvLogIdInvisible).text.toString()
 
                             val bundle = Bundle()
-                            bundle.putString("trainingMenu", trainingMenu)
-                            bundle.putString("trainingDate", trainingDate)
-                            bundle.putString("trainingWeight", trainingWeight)
-                            bundle.putString("trainingCount", trainingCount)
+                            bundle.putString("logId", logId)
 
                             findNavController().navigate(
                                 R.id.action_logHistoryFragment_to_logWatchFragment,
@@ -148,20 +139,11 @@ class LogHistoryFragment : Fragment() {
                     generateList(it),
                     object : TrainingLogViewAdapter.ListListener {
                         override fun onClickItem(tappedView: View, log: Log) {
-                            val trainingMenu =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingMenuOfLog).text.toString()
-                            val trainingDate =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingDateOfLog).text.toString()
-                            val trainingWeight =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingWeightOfLog).text.toString()
-                            val trainingCount =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingCountOfLog).text.toString()
+                            val logId =
+                                tappedView.findViewById<TextView>(R.id.tvLogIdInvisible).text.toString()
 
                             val bundle = Bundle()
-                            bundle.putString("trainingMenu", trainingMenu)
-                            bundle.putString("trainingDate", trainingDate)
-                            bundle.putString("trainingWeight", trainingWeight)
-                            bundle.putString("trainingCount", trainingCount)
+                            bundle.putString("logId", logId)
 
                             findNavController().navigate(
                                 R.id.action_logHistoryFragment_to_logWatchFragment,
@@ -172,8 +154,6 @@ class LogHistoryFragment : Fragment() {
                 )
             }
         })
-
-
     }
 
     override fun onDestroyView() {
@@ -188,12 +168,5 @@ class LogHistoryFragment : Fragment() {
             logList.add(log)
         }
         return logList
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LogHistoryFragment().apply {
-            }
     }
 }

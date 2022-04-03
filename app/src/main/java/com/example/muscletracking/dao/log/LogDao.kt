@@ -7,21 +7,27 @@ import com.example.muscletracking.model.log.Log
 interface LogDao {
 
     @Query("SELECT * FROM log order by trainingdate desc")
-    fun getAllLog():List<Log>
+    fun getAllLog(): List<Log>
 
     @Query("SELECT * FROM log WHERE menuname = :menuName order by trainingdate desc")
-    fun getLogByMenu(menuName:String):List<Log>
+    fun getLogByMenu(menuName: String): List<Log>
+
+    @Query("SELECT * FROM log WHERE id = :logId")
+    fun getLogById(logId: String): Log
 
     @Query("SELECT * FROM log WHERE trainingdate = :trainingDate")
-    fun getLogByDate(trainingDate:String):List<Log>
+    fun getLogByDate(trainingDate: String): List<Log>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLog(log:Log)
+    fun insertLog(log: Log)
 
     @Update
-    fun updateLog(log:Log)
+    fun updateLog(log: Log)
 
     @Delete
-    fun deleteLog(log:Log)
+    fun deleteLog(log: Log)
+
+    @Query("DELETE FROM log")
+    fun deleteAllLog()
 
 }

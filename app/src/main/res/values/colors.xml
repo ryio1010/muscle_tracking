@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Theme & Accent -->
+    <color name="theme300">#FF8A65</color>
+    <color name="theme500">#FF5722</color>
+    <color name="accent500">#1E88E5</color>
+
+    <!-- Greyscales -->
+    <color name="grey200">#EEEEEE</color>
+    <color name="grey600">#757575</color>
+
+    <!-- Others -->
+    <color name="green600">#43A047</color>
 </resources>

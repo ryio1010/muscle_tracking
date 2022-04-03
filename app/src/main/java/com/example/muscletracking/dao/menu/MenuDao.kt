@@ -10,7 +10,7 @@ interface MenuDao {
     fun getAllMenu(): List<Menu>
 
     @Query("SELECT * FROM menu WHERE musclePart = :musclePart")
-    fun getMenuByMusclePart(musclePart:String):List<Menu>
+    fun getMenuByMusclePart(musclePart: String): List<Menu>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMenu(menu: Menu)
@@ -20,4 +20,7 @@ interface MenuDao {
 
     @Delete
     fun deleteMenu(menu: Menu)
+
+    @Query("DELETE FROM menu")
+    fun deleteAllMenu()
 }

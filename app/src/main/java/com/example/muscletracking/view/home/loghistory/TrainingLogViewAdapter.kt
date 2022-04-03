@@ -24,6 +24,8 @@ class TrainingLogViewAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.findViewById<TextView>(R.id.tvLogIdInvisible).text =
+            list[position].logId.toString()
         holder.itemView.findViewById<TextView>(R.id.tvTrainingDateOfLog).text =
             list[position].trainingDate
         holder.itemView.findViewById<TextView>(R.id.tvTrainingWeightOfLog).text =

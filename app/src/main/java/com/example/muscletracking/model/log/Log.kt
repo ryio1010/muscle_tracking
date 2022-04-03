@@ -8,17 +8,23 @@ import androidx.room.PrimaryKey
 data class Log(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val logId:Int,
+    val logId: Int,
+
+    @ColumnInfo(name = "menuid")
+    val menuId: Int,
 
     @ColumnInfo(name = "menuname")
-    val menuName:String,
+    val menuName: String,
 
     @ColumnInfo(name = "trainingweight")
-    val trainingWeight:Double,
+    val trainingWeight: Double,
 
     @ColumnInfo(name = "trainingcount")
-    val trainingCount:Int,
+    val trainingCount: Int,
 
     @ColumnInfo(name = "trainingdate")
-    val trainingDate:String,
+    val trainingDate: String,
+
+    @ColumnInfo(name = "trainingmemo")
+    val trainingMemo: String
 )
