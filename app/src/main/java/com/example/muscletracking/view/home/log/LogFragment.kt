@@ -154,20 +154,25 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             val dialogContext =
                 LayoutInflater.from(activity).inflate(R.layout.item_added_training, null)
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingDate).text =
-                inputTrainingDateContainer.text.toString()
+                it.trainingDate
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingMenu).text =
-                inputTrainingMenuContainer.text.toString()
+                it.menuName
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingWeight).text =
-                inputTrainingWeightContainer.text.toString()
+                it.trainingWeight.toString()
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingCount).text =
-                inputTrainingCountContainer.text.toString()
+                it.trainingCount.toString()
 
             val dialog = AlertDialog.Builder(activity)
             dialog.setView(dialogContext)
             dialog.setPositiveButton(
                 "修正",
                 DialogInterface.OnClickListener { _, _ ->
-
+                    val bundle = arguments
+                    bundle?.putString("logId", it.logId.toString())
+                    findNavController().navigate(
+                        R.id.action_logFragment_to_logWatchFragment,
+                        bundle
+                    )
                 }
             )
             dialog.setNegativeButton("完了", null)

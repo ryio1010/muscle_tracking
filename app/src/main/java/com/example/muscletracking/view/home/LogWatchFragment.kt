@@ -1,5 +1,7 @@
 package com.example.muscletracking.view.home
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -84,16 +86,26 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
             val trainingCount = watchTrainingCountContainer.text.toString()
             val trainingMemo = watchTrainingMemoContainer.text.toString()
             // API実行して、前の画面に戻る
-            logViewModel.updateLog(
-                watchLog.logId.toString(),
-                watchLog.menuId.toString(),
-                trainingMenu,
-                trainingWeight,
-                trainingCount,
-                trainingDate,
-                trainingMemo,
-                "ryio1010"
+            val dialog = AlertDialog.Builder(activity)
+            dialog.setMessage(R.string.msg_dialog_modify)
+            dialog.setPositiveButton(
+                R.string.bt_dialog_modify,
+                DialogInterface.OnClickListener { _, _ ->
+                    logViewModel.updateLog(
+                        watchLog.logId.toString(),
+                        watchLog.menuId.toString(),
+                        trainingMenu,
+                        trainingWeight,
+                        trainingCount,
+                        trainingDate,
+                        trainingMemo,
+                        "ryio1010"
+                    )
+                }
             )
+            dialog.setNegativeButton(R.string.bt_dialog_cancel, null)
+            dialog.show()
+
         }
         logViewModel.updatedLog.observe(this, Observer {
             val log = com.example.muscletracking.model.log.Log(
@@ -113,7 +125,16 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
         val deleteButton = view.findViewById<Button>(R.id.btLogDelete)
         deleteButton.setOnClickListener {
             // API実行して、前の画面に戻る
-            logViewModel.deleteLog(watchLog.logId.toString())
+            val dialog = AlertDialog.Builder(activity)
+            dialog.setMessage(R.string.msg_dialog_delete)
+            dialog.setPositiveButton(
+                R.string.bt_dialog_delete,
+                DialogInterface.OnClickListener { _, _ ->
+                    logViewModel.deleteLog(watchLog.logId.toString())
+                }
+            )
+            dialog.setNegativeButton(R.string.bt_dialog_cancel, null)
+            dialog.show()
         }
         logViewModel.logIdDeleted.observe(this, Observer {
             logViewModel.deleteLogOfDB(watchLog)
