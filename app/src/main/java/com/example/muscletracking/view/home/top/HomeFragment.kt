@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
         bodyCompViewModel.latestBodyComp.observe(this, androidx.lifecycle.Observer {
             if (it == null) {
                 needsInsertion = true
-                userNameView.text = "ryo"
+                userNameView.text = (activity as HomeActivity).mUser!!.userName
                 userHeightView.text = "--"
                 userWeightView.text = "--"
                 userBmiView.text = "--"
@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
             } else {
                 needsInsertion = false
                 latestBodyCompInfo = it
-                userNameView.text = "ryo"
+                userNameView.text = (activity as HomeActivity).mUser!!.userName
                 userHeightView.text = it.height.toString()
                 userWeightView.text = it.weight.toString()
                 userBmiView.text = it.bmi.toString()
@@ -123,7 +123,7 @@ class HomeFragment : Fragment() {
                             modifyWeightValue,
                             modifyBfpValue,
                             latestBodyCompInfo!!.bodyCompDate,
-                            "ryio1010"
+                            (activity as HomeActivity).mUser!!.userId
                         )
                     } else {
                         bodyCompViewModel.updateBodyComp(
@@ -131,7 +131,7 @@ class HomeFragment : Fragment() {
                             modifyHeightValue,
                             modifyWeightValue,
                             modifyBfpValue,
-                            "ryio1010"
+                            (activity as HomeActivity).mUser!!.userId
                         )
                     }
                 }

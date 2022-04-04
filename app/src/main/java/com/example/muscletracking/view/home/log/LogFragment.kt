@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.muscletracking.HomeActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.log.LogViewModel
@@ -130,7 +131,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
                         inputTrainingCount,
                         inputTrainingDate,
                         inputTrainingMemo,
-                        "ryio1010"
+                        (activity as HomeActivity).mUser!!.userId
                     )
                 }
             }
@@ -154,7 +155,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             val dialogContext =
                 LayoutInflater.from(activity).inflate(R.layout.item_added_training, null)
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingDate).text =
-                it.trainingDate
+                dateForView
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingMenu).text =
                 it.menuName
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingWeight).text =

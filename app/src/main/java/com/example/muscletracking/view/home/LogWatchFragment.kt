@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.muscletracking.HomeActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.view.home.log.DatePickerFragment
 import com.example.muscletracking.viewmodel.log.LogViewModel
@@ -99,7 +100,7 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
                         trainingCount,
                         trainingDate,
                         trainingMemo,
-                        "ryio1010"
+                        (activity as HomeActivity).mUser!!.userId
                     )
                 }
             )
