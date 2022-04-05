@@ -22,6 +22,11 @@ class LogRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun getLogById(logId:String) : Log {
+        return logDao.getLogById(logId)
+    }
+
+    @WorkerThread
     suspend fun getLogByDate(trainingDate: String): List<Log> {
         return logDao.getLogByDate(trainingDate)
     }
@@ -42,6 +47,11 @@ class LogRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun deleteAllLogOfDb() {
+        return logDao.deleteAllLog()
+    }
+
+    @WorkerThread
     suspend fun getAllLog(userId: String): List<LogResponse>? {
         val response = retrofitClient.getAllLog(userId).execute()
         return if (response.isSuccessful) {
@@ -58,6 +68,7 @@ class LogRepository(app: Application) {
         trainingWeight: String,
         trainingCount: String,
         trainingDate: String,
+        trainingMemo: String,
         userId: String
     ): LogResponse? {
         val response =
@@ -67,9 +78,9 @@ class LogRepository(app: Application) {
                 trainingWeight,
                 trainingCount,
                 trainingDate,
+                trainingMemo,
                 userId
-            )
-                .execute()
+            ).execute()
         return if (response.isSuccessful) {
             return response.body()
         } else {
@@ -85,6 +96,7 @@ class LogRepository(app: Application) {
         trainingWeight: String,
         trainingCount: String,
         trainingDate: String,
+        trainingMemo: String,
         userId: String
     ): LogResponse? {
         val response = retrofitClient.updateLog(
@@ -94,6 +106,7 @@ class LogRepository(app: Application) {
             trainingWeight,
             trainingCount,
             trainingDate,
+            trainingMemo,
             userId
         ).execute()
         return if (response.isSuccessful) {
@@ -104,7 +117,7 @@ class LogRepository(app: Application) {
     }
 
     @WorkerThread
-    suspend fun deleteLog(logId: String): Boolean? {
+    suspend fun deleteLog(logId: String): String? {
         val response = retrofitClient.deleteLog(logId).execute()
         return response.body()
     }

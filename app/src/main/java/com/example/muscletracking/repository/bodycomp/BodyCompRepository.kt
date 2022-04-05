@@ -27,6 +27,11 @@ class BodyCompRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun deleteAllBodyCompDb() {
+        return bodyCompDao.deleteAll()
+    }
+
+    @WorkerThread
     suspend fun getAllBodyComp(userId: String): List<BodyCompResponse>? {
         val response = retrofitClient.getAllBodyComp(userId).execute()
         return if (response.isSuccessful) {

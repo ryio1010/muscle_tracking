@@ -18,7 +18,7 @@ import com.example.muscletracking.view.user.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
 class MainActivity : AppCompatActivity() {
-
+    // viewModel設定
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
             UserViewModel::class.java
@@ -32,13 +32,6 @@ class MainActivity : AppCompatActivity() {
         // TODO: ユーザー名、パスワードのバリデーション追加（英数字記号のみ）
         // TODO:　Toolbarの設置
         // TODO:　デザイン強化
-
-        // toolbarの設置
-//        val root = findViewById<ViewGroup>(R.id.activity_main_container)
-//        val toolbar = LayoutInflater.from(this).inflate(R.layout.toolbar, root, false) as Toolbar
-//        root.addView(toolbar)
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // 新規登録画面へのリンク登録
         val linkText = findViewById<TextView>(R.id.txtToRegister)
@@ -112,6 +105,7 @@ class MainActivity : AppCompatActivity() {
             setSpan(object : ClickableSpan() {
                 override fun onClick(view: View) {
                     val intent = Intent(this@MainActivity, UserRegisterActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                     view.context.startActivity(intent)
                 }
 

@@ -36,19 +36,18 @@
             android:id="@+id/tvWatchTrainingMenu"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_weight="3"
             android:gravity="center_vertical"
             android:text="ダンベルプレス"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/btWatchSelectMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/bt_select" />
+<!--        <Button-->
+<!--            android:id="@+id/btWatchSelectMenu"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="@string/bt_select" />-->
 
 
     </LinearLayout>
@@ -59,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,18 +70,17 @@
             android:id="@+id/tvWatchTrainingDate"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_weight="3"
             android:gravity="center_vertical"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/btWatchSelectDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/bt_select" />
+        <!--        <Button-->
+        <!--            android:id="@+id/btWatchSelectDate"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:text="@string/bt_select" />-->
 
 
     </LinearLayout>
@@ -91,6 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,6 +143,18 @@
 
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/etWatchTrainingMemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/txt_hint_log_memo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/watchTrainingCountContainer" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -152,7 +165,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/watchTrainingCountContainer">
+        app:layout_constraintTop_toBottomOf="@+id/etWatchTrainingMemo">
 
         <Button
             android:id="@+id/btLogModify"

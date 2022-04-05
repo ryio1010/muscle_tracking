@@ -7,7 +7,7 @@ import com.example.muscletracking.config.db.AppDatabase
 import com.example.muscletracking.model.menu.Menu
 import com.example.muscletracking.model.menu.MenuResponse
 
-class MenuRepository(app:Application) {
+class MenuRepository(app: Application) {
 
     private val menuDao = AppDatabase.getInstance(app).menuDao()
     private val retrofitClient = RetrofitClient.getApiService()
@@ -16,7 +16,7 @@ class MenuRepository(app:Application) {
      * ローカルDB全件検索
      */
     @WorkerThread
-    suspend fun getAllMenuFromDB() :List<Menu> {
+    suspend fun getAllMenuFromDB(): List<Menu> {
         return menuDao.getAllMenu()
     }
 
@@ -24,7 +24,7 @@ class MenuRepository(app:Application) {
      * ローカルDB検索（引数：MusclePart）
      */
     @WorkerThread
-    suspend fun getMenuFromDBByMusclePart(musclePart:String):List<Menu> {
+    suspend fun getMenuFromDBByMusclePart(musclePart: String): List<Menu> {
         return menuDao.getMenuByMusclePart(musclePart)
     }
 
@@ -32,8 +32,13 @@ class MenuRepository(app:Application) {
      * ローカルDB登録処理
      */
     @WorkerThread
-    suspend fun insertMenu(menu:Menu) {
+    suspend fun insertMenu(menu: Menu) {
         return menuDao.insertMenu(menu)
+    }
+
+    @WorkerThread
+    suspend fun deleteAllMenuOfDb() {
+        return menuDao.deleteAllMenu()
     }
 
 
@@ -41,11 +46,11 @@ class MenuRepository(app:Application) {
      * トレーニングメニュー取得API
      */
     @WorkerThread
-    suspend fun getAllMenu(userId:String):List<MenuResponse>? {
+    suspend fun getAllMenu(userId: String): List<MenuResponse>? {
         val response = retrofitClient.getAllMenu(userId).execute()
         return if (response.isSuccessful) {
             return response.body()
-        }else {
+        } else {
             null
         }
     }
@@ -54,11 +59,15 @@ class MenuRepository(app:Application) {
      * トレーニングメニュー追加API
      */
     @WorkerThread
-    suspend fun addMenu(musclePartId:String,menuName:String,userId: String):List<MenuResponse>? {
-        val response = retrofitClient.addMenu(musclePartId,menuName,userId).execute()
+    suspend fun addMenu(
+        musclePartId: String,
+        menuName: String,
+        userId: String
+    ): List<MenuResponse>? {
+        val response = retrofitClient.addMenu(musclePartId, menuName, userId).execute()
         return if (response.isSuccessful) {
             return response.body()
-        }else {
+        } else {
             null
         }
     }

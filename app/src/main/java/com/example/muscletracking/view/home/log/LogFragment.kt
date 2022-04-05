@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.muscletracking.HomeActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.log.LogViewModel
@@ -105,6 +106,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             val inputTrainingCount =
                 inputTrainingCountContainer.text.toString()
             val inputTrainingDate = dateForApi
+            val inputTrainingMemo = inputTrainingMemoContainer.text.toString()
 
             // 入力項目バリデーション
             when {
@@ -128,7 +130,8 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
                         inputTrainingWeight,
                         inputTrainingCount,
                         inputTrainingDate,
-                        "ryio1010"
+                        inputTrainingMemo,
+                        (activity as HomeActivity).mUser!!.userId
                     )
                 }
             }
@@ -137,27 +140,40 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
         logViewModel.addedLog.observe(this, androidx.lifecycle.Observer {
             // ローカルDB更新
             val insertLog =
-                Log(it.logId, it.menuName, it.trainingWeight, it.trainingCount, it.trainingDate)
+                Log(
+                    it.logId,
+                    it.menuId,
+                    it.menuName,
+                    it.trainingWeight,
+                    it.trainingCount,
+                    it.trainingDate,
+                    it.trainingMemo
+                )
             logViewModel.insertLogOfDB(insertLog)
 
             // 追加完了ダイアログViewの設定
             val dialogContext =
                 LayoutInflater.from(activity).inflate(R.layout.item_added_training, null)
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingDate).text =
-                inputTrainingDateContainer.text.toString()
+                dateForView
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingMenu).text =
-                inputTrainingMenuContainer.text.toString()
+                it.menuName
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingWeight).text =
-                inputTrainingWeightContainer.text.toString()
+                it.trainingWeight.toString()
             dialogContext.findViewById<TextView>(R.id.tvAddedTrainingCount).text =
-                inputTrainingCountContainer.text.toString()
+                it.trainingCount.toString()
 
             val dialog = AlertDialog.Builder(activity)
             dialog.setView(dialogContext)
             dialog.setPositiveButton(
                 "修正",
                 DialogInterface.OnClickListener { _, _ ->
-
+                    val bundle = arguments
+                    bundle?.putString("logId", it.logId.toString())
+                    findNavController().navigate(
+                        R.id.action_logFragment_to_logWatchFragment,
+                        bundle
+                    )
                 }
             )
             dialog.setNegativeButton("完了", null)

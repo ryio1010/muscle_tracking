@@ -17,11 +17,12 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
 
     val logList: MutableLiveData<List<LogResponse>> = MutableLiveData()
     val logListOfDB: MutableLiveData<List<Log>> = MutableLiveData()
+    val logById: MutableLiveData<Log> = MutableLiveData()
     val logListByMenu: MutableLiveData<List<Log>> = MutableLiveData()
     val logListByDate: MutableLiveData<List<Log>> = MutableLiveData()
     val updatedLog: MutableLiveData<LogResponse> = MutableLiveData()
     val addedLog: MutableLiveData<LogResponse> = MutableLiveData()
-    val isLogDeleted: MutableLiveData<Boolean> = MutableLiveData()
+    val logIdDeleted: MutableLiveData<String> = MutableLiveData()
 
 
     // coroutine用
@@ -45,6 +46,11 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
         logListByMenu.postValue(allLog)
     }
 
+    fun getLogById(logId: String) = scope.launch(Dispatchers.IO) {
+        val log = repository.getLogById(logId)
+        logById.postValue(log)
+    }
+
     fun getLogByDate(trainingDate: String) = scope.launch(Dispatchers.IO) {
         val todayLog = repository.getLogByDate(trainingDate)
         logListByDate.postValue(todayLog)
@@ -62,6 +68,10 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
         repository.deleteLogOfDB(log)
     }
 
+    fun deleteAllLogOfDb() = scope.launch(Dispatchers.IO) {
+        repository.deleteAllLogOfDb()
+    }
+
     fun getAllLog(userId: String) = scope.launch(Dispatchers.IO) {
         val allLog = repository.getAllLog(userId)
         logList.postValue(allLog)
@@ -73,9 +83,18 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
         trainingWeight: String,
         trainingCount: String,
         trainingDate: String,
+        trainingMemo: String,
         userId: String
     ) = scope.launch(Dispatchers.IO) {
-        val log = repository.insertLog(menuId, menuName, trainingWeight, trainingCount, trainingDate, userId)
+        val log = repository.insertLog(
+            menuId,
+            menuName,
+            trainingWeight,
+            trainingCount,
+            trainingDate,
+            trainingMemo,
+            userId
+        )
         addedLog.postValue(log)
     }
 
@@ -86,6 +105,7 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
         trainingWeight: String,
         trainingCount: String,
         trainingDate: String,
+        trainingMemo: String,
         userId: String
     ) = scope.launch(Dispatchers.IO) {
         val log = repository.updateLog(
@@ -95,13 +115,14 @@ class LogViewModel(app: Application) : AndroidViewModel(app) {
             trainingWeight,
             trainingCount,
             trainingDate,
+            trainingMemo,
             userId
         )
         updatedLog.postValue(log)
     }
 
     fun deleteLog(logId: String) = scope.launch(Dispatchers.IO) {
-        val deleteFlag = repository.deleteLog(logId)
-        isLogDeleted.postValue(deleteFlag)
+        val deleteLog = repository.deleteLog(logId)
+        logIdDeleted.postValue(deleteLog)
     }
 }

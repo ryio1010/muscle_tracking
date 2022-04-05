@@ -11,17 +11,26 @@
         android:layout_height="wrap_content"
         android:background="#ffffff"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/tvTrainingMenuId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
+
             <ImageView
                 android:id="@+id/ivTrainingMenu"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_margin="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -33,23 +42,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvTrainingPartOfMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="胸"
-                    android:textSize="14sp" />
-
-                <TextView
                     android:id="@+id/tvTrainingMenu"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
                     android:text="ベンチプレス"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvTrainingMenuId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </RelativeLayout>

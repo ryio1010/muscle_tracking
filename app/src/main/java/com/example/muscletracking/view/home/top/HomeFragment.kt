@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.muscletracking.HomeActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.log.Log
@@ -26,12 +27,6 @@ import java.util.*
 import kotlin.math.roundToLong
 
 class HomeFragment : Fragment() {
-
-    private var recyclerView: RecyclerView? = null
-    private var logList = mutableListOf<Log>()
-    private var needsInsertion = false
-    private var latestBodyCompInfo: BodyComp? = null
-
     private val logViewModel: LogViewModel by lazy {
         ViewModelProvider(
             this,
@@ -40,7 +35,6 @@ class HomeFragment : Fragment() {
             LogViewModel::class.java
         )
     }
-
     private val bodyCompViewModel: BodyCompViewModel by lazy {
         ViewModelProvider(
             this,
@@ -50,12 +44,18 @@ class HomeFragment : Fragment() {
         )
     }
 
+    private var recyclerView: RecyclerView? = null
+    private var logList = mutableListOf<Log>()
+    private var needsInsertion = false
+    private var latestBodyCompInfo: BodyComp? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        // 画面要素取得
         val userNameView = view.findViewById<TextView>(R.id.tvUserNameInput)
         val userHeightView = view.findViewById<TextView>(R.id.tvUserHeightInput)
         val userWeightView = view.findViewById<TextView>(R.id.tvUserWeightInput)
@@ -63,11 +63,13 @@ class HomeFragment : Fragment() {
         val userBfpView = view.findViewById<TextView>(R.id.tvUserBfpInput)
         val userLbmView = view.findViewById<TextView>(R.id.tvUserLbmInput)
 
+        android.util.Log.d("mUserDebug", (activity as HomeActivity).mUser.toString())
+        // 体組成データ設定
         bodyCompViewModel.getLatestBodyCompOfDb()
         bodyCompViewModel.latestBodyComp.observe(this, androidx.lifecycle.Observer {
             if (it == null) {
                 needsInsertion = true
-                userNameView.text = "ryo"
+                userNameView.text = (activity as HomeActivity).mUser!!.userName
                 userHeightView.text = "--"
                 userWeightView.text = "--"
                 userBmiView.text = "--"
@@ -76,7 +78,7 @@ class HomeFragment : Fragment() {
             } else {
                 needsInsertion = false
                 latestBodyCompInfo = it
-                userNameView.text = "ryo"
+                userNameView.text = (activity as HomeActivity).mUser!!.userName
                 userHeightView.text = it.height.toString()
                 userWeightView.text = it.weight.toString()
                 userBmiView.text = it.bmi.toString()
@@ -85,6 +87,7 @@ class HomeFragment : Fragment() {
             }
         })
 
+        // 体組成データ押下処理
         val llBodyCompContainer = view.findViewById<LinearLayout>(R.id.llBodyCompContainer)
         llBodyCompContainer.setOnClickListener {
             val dialogContent =
@@ -120,7 +123,7 @@ class HomeFragment : Fragment() {
                             modifyWeightValue,
                             modifyBfpValue,
                             latestBodyCompInfo!!.bodyCompDate,
-                            "ryio1010"
+                            (activity as HomeActivity).mUser!!.userId
                         )
                     } else {
                         bodyCompViewModel.updateBodyComp(
@@ -128,7 +131,7 @@ class HomeFragment : Fragment() {
                             modifyHeightValue,
                             modifyWeightValue,
                             modifyBfpValue,
-                            "ryio1010"
+                            (activity as HomeActivity).mUser!!.userId
                         )
                     }
                 }
@@ -137,6 +140,7 @@ class HomeFragment : Fragment() {
             dialog.setView(dialogContent)
             dialog.show()
         }
+        // 体組成データInsertAPI実行後の処理
         bodyCompViewModel.insertedBodyComp.observe(this, androidx.lifecycle.Observer {
             val insertBodyComp = BodyComp(
                 it.bodyCompId,
@@ -150,6 +154,7 @@ class HomeFragment : Fragment() {
             bodyCompViewModel.insertBodyCompDb(insertBodyComp)
         })
 
+        // 体組成データUpdateAPI実行後の処理
         bodyCompViewModel.updatedBodyComp.observe(this, androidx.lifecycle.Observer {
             val updateBodyComp = BodyComp(
                 it.bodyCompId,
@@ -163,6 +168,7 @@ class HomeFragment : Fragment() {
             bodyCompViewModel.updateBodyCompDb(updateBodyComp)
         })
 
+        // ログ履歴用カレンダーの設定
         val cv = view.findViewById<CalendarView>(R.id.cvForLogByDate)
         cv.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
             val date = "%04d%02d%02d".format(year, month + 1, dayOfMonth)
@@ -193,18 +199,10 @@ class HomeFragment : Fragment() {
                     generateList(it),
                     object : TrainingTodayLogViewAdapter.ListListener {
                         override fun onClickItem(tappedView: View, log: Log) {
-                            val trainingMenu =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingMenuOfTodayLog).text.toString()
-                            val trainingWeight =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingWeightOfTodayLog).text.toString()
-                            val trainingCount =
-                                tappedView.findViewById<TextView>(R.id.tvTrainingCountOfTodayLog).text.toString()
-
+                            val logId =
+                                tappedView.findViewById<TextView>(R.id.tvLogIdTodayInvisible).text.toString()
                             val bundle = Bundle()
-                            bundle.putString("trainingMenu", trainingMenu)
-                            bundle.putString("trainingDate", today)
-                            bundle.putString("trainingWeight", trainingWeight)
-                            bundle.putString("trainingCount", trainingCount)
+                            bundle.putString("logId", logId)
 
                             findNavController().navigate(
                                 R.id.action_homeFragment_to_logWatchFragment,

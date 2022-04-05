@@ -44,20 +44,36 @@ class BodyCompViewModel(app: Application) : AndroidViewModel(app) {
         repository.updateBodyCompDb(bodyComp)
     }
 
+    fun deleteAllBodyCompDb() = scope.launch(Dispatchers.IO) {
+        repository.deleteAllBodyCompDb()
+    }
+
     fun getAllBodyComp(userId: String) = scope.launch(Dispatchers.IO) {
         val allBodyComp = repository.getAllBodyComp(userId)
         bodyCompList.postValue(allBodyComp)
     }
 
-    fun insertBodyComp(height: Double, weight: Double, bfp: Double, bodyCompDate: String,userId: String) =
+    fun insertBodyComp(
+        height: Double,
+        weight: Double,
+        bfp: Double,
+        bodyCompDate: String,
+        userId: String
+    ) =
         scope.launch(Dispatchers.IO) {
-            val bodyComp = repository.insertBodyComp(height, weight, bfp, bodyCompDate,userId)
+            val bodyComp = repository.insertBodyComp(height, weight, bfp, bodyCompDate, userId)
             insertedBodyComp.postValue(bodyComp)
         }
 
-    fun updateBodyComp(bodyCompId: Int, height: Double, weight: Double, bfp: Double,userId: String) =
+    fun updateBodyComp(
+        bodyCompId: Int,
+        height: Double,
+        weight: Double,
+        bfp: Double,
+        userId: String
+    ) =
         scope.launch(Dispatchers.IO) {
-            val bodyComp = repository.updateBodyComp(bodyCompId, height, weight, bfp,userId)
+            val bodyComp = repository.updateBodyComp(bodyCompId, height, weight, bfp, userId)
             updatedBodyComp.postValue(bodyComp)
         }
 }

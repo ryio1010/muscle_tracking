@@ -85,11 +85,12 @@ interface ApiService {
         @Field("trainingWeight") trainingWeight: String,
         @Field("trainingCount") trainingCount: String,
         @Field("trainingDate") trainingDate: String,
+        @Field("trainingMemo") trainingMemo: String,
         @Field("userId") userId: String
     ): Call<LogResponse>
 
     /**
-     * ログ更新API
+     * ログ履歴更新API
      */
     @FormUrlEncoded
     @PUT("log")
@@ -100,14 +101,15 @@ interface ApiService {
         @Field("trainingWeight") trainingWeight: String,
         @Field("trainingCount") trainingCount: String,
         @Field("trainingDate") trainingDate: String,
-        @Field("userId") userId:String
+        @Field("trainingMemo") trainingMemo: String,
+        @Field("userId") userId: String
     ): Call<LogResponse>
 
     /**
      * ログ履歴削除API
      */
     @DELETE("log/delete/{logId}")
-    fun deleteLog(@Path("logId") logId: String): Call<Boolean>
+    fun deleteLog(@Path("logId") logId: String): Call<String>
 
 
     /**

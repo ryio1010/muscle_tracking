@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_logFragment_to_trainingPartListFragment"
             app:destination="@id/trainingPartListFragment" />
+        <action
+            android:id="@+id/action_logFragment_to_logWatchFragment"
+            app:destination="@id/logWatchFragment" />
     </fragment>
     <fragment
         android:id="@+id/trainingPartListFragment"
@@ -67,9 +70,5 @@
     <fragment
         android:id="@+id/logWatchFragment"
         android:name="com.example.muscletracking.view.home.LogWatchFragment"
-        android:label="LogWatchFragment" >
-        <action
-            android:id="@+id/action_logWatchFragment_to_trainingPartListFragment"
-            app:destination="@id/trainingPartListFragment" />
-    </fragment>
+        android:label="LogWatchFragment" />
 </navigation>

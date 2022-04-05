@@ -58,6 +58,10 @@
     <string name="txt_select_menu_add">メニューを入力してください</string>
     <string name="bt_dialog_add_menu">追加</string>
     <string name="bt_dialog_cancel">キャンセル</string>
+    <string name="bt_dialog_delete">削除</string>
+    <string name="bt_dialog_modify">修正</string>
+    <string name="msg_dialog_delete">このログを削除します。\nよろしいですか？</string>
+    <string name="msg_dialog_modify">このログを修正します。\nよろしいですか？</string>
 
     <!-- バリデーションメッセージ -->
     <string name="msg_no_input_userid">ユーザーIDを入力してください</string>

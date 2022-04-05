@@ -31,6 +31,11 @@ class UserRepository(app: Application) {
         userDao.insertUser(user)
     }
 
+    @WorkerThread
+    suspend fun deleteAllUserOfDb() {
+        userDao.deleteAllUserOfDb()
+    }
+
     /**
      * loginAPI
      */

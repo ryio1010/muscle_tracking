@@ -42,6 +42,10 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
         repository.insertUser(user)
     }
 
+    fun deleteAllUSerOfDb() = scope.launch(Dispatchers.IO) {
+        repository.deleteAllUserOfDb()
+    }
+
     /**
      * ローカルDB　UserテーブルId検索
      */

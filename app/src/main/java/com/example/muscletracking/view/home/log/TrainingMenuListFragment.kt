@@ -19,6 +19,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.muscletracking.HomeActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.menu.Menu
 import com.example.muscletracking.viewmodel.menu.MenuViewModel
@@ -61,7 +62,11 @@ class TrainingMenuListFragment : Fragment() {
                 DialogInterface.OnClickListener { _, _ ->
                     // メニュー追加API実行
                     val input = myedit.text.toString()
-                    menuViewModel.addMenu(args.musclePartId, input, "ryio1010")
+                    menuViewModel.addMenu(
+                        args.musclePartId,
+                        input,
+                        (activity as HomeActivity).mUser!!.userId
+                    )
                 })
 
             // negativebutton押下処理

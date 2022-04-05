@@ -12,7 +12,7 @@ interface UserDao {
      * Idによるユーザー検索
      */
     @Query("SELECT * FROM user WHERE userid = :userId")
-    fun getUserById(userId:String) : User
+    fun getUserById(userId: String): User
 
     /**
      * ユーザー登録
@@ -24,11 +24,14 @@ interface UserDao {
      * ユーザー情報更新
      */
     @Update
-    fun updateUser(user:User)
+    fun updateUser(user: User)
 
     /**
      * ユーザー削除
      */
     @Delete
-    fun deleteUser(user:User)
+    fun deleteUser(user: User)
+
+    @Query("DELETE FROM user")
+    fun deleteAllUserOfDb()
 }

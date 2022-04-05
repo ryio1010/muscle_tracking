@@ -10,8 +10,11 @@ import com.example.muscletracking.model.musclepart.MusclePart
 interface MusclePartDao {
 
     @Query("SELECT * FROM musclepart")
-    fun getAllMusclePart():List<MusclePart>
+    fun getAllMusclePart(): List<MusclePart>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMusclePart(musclePart: MusclePart)
+
+    @Query("DELETE FROM musclepart")
+    fun deleteAllMusclePartOfDb()
 }
