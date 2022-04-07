@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -83,27 +82,13 @@ class TrainingMenuListFragment : Fragment() {
         // observer登録
 
         // メニュー追加API実行時
-        menuViewModel.addedMenuList.observe(this, Observer {
-            if (it.isEmpty()) {
+        menuViewModel.addedMenu.observe(this, Observer {
+            val menu = Menu(it.menuId, it.menuName, it.musclePartName)
+            menuViewModel.insertMenu(menu)
 
-            } else {
-                // ローカルDBInsert
-                for (menu in it) {
-                    val addMenu = Menu(menu.menuId, menu.menuName, menu.musclePartName)
-                    menuViewModel.insertMenu(addMenu)
-                }
-
-                // リスト更新
-                menuList.clear()
-                for (menu in it) {
-                    val listMenu = Menu(menu.menuId, menu.menuName, menu.musclePartName)
-                    menuList.add(listMenu)
-                }
-                recyclerView?.adapter?.notifyDataSetChanged()
-
-            }
+            menuList.add(menu)
+            recyclerView?.adapter?.notifyDataSetChanged()
         })
-
         // ローカルDBメニュー全件取得時（トレーニング部位別）
         menuViewModel.menuListByPartOfDB.observe(this, Observer {
             if (menuList.isEmpty()) {
@@ -135,18 +120,6 @@ class TrainingMenuListFragment : Fragment() {
                     )
                 }
             }
-//            else {
-//                // メニュー追加時
-//                    Log.d("debug","メニュー追加時の処理に入りました")
-//                    Log.d("debug", recyclerView?.adapter?.toString().toString())
-//                    Log.d("debug", it.toString())
-//                menuList.clear()
-//                for (menu in it) {
-//                    menuList.add(menu)
-//                }
-//                recyclerView?.adapter?.notifyDataSetChanged()
-//            }
-
         })
 
         // トレーニング部位別メニュー取得

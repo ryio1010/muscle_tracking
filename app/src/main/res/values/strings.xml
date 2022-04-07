@@ -65,8 +65,11 @@
 
     <!-- バリデーションメッセージ -->
     <string name="msg_no_input_userid">ユーザーIDを入力してください</string>
+    <string name="msg_no_accept_userid">ユーザーIDは英数字で入力してください</string>
     <string name="msg_no_input_username">ユーザー名を入力してください</string>
+    <string name="msg_no_accept_username">ユーザー名は英数字で入力してください</string>
     <string name="msg_no_input_password">パスワードを入力してください</string>
+    <string name="msg_no_accept_password">パスワードは英数字で入力してください</string>
     <string name="msg_no_input_height">身長を入力してください</string>
     <string name="msg_no_input_weight">体重を入力してください</string>
     <string name="msg_no_input_training_weight">重量を入力してください</string>

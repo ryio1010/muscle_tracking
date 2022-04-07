@@ -16,7 +16,7 @@ class MenuViewModel(app: Application) : AndroidViewModel(app) {
     private val repository: MenuRepository = MenuRepository(app)
 
     val menuList: MutableLiveData<List<MenuResponse>> = MutableLiveData()
-    val addedMenuList: MutableLiveData<List<MenuResponse>> = MutableLiveData()
+    val addedMenu: MutableLiveData<MenuResponse> = MutableLiveData()
     val menuListOfDB: MutableLiveData<List<Menu>> = MutableLiveData()
     val menuListByPartOfDB: MutableLiveData<List<Menu>> = MutableLiveData()
 
@@ -79,9 +79,9 @@ class MenuViewModel(app: Application) : AndroidViewModel(app) {
         scope.launch(Dispatchers.IO) {
             val allMenu = repository.addMenu(musclePartId, menuName, userId)
             if (allMenu == null) {
-                addedMenuList.postValue(null)
+                addedMenu.postValue(null)
             } else {
-                addedMenuList.postValue(allMenu)
+                addedMenu.postValue(allMenu)
             }
         }
 }

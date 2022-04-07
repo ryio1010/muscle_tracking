@@ -19,6 +19,7 @@ import com.example.muscletracking.viewmodel.user.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
+    // TODO:API実行が追いついてないので、画面の表示がおかしくなっている
 
     private val menuViewModel by lazy {
         ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
