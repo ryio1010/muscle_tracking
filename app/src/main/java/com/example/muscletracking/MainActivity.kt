@@ -86,11 +86,11 @@ class MainActivity : AppCompatActivity() {
         val pw = password.text.toString()
 
         // userIdの正規表現
-        val userIdPattern = "[a-zA-Z0-9]"
+        val userIdPattern = "[a-zA-Z0-9]+$"
         val userIdRegex = Regex(pattern = userIdPattern)
 
         // passwordの正規表現
-        val passwordPattern = "[a-zA-Z0-9]"
+        val passwordPattern = "[a-zA-Z0-9]+$"
         val passwordRegex = Regex(pattern = passwordPattern)
 
         // userId
