@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.3490740740740741" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.40185185185185185" />
         <entry key="app/src/main/res/layout-w1240dp/item_training_log.xml" value="0.201171875" />
         <entry key="app/src/main/res/layout-w936dp/item_added_training.xml" value="0.33" />
@@ -29,6 +30,7 @@
         <entry key="app/src/main/res/layout/item_training_menu.xml" value="0.31683375104427736" />
         <entry key="app/src/main/res/layout/item_training_part.xml" value="0.31683375104427736" />
         <entry key="app/src/main/res/layout/row.xml" value="0.29074074074074074" />
+        <entry key="app/src/main/res/layout/sample_tool_bar_custom_view.xml" value="0.29991645781119464" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.4046296296296296" />
         <entry key="app/src/main/res/menu/setting_menu.xml" value="0.6491452991452992" />

@@ -7,6 +7,7 @@
     <string name="label_input_height_and_weight">身長体重入力</string>
     <string name="label_top">Welcome To MuscleTracking!</string>
     <string name="label_body_comp">体組成</string>
+    <string name="label_home">HOME</string>
 
     <!-- 入力 -->
     <string name="label_id">ユーザーID</string>
