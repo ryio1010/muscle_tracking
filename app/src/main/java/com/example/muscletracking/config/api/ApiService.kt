@@ -60,7 +60,7 @@ interface ApiService {
         @Field("musclePartId") musclePartId: String,
         @Field("menuName") menuName: String,
         @Field("userId") userId: String
-    ): Call<List<MenuResponse>>
+    ): Call<MenuResponse>
 
     /**
      * トレーニング部位取得API

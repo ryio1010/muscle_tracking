@@ -63,7 +63,7 @@ class MenuRepository(app: Application) {
         musclePartId: String,
         menuName: String,
         userId: String
-    ): List<MenuResponse>? {
+    ): MenuResponse? {
         val response = retrofitClient.addMenu(musclePartId, menuName, userId).execute()
         return if (response.isSuccessful) {
             return response.body()

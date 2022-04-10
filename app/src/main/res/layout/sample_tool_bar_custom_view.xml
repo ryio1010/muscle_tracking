@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_custom_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:background="@color/theme500"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/ibToolBarRight"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:scaleType="center"
+        android:scaleX="2"
+        android:scaleY="2" />
+
+    <TextView
+        android:id="@+id/tvToolBarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="ホーム"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/ibToolBarLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:contentDescription="TODO" />
+</LinearLayout>

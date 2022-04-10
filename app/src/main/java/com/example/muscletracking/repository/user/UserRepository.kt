@@ -42,6 +42,7 @@ class UserRepository(app: Application) {
     @WorkerThread
     suspend fun login(userid: String, password: String): UserResponse? {
         val response = retrofitClient.login(userid, password).execute()
+        Log.d("test", response.code().toString())
         return response.body()
     }
 

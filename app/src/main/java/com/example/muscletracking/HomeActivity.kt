@@ -2,6 +2,8 @@ package com.example.muscletracking
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,7 +20,8 @@ import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
 import com.example.muscletracking.viewmodel.user.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
+    // TODO:API実行が追いついてないので、画面の表示がおかしくなっている
 
     private val menuViewModel by lazy {
         ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
@@ -57,6 +60,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        setCustomBar()
 
         val userId = intent.getStringExtra("userId")
         // ログインユーザー情報取得
@@ -136,5 +141,24 @@ class HomeActivity : AppCompatActivity() {
         musclePartViewModel.deleteAllMusclePartOfDb()
         menuViewModel.deleteAllLogOfDb()
         logViewModel.deleteAllLogOfDb()
+    }
+
+    private fun setCustomBar() {
+        val toolBarCustomView = ToolBarCustomView(this)
+        toolBarCustomView.delegate = this
+
+        val title = getString(R.string.label_home)
+        toolBarCustomView.configure(title, isHideLeftButton = true, isHideRightButton = true)
+
+        val layout = findViewById<LinearLayout>(R.id.llAppBarHome)
+        layout.addView(toolBarCustomView)
+    }
+
+    override fun onClickedLeftButton() {
+        finish()
+    }
+
+    override fun onClickedRightButton() {
+        finish()
     }
 }

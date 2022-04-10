@@ -63,7 +63,6 @@ class HomeFragment : Fragment() {
         val userBfpView = view.findViewById<TextView>(R.id.tvUserBfpInput)
         val userLbmView = view.findViewById<TextView>(R.id.tvUserLbmInput)
 
-        android.util.Log.d("mUserDebug", (activity as HomeActivity).mUser.toString())
         // 体組成データ設定
         bodyCompViewModel.getLatestBodyCompOfDb()
         bodyCompViewModel.latestBodyComp.observe(this, androidx.lifecycle.Observer {

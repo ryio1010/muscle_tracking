@@ -1,5 +1,6 @@
 package com.example.muscletracking
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -18,6 +20,9 @@ import com.example.muscletracking.view.user.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private var inputMethodManager: InputMethodManager? = null
+
     // viewModel設定
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
@@ -29,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // TODO: ユーザー名、パスワードのバリデーション追加（英数字記号のみ）
         // TODO:　Toolbarの設置
         // TODO:　デザイン強化
 
@@ -43,10 +47,6 @@ class MainActivity : AppCompatActivity() {
         // ログインボタン押下のリスナー登録
         val loginButton = findViewById<Button>(R.id.btLogin)
         loginButton.setOnClickListener(LoginButtonListener())
-
-
-        // エラー情報textview
-        val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
 
         // observer登録
         // ログインAPI実行時
@@ -69,29 +69,55 @@ class MainActivity : AppCompatActivity() {
     // ログインボタン押下処理
     private inner class LoginButtonListener : View.OnClickListener {
         override fun onClick(view: View) {
-            // 入力情報の取得
-            val userId = findViewById<TextView>(R.id.inputId).text.toString()
-            val password = findViewById<TextView>(R.id.inputPw).text.toString()
+            hideKeyboard(view)
+            val userId = findViewById<EditText>(R.id.inputId)
+            val password = findViewById<EditText>(R.id.inputPw)
 
-            // エラー情報textview
-            val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
-            tvErrorMessage.visibility = TextView.INVISIBLE
-
-            when {
-                userId.isEmpty() -> {
-                    tvErrorMessage.setText(R.string.msg_no_input_userid)
-                    tvErrorMessage.visibility = TextView.VISIBLE
-                }
-                password.isEmpty() -> {
-                    tvErrorMessage.setText(R.string.msg_no_input_password)
-                    tvErrorMessage.visibility = TextView.VISIBLE
-                }
-                else -> {
-                    // ログインAPI実行
-                    userViewModel.login(userId, password)
-                }
+            val canLogin = checkValidation(userId, password)
+            if (canLogin) {
+                // loginAPI実行
+                userViewModel.login(userId.text.toString(), password.text.toString())
             }
         }
+    }
+
+    private fun checkValidation(userId: EditText, password: EditText): Boolean {
+        val id = userId.text.toString()
+        val pw = password.text.toString()
+
+        // userIdの正規表現
+        val userIdPattern = "[a-zA-Z0-9]+$"
+        val userIdRegex = Regex(pattern = userIdPattern)
+
+        // passwordの正規表現
+        val passwordPattern = "[a-zA-Z0-9]+$"
+        val passwordRegex = Regex(pattern = passwordPattern)
+
+        // userId
+        if (id.isEmpty()) {
+            userId.requestFocus()
+            Toast.makeText(this, R.string.msg_no_input_userid, Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (!userIdRegex.matches(id)) {
+            userId.requestFocus()
+            Toast.makeText(this, R.string.msg_no_accept_userid, Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        // password
+        if (pw.isEmpty()) {
+            password.requestFocus()
+            Toast.makeText(this, R.string.msg_no_input_password, Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (!passwordRegex.matches(pw)) {
+            password.requestFocus()
+            Toast.makeText(this, R.string.msg_no_accept_password, Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
     // 新規登録遷移文字列ハイライト処理
@@ -118,5 +144,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }, startPos, startPos + highLightText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
+    }
+
+    private fun hideKeyboard(view: View) {
+        this.inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager?.hideSoftInputFromWindow(
+            view.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 }
