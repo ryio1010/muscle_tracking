@@ -2,6 +2,7 @@ package com.example.muscletracking.view.home.top
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.HomeActivity
+import com.example.muscletracking.LogDetailActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.log.Log
@@ -181,6 +183,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+        titleTextView.text = getString(R.string.label_home)
+
         val sdf = SimpleDateFormat("yyyyMMdd")
         val today = sdf.format(Date(System.currentTimeMillis()))
         logViewModel.getLogByDate(today)
@@ -200,13 +206,11 @@ class HomeFragment : Fragment() {
                         override fun onClickItem(tappedView: View, log: Log) {
                             val logId =
                                 tappedView.findViewById<TextView>(R.id.tvLogIdTodayInvisible).text.toString()
-                            val bundle = Bundle()
-                            bundle.putString("logId", logId)
 
-                            findNavController().navigate(
-                                R.id.action_homeFragment_to_logWatchFragment,
-                                bundle
-                            )
+                            // ログ詳細画面へ遷移
+                            val intent = Intent(activity, LogDetailActivity::class.java)
+                            intent.putExtra("logId", logId)
+                            startActivity(intent)
                         }
                     }
                 )

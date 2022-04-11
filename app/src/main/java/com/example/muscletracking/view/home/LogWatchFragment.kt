@@ -100,7 +100,8 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
                         trainingCount,
                         trainingDate,
                         trainingMemo,
-                        (activity as HomeActivity).mUser!!.userId
+//                        (activity as HomeActivity).mUser!!.userId
+                        "ryio1010"
                     )
                 }
             )
@@ -119,7 +120,7 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
                 it.trainingMemo
             )
             logViewModel.updateLogOfDB(log)
-            findNavController().popBackStack()
+            activity?.finish()
         })
 
         // 削除ボタン押下処理
@@ -139,35 +140,8 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
         }
         logViewModel.logIdDeleted.observe(this, Observer {
             logViewModel.deleteLogOfDB(watchLog)
-            findNavController().popBackStack()
+            activity?.finish()
         })
-
-
-        // トレーニングメニュー選択
-//        btMenuSelect = view.findViewById<Button>(R.id.btWatchSelectMenu)
-//        btMenuSelect.setOnClickListener {
-//            musclePartViewModel.getAllMusclePartFromDB()
-//        }
-//        musclePartViewModel.musclePartListOfDB.observe(this, androidx.lifecycle.Observer {
-//            val allMusclePart = it
-//            Log.d("debug", allMusclePart.toString())
-//            findNavController().navigate(R.id.action_logWatchFragment_to_trainingPartListFragment)
-//        })
-
-        // トレーニング日付選択
-//        tvDate = view.findViewById<TextView>(R.id.tvWatchTrainingDate)
-//        val sdfForView = SimpleDateFormat("yyyy年MM月dd日")
-//        val sdfForApi = SimpleDateFormat("yyyyMMdd")
-//        dateForView = sdfForView.format(Date(System.currentTimeMillis()))
-//        dateForApi = sdfForApi.format(Date(System.currentTimeMillis()))
-//        tvDate.text = dateForView
-//
-//        // トレーニング日付選択時の処理
-//        btDateSelect = view.findViewById<Button>(R.id.btWatchSelectDate)
-//        btDateSelect.setOnClickListener {
-//            val dialog = DatePickerFragment()
-//            dialog.show(childFragmentManager, "date_picker")
-//        }
 
         return view
     }

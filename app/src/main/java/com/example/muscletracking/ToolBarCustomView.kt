@@ -1,11 +1,6 @@
 package com.example.muscletracking
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +33,7 @@ class ToolBarCustomView : LinearLayout {
     }
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
-        LayoutInflater.from(context).inflate(R.layout.sample_tool_bar_custom_view, this, true)
+        LayoutInflater.from(context).inflate(R.layout.tool_bar_custom_view, this, true)
     }
 
     fun configure(titleText: String, isHideLeftButton: Boolean, isHideRightButton: Boolean) {

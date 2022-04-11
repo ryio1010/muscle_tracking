@@ -2,6 +2,7 @@ package com.example.muscletracking.view.home.log
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.muscletracking.HomeActivity
+import com.example.muscletracking.LogDetailActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.log.LogViewModel
@@ -168,18 +170,22 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
             dialog.setPositiveButton(
                 "修正",
                 DialogInterface.OnClickListener { _, _ ->
-                    val bundle = arguments
-                    bundle?.putString("logId", it.logId.toString())
-                    findNavController().navigate(
-                        R.id.action_logFragment_to_logWatchFragment,
-                        bundle
-                    )
+                    // ログ詳細画面へ遷移
+                    val intent = Intent(activity, LogDetailActivity::class.java)
+                    intent.putExtra("logId", it.logId.toString())
+                    startActivity(intent)
                 }
             )
             dialog.setNegativeButton("完了", null)
             dialog.show()
         })
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+        titleTextView.text = getString(R.string.label_log)
     }
 
     override fun selectedDate(year: Int, month: Int, dayOfMonth: Int) {
