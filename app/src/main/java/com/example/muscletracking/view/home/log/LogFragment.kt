@@ -1,5 +1,6 @@
 package com.example.muscletracking.view.home.log
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,10 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.muscletracking.HomeActivity
 import com.example.muscletracking.LogDetailActivity
+import com.example.muscletracking.MenuSelectActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.log.LogViewModel
@@ -24,14 +27,6 @@ import java.util.*
 
 class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
 
-    private val musclePartViewModel: MusclePartViewModel by lazy {
-        ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory(activity!!.application)
-        ).get(
-            MusclePartViewModel::class.java
-        )
-    }
     private val logViewModel: LogViewModel by lazy {
         ViewModelProvider(
             this,
@@ -51,6 +46,22 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
     private lateinit var dateForView: String
     private lateinit var dateForApi: String
 
+    private lateinit var inputTrainingMenuContainer: TextView
+
+    private var selectedMenuId: String? = null
+
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                it.data.let { data: Intent? ->
+                    val selectedMenu = data?.getStringExtra("selectedMenu")
+                    selectedMenuId = data?.getStringExtra("selectedMenuId")
+                    inputTrainingMenuContainer.text = selectedMenu
+                    Toast.makeText(activity, "選択したメニュー : $selectedMenu", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +70,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
         val view = inflater.inflate(R.layout.fragment_log, container, false)
 
         // 画面要素の取得
-        val inputTrainingMenuContainer = view.findViewById<TextView>(R.id.tvTrainingMenu)
+        inputTrainingMenuContainer = view.findViewById<TextView>(R.id.tvTrainingMenu)
         val inputTrainingDateContainer = view.findViewById<TextView>(R.id.tvTrainingDate)
         val inputTrainingWeightContainer = view.findViewById<TextView>(R.id.etTrainingWeight)
         val inputTrainingCountContainer = view.findViewById<TextView>(R.id.etTrainingCount)
@@ -71,17 +82,8 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
         // トレーニングメニュー選択時の処理
         btMenuSelect = view.findViewById<Button>(R.id.btSelectMenu)
         btMenuSelect.setOnClickListener {
-            musclePartViewModel.getAllMusclePartFromDB()
+            startForResult.launch(Intent(activity, MenuSelectActivity::class.java))
         }
-        musclePartViewModel.musclePartListOfDB.observe(this, androidx.lifecycle.Observer {
-            findNavController().navigate(R.id.action_logFragment_to_trainingPartListFragment)
-        })
-
-        // bundleで値が渡って来た場合に、メニューを設定する
-        val bundle = arguments
-        inputTrainingMenuContainer.text =
-            bundle?.getString("selectedMenu") ?: "選択してください"
-        val selectedMenuId = bundle?.getString("selectedMenuId")
 
         // 日付初期設定（現在日付）
         tvDate = view.findViewById<TextView>(R.id.tvTrainingDate)
@@ -112,7 +114,7 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
 
             // 入力項目バリデーション
             when {
-                inputTrainingMenu.equals(R.string.txt_select) -> {
+                inputTrainingMenu == getString(R.string.txt_select) -> {
                     tvErrorMessage.setText(R.string.msg_no_input_training_menu)
                     tvErrorMessage.visibility = TextView.VISIBLE
                 }

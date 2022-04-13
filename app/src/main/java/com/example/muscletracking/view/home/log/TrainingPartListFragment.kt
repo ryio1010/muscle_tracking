@@ -21,6 +21,11 @@ import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
 
 class TrainingPartListFragment : Fragment() {
 
+    // ホーム画面は今日の体組成とトレーニングを乗せる
+    // ログ追加画面は別Activityに変更
+    // ログ追加画面の代わりに体組成追加画面を追加
+    // 履歴画面で日付検索できるようにする
+
     private val musclePartViewModel: MusclePartViewModel by lazy {
         ViewModelProvider(
             this,
@@ -60,11 +65,22 @@ class TrainingPartListFragment : Fragment() {
                             val musclePart =
                                 tappedView.findViewById<TextView>(R.id.tvTrainingPartName).text.toString()
 
-                            val action =
-                                TrainingPartListFragmentDirections.actionTrainingPartListFragmentToTrainingMenuListFragment(
-                                    musclePartId, musclePart
-                                )
-                            findNavController().navigate(action)
+                            val transaction = parentFragmentManager.beginTransaction()
+
+                            val fragment = TrainingMenuListFragment()
+                            val bundle = Bundle()
+                            bundle.putString("musclePartId", musclePartId)
+                            bundle.putString("musclePart", musclePart)
+                            fragment.arguments = bundle
+
+                            transaction.replace(R.id.fcvTrainingMenuSelect, fragment)
+                            transaction.commit()
+
+//                            val action =
+//                                TrainingPartListFragmentDirections.actionTrainingPartListFragmentToTrainingMenuListFragment(
+//                                    musclePartId, musclePart
+//                                )
+//                            findNavController().navigate(action)
                         }
                     }
                 )
@@ -84,12 +100,5 @@ class TrainingPartListFragment : Fragment() {
             list.add(musclePart)
         }
         return list
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TrainingPartListFragment().apply {
-            }
     }
 }
