@@ -1,7 +1,9 @@
 package com.example.muscletracking.view.home.log
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -25,7 +28,7 @@ import com.example.muscletracking.viewmodel.menu.MenuViewModel
 
 class TrainingMenuListFragment : Fragment() {
 
-    private val args: TrainingMenuListFragmentArgs by navArgs()
+    //private val args: TrainingMenuListFragmentArgs by navArgs()
 
     private val menuViewModel by lazy {
         ViewModelProvider(
@@ -60,11 +63,13 @@ class TrainingMenuListFragment : Fragment() {
                 R.string.bt_dialog_add_menu,
                 DialogInterface.OnClickListener { _, _ ->
                     // メニュー追加API実行
+                    val musclePartId = arguments?.getString("musclePartId")
                     val input = myedit.text.toString()
                     menuViewModel.addMenu(
-                        args.musclePartId,
+                        musclePartId!!,
                         input,
-                        (activity as HomeActivity).mUser!!.userId
+//                        (activity as HomeActivity).mUser!!.userId
+                        "ryio1010"
                     )
                 })
 
@@ -78,6 +83,9 @@ class TrainingMenuListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+//        titleTextView.text = getString(R.string.label_training_menus)
 
         // observer登録
 
@@ -108,13 +116,14 @@ class TrainingMenuListFragment : Fragment() {
                                 val selectedMenu =
                                     tappedView.findViewById<TextView>(R.id.tvTrainingMenu).text.toString()
 
-                                val bundle = Bundle()
-                                bundle.putString("selectedMenuId", selectedMenuId)
-                                bundle.putString("selectedMenu", selectedMenu)
-                                findNavController().navigate(
-                                    R.id.action_trainingMenuListFragment_to_logFragment,
-                                    bundle
-                                )
+//                                val bundle = Bundle()
+//                                bundle.putString("selectedMenuId", selectedMenuId)
+//                                bundle.putString("selectedMenu", selectedMenu)
+                                val intent = Intent()
+                                intent.putExtra("selectedMenuId", selectedMenuId)
+                                intent.putExtra("selectedMenu", selectedMenu)
+                                activity?.setResult(Activity.RESULT_OK, intent)
+                                activity?.finish()
                             }
                         }
                     )
@@ -123,7 +132,8 @@ class TrainingMenuListFragment : Fragment() {
         })
 
         // トレーニング部位別メニュー取得
-        menuViewModel.getAllMenuByMusclePartFromDB(args.musclePart)
+        val musclePart = arguments?.getString("musclePart")
+        menuViewModel.getAllMenuByMusclePartFromDB(musclePart!!)
 
     }
 

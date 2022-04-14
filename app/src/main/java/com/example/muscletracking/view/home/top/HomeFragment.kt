@@ -2,6 +2,7 @@ package com.example.muscletracking.view.home.top
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.HomeActivity
+import com.example.muscletracking.LogDetailActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.log.Log
@@ -56,7 +58,7 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         // 画面要素取得
-        val userNameView = view.findViewById<TextView>(R.id.tvUserNameInput)
+//        val userNameView = view.findViewById<TextView>(R.id.tvUserNameInput)
         val userHeightView = view.findViewById<TextView>(R.id.tvUserHeightInput)
         val userWeightView = view.findViewById<TextView>(R.id.tvUserWeightInput)
         val userBmiView = view.findViewById<TextView>(R.id.tvUserBmiInput)
@@ -68,7 +70,7 @@ class HomeFragment : Fragment() {
         bodyCompViewModel.latestBodyComp.observe(this, androidx.lifecycle.Observer {
             if (it == null) {
                 needsInsertion = true
-                userNameView.text = (activity as HomeActivity).mUser!!.userName
+//                userNameView.text = (activity as HomeActivity).mUser!!.userName
                 userHeightView.text = "--"
                 userWeightView.text = "--"
                 userBmiView.text = "--"
@@ -77,7 +79,7 @@ class HomeFragment : Fragment() {
             } else {
                 needsInsertion = false
                 latestBodyCompInfo = it
-                userNameView.text = (activity as HomeActivity).mUser!!.userName
+//                userNameView.text = (activity as HomeActivity).mUser!!.userName
                 userHeightView.text = it.height.toString()
                 userWeightView.text = it.weight.toString()
                 userBmiView.text = it.bmi.toString()
@@ -169,11 +171,15 @@ class HomeFragment : Fragment() {
 
         // ログ履歴用カレンダーの設定
         val cv = view.findViewById<CalendarView>(R.id.cvForLogByDate)
+        val text = view.findViewById<TextView>(R.id.tvTodayTraining)
         cv.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
             val date = "%04d%02d%02d".format(year, month + 1, dayOfMonth)
-            val bundle = Bundle()
-            bundle.putString("trainingDate", date)
-            findNavController().navigate(R.id.action_homeFragment_to_logHistoryFragment, bundle)
+            val dateForView = "%02d月%02d日".format(month + 1, dayOfMonth)
+//            val bundle = Bundle()
+//            bundle.putString("trainingDate", date)
+//            findNavController().navigate(R.id.action_homeFragment_to_logHistoryFragment, bundle)
+            text.text = "$dateForView のトレーニング"
+            logViewModel.getLogByDate(date)
         }
 
         return view
@@ -181,6 +187,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+        titleTextView.text = getString(R.string.label_home)
+
         val sdf = SimpleDateFormat("yyyyMMdd")
         val today = sdf.format(Date(System.currentTimeMillis()))
         logViewModel.getLogByDate(today)
@@ -200,13 +210,11 @@ class HomeFragment : Fragment() {
                         override fun onClickItem(tappedView: View, log: Log) {
                             val logId =
                                 tappedView.findViewById<TextView>(R.id.tvLogIdTodayInvisible).text.toString()
-                            val bundle = Bundle()
-                            bundle.putString("logId", logId)
 
-                            findNavController().navigate(
-                                R.id.action_homeFragment_to_logWatchFragment,
-                                bundle
-                            )
+                            // ログ詳細画面へ遷移
+                            val intent = Intent(activity, LogDetailActivity::class.java)
+                            intent.putExtra("logId", logId)
+                            startActivity(intent)
                         }
                     }
                 )

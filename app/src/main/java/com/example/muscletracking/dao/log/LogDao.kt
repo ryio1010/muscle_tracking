@@ -9,7 +9,7 @@ interface LogDao {
     @Query("SELECT * FROM log order by trainingdate desc")
     fun getAllLog(): List<Log>
 
-    @Query("SELECT * FROM log WHERE menuname = :menuName order by trainingdate desc")
+    @Query("SELECT * FROM log WHERE menuname LIKE :menuName order by trainingdate desc, menuname")
     fun getLogByMenu(menuName: String): List<Log>
 
     @Query("SELECT * FROM log WHERE id = :logId")

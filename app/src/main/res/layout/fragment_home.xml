@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/label_body_comp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,49 +23,51 @@
         android:id="@+id/llBodyCompContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBodyComp">
 
         <LinearLayout
             android:id="@+id/llBasicBodyCompContainer"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/llUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/llUserName"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="@string/label_name" />
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginRight="5dp"-->
+            <!--                    android:text="@string/label_name" />-->
 
-                <TextView
-                    android:id="@+id/tvUserNameInput"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ryio1010" />
+            <!--                <TextView-->
+            <!--                    android:id="@+id/tvUserNameInput"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="ryio1010"-->
+            <!--                    android:textStyle="bold" />-->
 
-            </LinearLayout>
+            <!--            </LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/llUserHeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:text="@string/label_height" />
 
                 <TextView
@@ -71,7 +75,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="170" />
+                    android:text="170"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvUserHeightUnit"
@@ -85,12 +91,13 @@
                 android:id="@+id/llUserWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:text="@string/label_weight" />
 
                 <TextView
@@ -98,7 +105,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="79" />
+                    android:text="79"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvUserWeightUnit"
@@ -116,19 +125,19 @@
             android:id="@+id/llExtraBodyCompContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/llUserBmi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:text="@string/label_bmi" />
 
                 <TextView
@@ -136,7 +145,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="xx.x" />
+                    android:text="xx.x"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -144,12 +155,13 @@
                 android:id="@+id/llUserBfp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:text="@string/label_bfp" />
 
                 <TextView
@@ -157,7 +169,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="20" />
+                    android:text="20"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvUserBfpUnit"
@@ -176,7 +190,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:text="@string/label_lbm" />
 
                 <TextView
@@ -184,7 +198,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="xx.x" />
+                    android:text="xx.x"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvUserLbmUnit"
@@ -201,9 +217,9 @@
 
     <CalendarView
         android:id="@+id/cvForLogByDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
@@ -213,8 +229,10 @@
         android:id="@+id/tvTodayTraining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="今日のトレーニング"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cvForLogByDate" />

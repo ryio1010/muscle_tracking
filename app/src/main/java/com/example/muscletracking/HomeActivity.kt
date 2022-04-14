@@ -1,8 +1,11 @@
 package com.example.muscletracking
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +25,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     // TODO:API実行が追いついてないので、画面の表示がおかしくなっている
+
+    private var inputMethodManager: InputMethodManager? = null
 
     private val menuViewModel by lazy {
         ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
@@ -148,7 +153,7 @@ class HomeActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
         toolBarCustomView.delegate = this
 
         val title = getString(R.string.label_home)
-        toolBarCustomView.configure(title, isHideLeftButton = true, isHideRightButton = true)
+        toolBarCustomView.configure(title, isHideLeftButton = false, isHideRightButton = false)
 
         val layout = findViewById<LinearLayout>(R.id.llAppBarHome)
         layout.addView(toolBarCustomView)
@@ -160,5 +165,14 @@ class HomeActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     override fun onClickedRightButton() {
         finish()
+    }
+
+    fun hideKeyboard(view: View) {
+        this.inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager?.hideSoftInputFromWindow(
+            view.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 }
