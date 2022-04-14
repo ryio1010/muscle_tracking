@@ -70,6 +70,7 @@ class LogHistoryFragment : Fragment() {
         // 検索ボタン押下処理
         val btSearchLog = view.findViewById<Button>(R.id.btSearchLog)
         btSearchLog.setOnClickListener {
+            (activity as HomeActivity).hideKeyboard(it)
             val searchTrainingMenu =
                 view.findViewById<EditText>(R.id.etSearchTrainingMenu).text.toString()
             logViewModel.getLogByMenu(searchTrainingMenu)

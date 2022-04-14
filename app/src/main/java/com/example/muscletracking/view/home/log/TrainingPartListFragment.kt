@@ -48,6 +48,9 @@ class TrainingPartListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+//        titleTextView.text = getString(R.string.label_training_muscle_groups)
+
         musclePartViewModel.getAllMusclePartFromDB()
         musclePartViewModel.musclePartListOfDB.observe(this, Observer {
             this.recyclerView = view.findViewById(R.id.rvTrainingPart)

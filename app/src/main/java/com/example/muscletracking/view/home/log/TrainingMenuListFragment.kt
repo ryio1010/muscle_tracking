@@ -68,7 +68,8 @@ class TrainingMenuListFragment : Fragment() {
                     menuViewModel.addMenu(
                         musclePartId!!,
                         input,
-                        (activity as HomeActivity).mUser!!.userId
+//                        (activity as HomeActivity).mUser!!.userId
+                        "ryio1010"
                     )
                 })
 
@@ -82,6 +83,9 @@ class TrainingMenuListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+//        titleTextView.text = getString(R.string.label_training_menus)
 
         // observer登録
 
