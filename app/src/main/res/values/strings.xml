@@ -10,6 +10,7 @@
     <string name="label_home">ホーム</string>
     <string name="label_log">ログ追加</string>
     <string name="label_log_history">ログ履歴</string>
+    <string name="label_log_detail">ログ詳細</string>
 
     <!-- 入力 -->
     <string name="label_id">ユーザーID</string>

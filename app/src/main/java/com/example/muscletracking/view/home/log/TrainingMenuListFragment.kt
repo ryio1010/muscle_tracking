@@ -84,8 +84,8 @@ class TrainingMenuListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
-//        titleTextView.text = getString(R.string.label_training_menus)
+        val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+        titleTextView.text = getString(R.string.label_training_menus)
 
         // observer登録
 

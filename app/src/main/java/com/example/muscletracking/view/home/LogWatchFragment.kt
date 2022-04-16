@@ -1,7 +1,9 @@
 package com.example.muscletracking.view.home
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -120,6 +122,10 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
                 it.trainingMemo
             )
             logViewModel.updateLogOfDB(log)
+            val intent = Intent()
+            val trainingDate = watchTrainingDateContainer.text.toString()
+            intent.putExtra("trainingDate", trainingDate)
+            activity?.setResult(Activity.RESULT_OK, intent)
             activity?.finish()
         })
 
@@ -140,6 +146,10 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
         }
         logViewModel.logIdDeleted.observe(this, Observer {
             logViewModel.deleteLogOfDB(watchLog)
+            val intent = Intent()
+            val trainingDate = watchTrainingDateContainer.text.toString()
+            intent.putExtra("trainingDate", trainingDate)
+            activity?.setResult(Activity.RESULT_OK, intent)
             activity?.finish()
         })
 

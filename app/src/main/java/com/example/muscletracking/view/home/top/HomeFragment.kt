@@ -1,5 +1,6 @@
 package com.example.muscletracking.view.home.top
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -24,6 +26,7 @@ import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.view.home.loghistory.TrainingLogViewAdapter
 import com.example.muscletracking.viewmodel.bodycomp.BodyCompViewModel
 import com.example.muscletracking.viewmodel.log.LogViewModel
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToLong
@@ -51,6 +54,22 @@ class HomeFragment : Fragment() {
     private var needsInsertion = false
     private var latestBodyCompInfo: BodyComp? = null
 
+    private lateinit var userHeightView: TextView
+    private lateinit var userWeightView: TextView
+    private lateinit var userBmiView: TextView
+    private lateinit var userBfpView: TextView
+    private lateinit var userLbmView: TextView
+
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                it.data.let { data: Intent? ->
+                    val date = data?.getStringExtra("trainingDate")
+                    logViewModel.getLogByDate(date!!)
+                }
+            }
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,33 +77,28 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         // 画面要素取得
-//        val userNameView = view.findViewById<TextView>(R.id.tvUserNameInput)
-        val userHeightView = view.findViewById<TextView>(R.id.tvUserHeightInput)
-        val userWeightView = view.findViewById<TextView>(R.id.tvUserWeightInput)
-        val userBmiView = view.findViewById<TextView>(R.id.tvUserBmiInput)
-        val userBfpView = view.findViewById<TextView>(R.id.tvUserBfpInput)
-        val userLbmView = view.findViewById<TextView>(R.id.tvUserLbmInput)
+        userHeightView = view.findViewById<TextView>(R.id.tvUserHeightInput)
+        userWeightView = view.findViewById<TextView>(R.id.tvUserWeightInput)
+        userBmiView = view.findViewById<TextView>(R.id.tvUserBmiInput)
+        userBfpView = view.findViewById<TextView>(R.id.tvUserBfpInput)
+        userLbmView = view.findViewById<TextView>(R.id.tvUserLbmInput)
 
         // 体組成データ設定
         bodyCompViewModel.getLatestBodyCompOfDb()
         bodyCompViewModel.latestBodyComp.observe(this, androidx.lifecycle.Observer {
             if (it == null) {
                 needsInsertion = true
-//                userNameView.text = (activity as HomeActivity).mUser!!.userName
-                userHeightView.text = "--"
-                userWeightView.text = "--"
-                userBmiView.text = "--"
-                userBfpView.text = "--"
-                userLbmView.text = "--"
+                setBodyComp("--", "--", "--", "--", "--")
             } else {
                 needsInsertion = false
                 latestBodyCompInfo = it
-//                userNameView.text = (activity as HomeActivity).mUser!!.userName
-                userHeightView.text = it.height.toString()
-                userWeightView.text = it.weight.toString()
-                userBmiView.text = it.bmi.toString()
-                userBfpView.text = it.bfp.toString()
-                userLbmView.text = it.lbm.toString()
+                setBodyComp(
+                    it.height.toString(),
+                    it.weight.toString(),
+                    it.bmi.toString(),
+                    it.bfp.toString(),
+                    it.lbm.toString()
+                )
             }
         })
 
@@ -182,6 +196,36 @@ class HomeFragment : Fragment() {
             logViewModel.getLogByDate(date)
         }
 
+        val dividerItemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        this.recyclerView = view.findViewById(R.id.rvTodayLog)
+        this.recyclerView?.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            itemAnimator = DefaultItemAnimator()
+            addItemDecoration(dividerItemDecoration)
+            adapter = TrainingTodayLogViewAdapter(
+                logList,
+                object : TrainingTodayLogViewAdapter.ListListener {
+                    override fun onClickItem(tappedView: View, log: Log) {
+                        val logId =
+                            tappedView.findViewById<TextView>(R.id.tvLogIdTodayInvisible).text.toString()
+
+                        // ログ詳細画面へ遷移
+                        val intent = Intent(activity, LogDetailActivity::class.java)
+                        intent.putExtra("logId", logId)
+//                        startActivity(intent)
+                        startForResult.launch(intent)
+                    }
+                }
+            )
+        }
+
+        logViewModel.logListByDate.observe(this, androidx.lifecycle.Observer {
+            android.util.Log.d("debug", it.toString())
+            generateList(it)
+            recyclerView?.adapter?.notifyDataSetChanged()
+        })
+
         return view
     }
 
@@ -194,41 +238,21 @@ class HomeFragment : Fragment() {
         val sdf = SimpleDateFormat("yyyyMMdd")
         val today = sdf.format(Date(System.currentTimeMillis()))
         logViewModel.getLogByDate(today)
-        logViewModel.logListByDate.observe(this, androidx.lifecycle.Observer {
-            android.util.Log.d("debug", it.toString())
-            val dividerItemDecoration =
-                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-            this.recyclerView = view.findViewById(R.id.rvTodayLog)
-            this.recyclerView?.apply {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context)
-                itemAnimator = DefaultItemAnimator()
-                addItemDecoration(dividerItemDecoration)
-                adapter = TrainingTodayLogViewAdapter(
-                    generateList(it),
-                    object : TrainingTodayLogViewAdapter.ListListener {
-                        override fun onClickItem(tappedView: View, log: Log) {
-                            val logId =
-                                tappedView.findViewById<TextView>(R.id.tvLogIdTodayInvisible).text.toString()
-
-                            // ログ詳細画面へ遷移
-                            val intent = Intent(activity, LogDetailActivity::class.java)
-                            intent.putExtra("logId", logId)
-                            startActivity(intent)
-                        }
-                    }
-                )
-            }
-        })
-
     }
 
-    private fun generateList(logs: List<Log>): List<Log> {
-        logList = mutableListOf<Log>()
+    private fun generateList(logs: List<Log>) {
+        logList.clear()
         for (log in logs) {
             logList.add(log)
         }
-        return logList
+    }
+
+    private fun setBodyComp(height: String, weight: String, bmi: String, bfp: String, lbm: String) {
+        userHeightView.text = height
+        userWeightView.text = weight
+        userBmiView.text = bmi
+        userBfpView.text = bfp
+        userLbmView.text = lbm
     }
 
     private fun calculateBmi(height: Double, weight: Double): Double {
