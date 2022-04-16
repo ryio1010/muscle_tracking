@@ -69,6 +69,6 @@
     </fragment>
     <fragment
         android:id="@+id/logWatchFragment"
-        android:name="com.example.muscletracking.view.home.LogWatchFragment"
+        android:name="com.example.muscletracking.view.home.logdetail.LogWatchFragment"
         android:label="LogWatchFragment" />
 </navigation>

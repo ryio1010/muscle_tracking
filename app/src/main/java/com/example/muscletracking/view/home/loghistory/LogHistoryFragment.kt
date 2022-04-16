@@ -1,5 +1,6 @@
 package com.example.muscletracking.view.home.loghistory
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,15 +10,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.muscletracking.HomeActivity
-import com.example.muscletracking.LogDetailActivity
+import com.example.muscletracking.view.home.HomeActivity
+import com.example.muscletracking.view.home.logdetail.LogDetailActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.log.LogViewModel
@@ -34,7 +35,22 @@ class LogHistoryFragment : Fragment() {
     }
 
     private var recyclerView: RecyclerView? = null
-    private var logList = mutableListOf<Log>()
+    private var trainingLogList = mutableListOf<Log>()
+
+    private lateinit var searchTrainingMenuContainer: TextView
+
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                it.data.let { data: Intent? ->
+                    if (searchTrainingMenuContainer.text.toString().isNotEmpty()) {
+                        logViewModel.getLogByMenu(searchTrainingMenuContainer.text.toString())
+                    } else {
+                        logViewModel.getAllLogFromDB()
+                    }
+                }
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +59,7 @@ class LogHistoryFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_log_history, container, false)
         val tvError = view.findViewById<TextView>(R.id.tvNoResult)
+        searchTrainingMenuContainer = view.findViewById<EditText>(R.id.etSearchTrainingMenu)
         tvError.visibility = TextView.INVISIBLE
 
         // observer登録
@@ -50,18 +67,13 @@ class LogHistoryFragment : Fragment() {
         logViewModel.logListByMenu.observe(this, Observer {
 
             tvError.visibility = TextView.INVISIBLE
-
-            logList.clear()
-
             if (it.isEmpty()) {
                 // 検索結果なし
+                trainingLogList.clear()
                 tvError.setText(R.string.txt_no_find_log_history)
                 tvError.visibility = TextView.VISIBLE
             } else {
-
-                for (log in it) {
-                    logList.add(log)
-                }
+                generateTrainingList(it)
             }
             recyclerView?.adapter?.notifyDataSetChanged()
         })
@@ -71,8 +83,7 @@ class LogHistoryFragment : Fragment() {
         val btSearchLog = view.findViewById<Button>(R.id.btSearchLog)
         btSearchLog.setOnClickListener {
             (activity as HomeActivity).hideKeyboard(it)
-            val searchTrainingMenu =
-                view.findViewById<EditText>(R.id.etSearchTrainingMenu).text.toString()
+            val searchTrainingMenu = searchTrainingMenuContainer.text.toString()
             logViewModel.getLogByMenu(searchTrainingMenu)
         }
 
@@ -86,6 +97,34 @@ class LogHistoryFragment : Fragment() {
             logViewModel.getAllLogFromDB()
         }
 
+        val dividerItemDecoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        this.recyclerView = view.findViewById(R.id.rvTrainingLog)
+        this.recyclerView?.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            itemAnimator = DefaultItemAnimator()
+            addItemDecoration(dividerItemDecoration)
+            adapter = TrainingLogViewAdapter(
+                trainingLogList,
+                object : TrainingLogViewAdapter.ListListener {
+                    override fun onClickItem(tappedView: View, log: Log) {
+                        val logId =
+                            tappedView.findViewById<TextView>(R.id.tvLogIdInvisible).text.toString()
+
+                        // ログ詳細画面へ遷移
+                        val intent = Intent(activity, LogDetailActivity::class.java)
+                        intent.putExtra("logId", logId)
+                        startForResult.launch(intent)
+                    }
+                }
+            )
+        }
+
+        logViewModel.logListOfDB.observe(this, Observer {
+            generateTrainingList(it)
+            recyclerView?.adapter?.notifyDataSetChanged()
+        })
+
         return view
     }
 
@@ -95,66 +134,7 @@ class LogHistoryFragment : Fragment() {
         val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
         titleTextView.text = getString(R.string.label_log_history)
 
-        val bundle = arguments
-        val trainingDate = bundle?.getString("trainingDate")
-        if (bundle == null) {
-            logViewModel.getAllLogFromDB()
-        } else {
-            logViewModel.getLogByDate(trainingDate!!)
-        }
-
-
-        logViewModel.logListOfDB.observe(this, Observer {
-            val dividerItemDecoration =
-                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-            this.recyclerView = view.findViewById(R.id.rvTrainingLog)
-            this.recyclerView?.apply {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context)
-                itemAnimator = DefaultItemAnimator()
-                addItemDecoration(dividerItemDecoration)
-                adapter = TrainingLogViewAdapter(
-                    generateList(it),
-                    object : TrainingLogViewAdapter.ListListener {
-                        override fun onClickItem(tappedView: View, log: Log) {
-                            val logId =
-                                tappedView.findViewById<TextView>(R.id.tvLogIdInvisible).text.toString()
-
-                            // ログ詳細画面へ遷移
-                            val intent = Intent(activity, LogDetailActivity::class.java)
-                            intent.putExtra("logId", logId)
-                            startActivity(intent)
-                        }
-                    }
-                )
-            }
-        })
-
-        logViewModel.logListByDate.observe(this, Observer {
-            val dividerItemDecoration =
-                DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-            this.recyclerView = view.findViewById(R.id.rvTrainingLog)
-            this.recyclerView?.apply {
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(context)
-                itemAnimator = DefaultItemAnimator()
-                addItemDecoration(dividerItemDecoration)
-                adapter = TrainingLogViewAdapter(
-                    generateList(it),
-                    object : TrainingLogViewAdapter.ListListener {
-                        override fun onClickItem(tappedView: View, log: Log) {
-                            val logId =
-                                tappedView.findViewById<TextView>(R.id.tvLogIdInvisible).text.toString()
-
-                            // ログ詳細画面へ遷移
-                            val intent = Intent(activity, LogDetailActivity::class.java)
-                            intent.putExtra("logId", logId)
-                            startActivity(intent)
-                        }
-                    }
-                )
-            }
-        })
+        logViewModel.getAllLogFromDB()
     }
 
     override fun onDestroyView() {
@@ -163,11 +143,10 @@ class LogHistoryFragment : Fragment() {
         this.recyclerView = null
     }
 
-    private fun generateList(logs: List<Log>): List<Log> {
-        logList = mutableListOf<Log>()
+    private fun generateTrainingList(logs: List<Log>) {
+        trainingLogList.clear()
         for (log in logs) {
-            logList.add(log)
+            trainingLogList.add(log)
         }
-        return logList
     }
 }

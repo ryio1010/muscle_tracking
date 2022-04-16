@@ -1,4 +1,4 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.common
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.muscletracking.R
 
 interface ToolBarCustomViewDelegate {
     fun onClickedLeftButton()

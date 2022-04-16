@@ -39,7 +39,6 @@ class UserRegisterActivity : AppCompatActivity() {
 
         // TODO:　デザイン強化
         // TODO:　ログインAPIのレスポンス確認
-        // TODO:　アクティビティ遷移時多重起動させない
 
         // 新規登録画面へのリンク登録
         val linkText = findViewById<TextView>(R.id.txtToLogin)
@@ -154,6 +153,7 @@ class UserRegisterActivity : AppCompatActivity() {
             setSpan(object : ClickableSpan() {
                 override fun onClick(view: View) {
                     val intent = Intent(this@UserRegisterActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                     view.context.startActivity(intent)
                 }
 
