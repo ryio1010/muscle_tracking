@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.muscletracking.model.user.User
+import com.example.muscletracking.view.home.HomeActivity
 import com.example.muscletracking.view.user.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
 
@@ -34,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // TODO:　Toolbarの設置
         // TODO:　デザイン強化
 
         // 新規登録画面へのリンク登録
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             setSpan(object : ClickableSpan() {
                 override fun onClick(view: View) {
                     val intent = Intent(this@MainActivity, UserRegisterActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                     view.context.startActivity(intent)
                 }
 

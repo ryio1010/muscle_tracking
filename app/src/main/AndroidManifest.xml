@@ -13,13 +13,13 @@
         android:theme="@style/MuscleTrackingTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MenuSelectActivity"
+            android:name=".view.home.log.MenuSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".LogDetailActivity"
+            android:name=".view.home.logdetail.LogDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".view.home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".view.user.UserInputHeightAndWeightActivity"

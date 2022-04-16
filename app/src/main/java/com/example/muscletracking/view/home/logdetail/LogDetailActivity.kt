@@ -1,10 +1,11 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.home.logdetail
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
-import com.example.muscletracking.view.home.LogWatchFragment
+import com.example.muscletracking.R
+import com.example.muscletracking.view.common.ToolBarCustomView
+import com.example.muscletracking.view.common.ToolBarCustomViewDelegate
 
 class LogDetailActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
     override fun onCreate(savedInstanceState: Bundle?) {

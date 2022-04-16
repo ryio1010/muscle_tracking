@@ -1,21 +1,23 @@
-package com.example.muscletracking
+package com.example.muscletracking.view.home
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.muscletracking.R
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.model.menu.Menu
 import com.example.muscletracking.model.musclepart.MusclePart
 import com.example.muscletracking.model.user.User
+import com.example.muscletracking.view.common.ToolBarCustomView
+import com.example.muscletracking.view.common.ToolBarCustomViewDelegate
 import com.example.muscletracking.viewmodel.bodycomp.BodyCompViewModel
 import com.example.muscletracking.viewmodel.log.LogViewModel
 import com.example.muscletracking.viewmodel.menu.MenuViewModel

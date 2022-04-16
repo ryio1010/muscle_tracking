@@ -12,21 +12,17 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.muscletracking.HomeActivity
-import com.example.muscletracking.LogDetailActivity
+import com.example.muscletracking.view.home.HomeActivity
+import com.example.muscletracking.view.home.logdetail.LogDetailActivity
 import com.example.muscletracking.R
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.log.Log
-import com.example.muscletracking.view.home.loghistory.TrainingLogViewAdapter
 import com.example.muscletracking.viewmodel.bodycomp.BodyCompViewModel
 import com.example.muscletracking.viewmodel.log.LogViewModel
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToLong
@@ -221,7 +217,6 @@ class HomeFragment : Fragment() {
         }
 
         logViewModel.logListByDate.observe(this, androidx.lifecycle.Observer {
-            android.util.Log.d("debug", it.toString())
             generateList(it)
             recyclerView?.adapter?.notifyDataSetChanged()
         })
