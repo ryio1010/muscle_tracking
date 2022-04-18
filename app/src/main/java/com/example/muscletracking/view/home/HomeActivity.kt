@@ -17,7 +17,6 @@ import com.example.muscletracking.model.menu.Menu
 import com.example.muscletracking.model.musclepart.MusclePart
 import com.example.muscletracking.model.user.User
 import com.example.muscletracking.view.common.ToolBarCustomView
-import com.example.muscletracking.view.common.ToolBarCustomViewDelegate
 import com.example.muscletracking.viewmodel.bodycomp.BodyCompViewModel
 import com.example.muscletracking.viewmodel.log.LogViewModel
 import com.example.muscletracking.viewmodel.menu.MenuViewModel
@@ -25,7 +24,7 @@ import com.example.muscletracking.viewmodel.musclepart.MusclePartViewModel
 import com.example.muscletracking.viewmodel.user.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
+class HomeActivity : AppCompatActivity() {
     // TODO:API実行が追いついてないので、画面の表示がおかしくなっている
 
     private var inputMethodManager: InputMethodManager? = null
@@ -152,21 +151,12 @@ class HomeActivity : AppCompatActivity(), ToolBarCustomViewDelegate {
 
     private fun setCustomBar() {
         val toolBarCustomView = ToolBarCustomView(this)
-        toolBarCustomView.delegate = this
 
         val title = getString(R.string.label_home)
         toolBarCustomView.configure(title, isHideLeftButton = false, isHideRightButton = false)
 
         val layout = findViewById<LinearLayout>(R.id.llAppBarHome)
         layout.addView(toolBarCustomView)
-    }
-
-    override fun onClickedLeftButton() {
-        finish()
-    }
-
-    override fun onClickedRightButton() {
-        finish()
     }
 
     fun hideKeyboard(view: View) {

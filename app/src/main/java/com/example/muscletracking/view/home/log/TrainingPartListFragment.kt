@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -49,7 +47,11 @@ class TrainingPartListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
+        val leftButton = activity!!.findViewById<ImageButton>(R.id.ibToolBarLeft)
         titleTextView.text = getString(R.string.label_training_muscle_groups)
+        leftButton.setOnClickListener {
+            activity!!.finish()
+        }
 
         musclePartViewModel.getAllMusclePartFromDB()
         musclePartViewModel.musclePartListOfDB.observe(this, Observer {
@@ -77,6 +79,7 @@ class TrainingPartListFragment : Fragment() {
                             fragment.arguments = bundle
 
                             transaction.replace(R.id.fcvTrainingMenuSelect, fragment)
+                            transaction.addToBackStack("menuListFragment")
                             transaction.commit()
 
 //                            val action =

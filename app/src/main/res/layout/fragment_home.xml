@@ -193,7 +193,7 @@
 
     </LinearLayout>
 
-    <CalendarView
+    <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/cvForLogByDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

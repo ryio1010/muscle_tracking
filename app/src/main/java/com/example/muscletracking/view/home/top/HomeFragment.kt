@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.applandeo.materialcalendarview.CalendarView
 import com.example.muscletracking.view.home.HomeActivity
 import com.example.muscletracking.view.home.logdetail.LogDetailActivity
 import com.example.muscletracking.R
@@ -181,10 +182,23 @@ class HomeFragment : Fragment() {
 
         // ログ履歴用カレンダーの設定
         val cv = view.findViewById<CalendarView>(R.id.cvForLogByDate)
+        val trainingDates = mutableListOf<Calendar>()
+        val calendarDate = Calendar.getInstance()
+        calendarDate.set(2022, 3, 17)
+        trainingDates.add(calendarDate)
+        cv.setHighlightedDays(trainingDates)
         val text = view.findViewById<TextView>(R.id.tvTodayTraining)
-        cv.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
-            val date = "%04d%02d%02d".format(year, month + 1, dayOfMonth)
-            val dateForView = "%02d月%02d日".format(month + 1, dayOfMonth)
+        cv.setOnDayClickListener {
+            val selectedDate = it.calendar
+            val date = "%04d%02d%02d".format(
+                selectedDate.get(Calendar.YEAR),
+                selectedDate.get(Calendar.MONTH) + 1,
+                selectedDate.get(Calendar.DATE)
+            )
+            val dateForView = "%02d月%02d日".format(
+                selectedDate.get(Calendar.MONTH) + 1,
+                selectedDate.get(Calendar.DATE)
+            )
 //            val bundle = Bundle()
 //            bundle.putString("trainingDate", date)
 //            findNavController().navigate(R.id.action_homeFragment_to_logHistoryFragment, bundle)
