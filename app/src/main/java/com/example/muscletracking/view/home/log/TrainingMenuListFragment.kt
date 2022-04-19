@@ -86,7 +86,7 @@ class TrainingMenuListFragment : Fragment() {
         val leftButton = activity!!.findViewById<ImageButton>(R.id.ibToolBarLeft)
         titleTextView.text = getString(R.string.label_training_menus)
         leftButton.setOnClickListener {
-            childFragmentManager.popBackStack("menuListFragment",FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            parentFragmentManager.popBackStack("menuListFragment",FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
 
         // observer登録
@@ -118,9 +118,6 @@ class TrainingMenuListFragment : Fragment() {
                                 val selectedMenu =
                                     tappedView.findViewById<TextView>(R.id.tvTrainingMenu).text.toString()
 
-//                                val bundle = Bundle()
-//                                bundle.putString("selectedMenuId", selectedMenuId)
-//                                bundle.putString("selectedMenu", selectedMenu)
                                 val intent = Intent()
                                 intent.putExtra("selectedMenuId", selectedMenuId)
                                 intent.putExtra("selectedMenu", selectedMenu)
@@ -151,15 +148,5 @@ class TrainingMenuListFragment : Fragment() {
             menuList.add(menu)
         }
         return menuList
-    }
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance(): TrainingMenuListFragment {
-            return TrainingMenuListFragment()
-        }
-
-
     }
 }
