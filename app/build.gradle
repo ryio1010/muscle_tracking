@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
     implementation 'androidx.core:core-ktx:1.0.1'
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
 
     // lifecycle
     def lifecycle_version = "2.1.0"
@@ -70,12 +71,6 @@ dependencies {
 
     // okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-
-//    // architecture components
-//    def arch_version = "1.1.0"
-//    implementation "android.arch.lifecycle:runtime:$arch_version"
-//    implementation "android.arch.lifecycle:extensions:$arch_version"
-//    implementation "android.arch.lifecycle:reactivestreams:$arch_version"
 
     // dagger2
     def dagger_version="2.27"

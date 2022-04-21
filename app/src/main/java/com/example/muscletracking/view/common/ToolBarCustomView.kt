@@ -9,13 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.muscletracking.R
 
-interface ToolBarCustomViewDelegate {
-    fun onClickedLeftButton()
-    fun onClickedRightButton()
-}
-
 class ToolBarCustomView : LinearLayout {
-    var delegate: ToolBarCustomViewDelegate? = null
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -45,12 +39,5 @@ class ToolBarCustomView : LinearLayout {
         titleTextView.text = titleText
         leftButton.visibility = if (isHideLeftButton) View.VISIBLE else View.INVISIBLE
         rightButton.visibility = if (isHideRightButton) View.VISIBLE else View.INVISIBLE
-
-        leftButton.setOnClickListener {
-            delegate?.onClickedLeftButton()
-        }
-        rightButton.setOnClickListener {
-            delegate?.onClickedRightButton()
-        }
     }
 }
