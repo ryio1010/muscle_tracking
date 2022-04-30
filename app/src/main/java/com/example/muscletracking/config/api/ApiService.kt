@@ -7,6 +7,7 @@ import com.example.muscletracking.model.menu.MenuResponse
 import com.example.muscletracking.model.musclepart.MusclePartResponse
 import com.example.muscletracking.model.user.UserResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -31,6 +32,16 @@ interface ApiService {
         @Field("userId") userid: String,
         @Field("password") password: String
     ): Call<UserResponse>
+
+    /**
+     * ユーザーログインAPI
+     */
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun login2(
+        @Field("userId") userid: String,
+        @Field("password") password: String
+    ): Response<UserResponse>
 
     /**
      * ユーザー情報更新API

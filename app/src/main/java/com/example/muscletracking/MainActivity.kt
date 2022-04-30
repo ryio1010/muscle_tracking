@@ -9,16 +9,20 @@ import android.text.SpannableStringBuilder
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.muscletracking.common.ApiResult
 import com.example.muscletracking.model.user.User
 import com.example.muscletracking.view.home.HomeActivity
 import com.example.muscletracking.view.user.UserRegisterActivity
 import com.example.muscletracking.viewmodel.user.UserViewModel
+import retrofit2.HttpException
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,6 +68,38 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+
+        userViewModel.loginTest.observe(this, Observer {
+            when (it) {
+                is ApiResult.Proceeding -> {
+                    // progress barを表示
+                    Toast.makeText(this, "PROCEEDING", Toast.LENGTH_SHORT).show()
+                }
+                is ApiResult.Success -> {
+                    val processDialogFragment =
+                        supportFragmentManager.findFragmentByTag(ProcessDialogFragment::class.java.name)
+                    (processDialogFragment as? DialogFragment)?.dismiss()
+
+                    Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show()
+
+                    // ローカルDBにユーザー情報を登録
+                    val userInfoForDB = User(it.value.userId, it.value.userName, it.value.password)
+                    userViewModel.insertUser(userInfoForDB)
+
+                    // トップ画面へ遷移
+                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                    intent.putExtra("userId", it.value.userId)
+                    startActivity(intent)
+                }
+                is ApiResult.Error -> {
+                    val processDialogFragment =
+                        supportFragmentManager.findFragmentByTag(ProcessDialogFragment::class.java.name)
+                    (processDialogFragment as? DialogFragment)?.dismiss()
+
+                    Toast.makeText(this, it.exception.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     // ログインボタン押下処理
@@ -76,7 +112,16 @@ class MainActivity : AppCompatActivity() {
             val canLogin = checkValidation(userId, password)
             if (canLogin) {
                 // loginAPI実行
-                userViewModel.login(userId.text.toString(), password.text.toString())
+                //userViewModel.login(userId.text.toString(), password.text.toString())
+                userViewModel.login2(userId.text.toString(), password.text.toString())
+                if (!ProcessDialogFragment.getInstance().isAdded) {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.add(
+                        ProcessDialogFragment.getInstance(),
+                        ProcessDialogFragment::class.java.name
+                    )
+                    transaction.commit()
+                }
             }
         }
     }

@@ -91,6 +91,8 @@
     <string name="menu_log">ログ</string>
     <string name="menu_training_menu_master">トレーニングメニュー管理</string>
     <string name="menu_dark_mode">ダークモード切り替え</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

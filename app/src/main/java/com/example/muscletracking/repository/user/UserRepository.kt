@@ -3,10 +3,13 @@ package com.example.muscletracking.repository.user
 import android.app.Application
 import android.util.Log
 import androidx.annotation.WorkerThread
+import com.example.muscletracking.common.apiCall
+import com.example.muscletracking.common.ApiResult
 import com.example.muscletracking.config.db.AppDatabase
 import com.example.muscletracking.config.api.RetrofitClient
 import com.example.muscletracking.model.user.User
 import com.example.muscletracking.model.user.UserResponse
+import kotlinx.coroutines.flow.Flow
 
 class UserRepository(app: Application) {
 
@@ -45,6 +48,9 @@ class UserRepository(app: Application) {
         Log.d("test", response.code().toString())
         return response.body()
     }
+
+    fun login2(userId:String,password: String) : Flow<ApiResult<UserResponse>> =
+        apiCall { retrofitClient.login2(userId,password) }
 
     /**
      * registerAPI
