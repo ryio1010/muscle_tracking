@@ -76,9 +76,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "PROCEEDING", Toast.LENGTH_SHORT).show()
                 }
                 is ApiResult.Success -> {
-                    val processDialogFragment =
-                        supportFragmentManager.findFragmentByTag(ProcessDialogFragment::class.java.name)
-                    (processDialogFragment as? DialogFragment)?.dismiss()
+                    hideProgressDialog()
 
                     Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show()
 
@@ -92,11 +90,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 is ApiResult.Error -> {
-                    val processDialogFragment =
-                        supportFragmentManager.findFragmentByTag(ProcessDialogFragment::class.java.name)
-                    (processDialogFragment as? DialogFragment)?.dismiss()
+                    hideProgressDialog()
 
-                    Toast.makeText(this, it.exception.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.msg_can_not_login_error, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
@@ -114,14 +111,8 @@ class MainActivity : AppCompatActivity() {
                 // loginAPI実行
                 //userViewModel.login(userId.text.toString(), password.text.toString())
                 userViewModel.login2(userId.text.toString(), password.text.toString())
-                if (!ProcessDialogFragment.getInstance().isAdded) {
-                    val transaction = supportFragmentManager.beginTransaction()
-                    transaction.add(
-                        ProcessDialogFragment.getInstance(),
-                        ProcessDialogFragment::class.java.name
-                    )
-                    transaction.commit()
-                }
+
+                showProgressDialog()
             }
         }
     }
@@ -198,5 +189,22 @@ class MainActivity : AppCompatActivity() {
             view.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS
         )
+    }
+
+    private fun showProgressDialog() {
+        if (!ProcessDialogFragment.getInstance().isAdded) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.add(
+                ProcessDialogFragment.getInstance(),
+                ProcessDialogFragment::class.java.name
+            )
+            transaction.commit()
+        }
+    }
+
+    private fun hideProgressDialog() {
+        val processDialogFragment =
+            supportFragmentManager.findFragmentByTag(ProcessDialogFragment::class.java.name)
+        (processDialogFragment as? DialogFragment)?.dismiss()
     }
 }

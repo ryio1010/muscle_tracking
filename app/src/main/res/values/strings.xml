@@ -84,6 +84,7 @@
     <string name="msg_can_not_find_user">ユーザーIDが存在しません。新規登録してください。</string>
     <string name="msg_can_not_register">このユーザーIDはすでに使われています。</string>
     <string name="msg_can_not_update">更新ができませんでした</string>
+    <string name="msg_can_not_login_error">ログインに失敗しました。時間をおいて再実行してください。</string>
 
     <!-- メニュー -->
     <string name="menu_home">ホーム</string>
