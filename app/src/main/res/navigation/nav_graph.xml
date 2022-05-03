@@ -71,4 +71,9 @@
         android:id="@+id/logWatchFragment"
         android:name="com.example.muscletracking.view.home.logdetail.LogWatchFragment"
         android:label="LogWatchFragment" />
+    <fragment
+        android:id="@+id/bodyCompFragment"
+        android:name="com.example.muscletracking.view.home.bodycomp.BodyCompFragment"
+        android:label="fragment_body_comp"
+        tools:layout="@layout/fragment_body_comp" />
 </navigation>

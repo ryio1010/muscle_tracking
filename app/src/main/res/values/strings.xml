@@ -84,16 +84,15 @@
     <string name="msg_can_not_find_user">ユーザーIDが存在しません。新規登録してください。</string>
     <string name="msg_can_not_register">このユーザーIDはすでに使われています。</string>
     <string name="msg_can_not_update">更新ができませんでした</string>
-    <string name="msg_can_not_login_error">ログインに失敗しました。時間をおいて再実行してください。</string>
+    <string name="msg_can_not_login_error">ログインに失敗しました。\n時間をおいて再実行してください。</string>
 
     <!-- メニュー -->
     <string name="menu_home">ホーム</string>
     <string name="menu_log_history">ログ履歴</string>
     <string name="menu_log">ログ</string>
+    <string name="menu_body_comp">体組成</string>
     <string name="menu_training_menu_master">トレーニングメニュー管理</string>
     <string name="menu_dark_mode">ダークモード切り替え</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
 </resources>

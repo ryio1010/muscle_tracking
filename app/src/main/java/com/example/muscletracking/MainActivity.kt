@@ -72,13 +72,9 @@ class MainActivity : AppCompatActivity() {
         userViewModel.loginTest.observe(this, Observer {
             when (it) {
                 is ApiResult.Proceeding -> {
-                    // progress barを表示
-                    Toast.makeText(this, "PROCEEDING", Toast.LENGTH_SHORT).show()
                 }
                 is ApiResult.Success -> {
                     hideProgressDialog()
-
-                    Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show()
 
                     // ローカルDBにユーザー情報を登録
                     val userInfoForDB = User(it.value.userId, it.value.userName, it.value.password)
@@ -90,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 is ApiResult.Error -> {
+                    // http statusで分岐
                     hideProgressDialog()
 
                     Toast.makeText(this, R.string.msg_can_not_login_error, Toast.LENGTH_SHORT)

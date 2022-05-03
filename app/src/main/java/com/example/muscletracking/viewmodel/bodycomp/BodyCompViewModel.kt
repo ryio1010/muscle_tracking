@@ -3,12 +3,14 @@ package com.example.muscletracking.viewmodel.bodycomp
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.muscletracking.common.ApiResult
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.bodycomp.BodyCompResponse
 import com.example.muscletracking.repository.bodycomp.BodyCompRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
@@ -19,6 +21,8 @@ class BodyCompViewModel(app: Application) : AndroidViewModel(app) {
     val bodyCompList: MutableLiveData<List<BodyCompResponse>> = MutableLiveData()
     val insertedBodyComp: MutableLiveData<BodyCompResponse> = MutableLiveData()
     val updatedBodyComp: MutableLiveData<BodyCompResponse> = MutableLiveData()
+
+    val latestBodyComp2 = MutableLiveData<ApiResult<BodyCompResponse>>(ApiResult.Proceeding)
 
     // coroutine用
     private var parentJob = Job()
@@ -51,6 +55,10 @@ class BodyCompViewModel(app: Application) : AndroidViewModel(app) {
     fun getAllBodyComp(userId: String) = scope.launch(Dispatchers.IO) {
         val allBodyComp = repository.getAllBodyComp(userId)
         bodyCompList.postValue(allBodyComp)
+    }
+
+    fun getLatestBodyComp(userId: String) = scope.launch {
+        repository.getLatestBodyComp(userId).collectLatest { latestBodyComp2.value = it }
     }
 
     fun insertBodyComp(

@@ -130,6 +130,12 @@ interface ApiService {
     fun getAllBodyComp(@Path("userId") userId: String): Call<List<BodyCompResponse>>
 
     /**
+     * 体組成データ取得API
+     */
+    @GET("bodycomp/latest/{userId}")
+    suspend fun getLatestBodyComp(@Path("userId") userId: String): Response<BodyCompResponse>
+
+    /**
      * 体組成データ追加API
      */
     @FormUrlEncoded
