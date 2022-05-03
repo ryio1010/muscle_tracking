@@ -11,15 +11,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.applandeo.materialcalendarview.CalendarView
+import com.example.muscletracking.ProcessDialogFragment
 import com.example.muscletracking.view.home.HomeActivity
 import com.example.muscletracking.view.home.logdetail.LogDetailActivity
 import com.example.muscletracking.R
+import com.example.muscletracking.common.ApiResult
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.log.Log
 import com.example.muscletracking.viewmodel.bodycomp.BodyCompViewModel
@@ -37,25 +40,9 @@ class HomeFragment : Fragment() {
             LogViewModel::class.java
         )
     }
-    private val bodyCompViewModel: BodyCompViewModel by lazy {
-        ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory(activity!!.application)
-        ).get(
-            BodyCompViewModel::class.java
-        )
-    }
 
     private var recyclerView: RecyclerView? = null
     private var logList = mutableListOf<Log>()
-    private var needsInsertion = false
-    private var latestBodyCompInfo: BodyComp? = null
-
-    private lateinit var userHeightView: TextView
-    private lateinit var userWeightView: TextView
-    private lateinit var userBmiView: TextView
-    private lateinit var userBfpView: TextView
-    private lateinit var userLbmView: TextView
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -72,113 +59,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        // 画面要素取得
-        userHeightView = view.findViewById<TextView>(R.id.tvUserHeightInput)
-        userWeightView = view.findViewById<TextView>(R.id.tvUserWeightInput)
-        userBmiView = view.findViewById<TextView>(R.id.tvUserBmiInput)
-        userBfpView = view.findViewById<TextView>(R.id.tvUserBfpInput)
-        userLbmView = view.findViewById<TextView>(R.id.tvUserLbmInput)
-
-        // 体組成データ設定
-        bodyCompViewModel.getLatestBodyCompOfDb()
-        bodyCompViewModel.latestBodyComp.observe(this, androidx.lifecycle.Observer {
-            if (it == null) {
-                needsInsertion = true
-                setBodyComp("--", "--", "--", "--", "--")
-            } else {
-                needsInsertion = false
-                latestBodyCompInfo = it
-                setBodyComp(
-                    it.height.toString(),
-                    it.weight.toString(),
-                    it.bmi.toString(),
-                    it.bfp.toString(),
-                    it.lbm.toString()
-                )
-            }
-        })
-
-        // 体組成データ押下処理
-        val llBodyCompContainer = view.findViewById<LinearLayout>(R.id.llBodyCompContainer)
-        llBodyCompContainer.setOnClickListener {
-            val dialogContent =
-                LayoutInflater.from(activity).inflate(R.layout.item_input_bodycomp, null)
-
-            val modifyHeightContainer = dialogContent.findViewById<EditText>(R.id.tvModifyHeight)
-            modifyHeightContainer.setText(userHeightView.text.toString())
-
-            val modifyWeightContainer = dialogContent.findViewById<EditText>(R.id.tvModifyWeight)
-            modifyWeightContainer.setText(userWeightView.text.toString())
-
-            val modifyBfpContainer = dialogContent.findViewById<EditText>(R.id.tvModifyBfp)
-            modifyBfpContainer.setText(userBfpView.text.toString())
-
-            val dialog = AlertDialog.Builder(activity)
-            dialog.setTitle("体組成修正")
-            dialog.setPositiveButton(
-                "修正",
-                DialogInterface.OnClickListener { _, _ ->
-                    val modifyHeightValue = modifyHeightContainer.text.toString().toDouble()
-                    val modifyWeightValue = modifyWeightContainer.text.toString().toDouble()
-                    val modifyBfpValue = modifyBfpContainer.text.toString().toDouble()
-
-                    userHeightView.text = modifyHeightValue.toString()
-                    userWeightView.text = modifyWeightValue.toString()
-                    userBmiView.text = calculateBmi(modifyHeightValue, modifyWeightValue).toString()
-                    userBfpView.text = modifyBfpValue.toString()
-                    userLbmView.text = calculateLbm(modifyWeightValue, modifyBfpValue).toString()
-
-                    if (needsInsertion) {
-                        bodyCompViewModel.insertBodyComp(
-                            modifyHeightValue,
-                            modifyWeightValue,
-                            modifyBfpValue,
-                            latestBodyCompInfo!!.bodyCompDate,
-                            (activity as HomeActivity).mUser!!.userId
-                        )
-                    } else {
-                        bodyCompViewModel.updateBodyComp(
-                            latestBodyCompInfo!!.bodyCompId,
-                            modifyHeightValue,
-                            modifyWeightValue,
-                            modifyBfpValue,
-                            (activity as HomeActivity).mUser!!.userId
-                        )
-                    }
-                }
-            )
-            dialog.setNegativeButton("戻る", null)
-            dialog.setView(dialogContent)
-            dialog.show()
-        }
-        // 体組成データInsertAPI実行後の処理
-        bodyCompViewModel.insertedBodyComp.observe(this, androidx.lifecycle.Observer {
-            val insertBodyComp = BodyComp(
-                it.bodyCompId,
-                it.height,
-                it.weight,
-                it.bfp,
-                calculateBmi(it.height, it.weight),
-                calculateLbm(it.weight, it.bfp),
-                it.bodyCompDate
-            )
-            bodyCompViewModel.insertBodyCompDb(insertBodyComp)
-        })
-
-        // 体組成データUpdateAPI実行後の処理
-        bodyCompViewModel.updatedBodyComp.observe(this, androidx.lifecycle.Observer {
-            val updateBodyComp = BodyComp(
-                it.bodyCompId,
-                it.height,
-                it.weight,
-                it.bfp,
-                calculateBmi(it.height, it.weight),
-                calculateLbm(it.weight, it.bfp),
-                it.bodyCompDate
-            )
-            bodyCompViewModel.updateBodyCompDb(updateBodyComp)
-        })
 
         // ログ履歴用カレンダーの設定
         val cv = view.findViewById<CalendarView>(R.id.cvForLogByDate)
@@ -244,8 +124,11 @@ class HomeFragment : Fragment() {
         val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
         titleTextView.text = getString(R.string.label_home)
 
+        val text = view.findViewById<TextView>(R.id.tvTodayTraining)
         val sdf = SimpleDateFormat("yyyyMMdd")
+        val sdfForView = SimpleDateFormat("MM月dd日")
         val today = sdf.format(Date(System.currentTimeMillis()))
+        text.text = "${sdfForView.format(Date(System.currentTimeMillis()))} のトレーニング"
         logViewModel.getLogByDate(today)
     }
 
@@ -254,21 +137,5 @@ class HomeFragment : Fragment() {
         for (log in logs) {
             logList.add(log)
         }
-    }
-
-    private fun setBodyComp(height: String, weight: String, bmi: String, bfp: String, lbm: String) {
-        userHeightView.text = height
-        userWeightView.text = weight
-        userBmiView.text = bmi
-        userBfpView.text = bfp
-        userLbmView.text = lbm
-    }
-
-    private fun calculateBmi(height: Double, weight: Double): Double {
-        return (weight / (height / 100 * (height / 100)) * 100.0).roundToLong() / 100.0
-    }
-
-    private fun calculateLbm(weight: Double, bfp: Double): Double {
-        return (weight * (100 - bfp) / 100 * 100.0).roundToLong() / 100.0
     }
 }

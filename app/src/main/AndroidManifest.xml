@@ -22,9 +22,6 @@
             android:name=".view.home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.user.UserInputHeightAndWeightActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.user.RegisterUserCompleteActivity"
             android:exported="false" />
         <activity

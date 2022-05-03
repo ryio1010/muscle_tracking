@@ -13,4 +13,8 @@
         android:id="@+id/logHistoryFragment"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/menu_log_history" />
+    <item
+        android:id="@+id/bodyCompFragment"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/menu_body_comp" />
 </menu>

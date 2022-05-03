@@ -2,10 +2,13 @@ package com.example.muscletracking.repository.bodycomp
 
 import android.app.Application
 import androidx.annotation.WorkerThread
+import com.example.muscletracking.common.ApiResult
+import com.example.muscletracking.common.apiCall
 import com.example.muscletracking.config.api.RetrofitClient
 import com.example.muscletracking.config.db.AppDatabase
 import com.example.muscletracking.model.bodycomp.BodyComp
 import com.example.muscletracking.model.bodycomp.BodyCompResponse
+import kotlinx.coroutines.flow.Flow
 
 class BodyCompRepository(app: Application) {
     private val bodyCompDao = AppDatabase.getInstance(app).bodyCompDao()
@@ -40,6 +43,9 @@ class BodyCompRepository(app: Application) {
             null
         }
     }
+
+    fun getLatestBodyComp(userId: String): Flow<ApiResult<BodyCompResponse>> =
+        apiCall { retrofitClient.getLatestBodyComp(userId) }
 
     @WorkerThread
     suspend fun insertBodyComp(

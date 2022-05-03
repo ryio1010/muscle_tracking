@@ -4,12 +4,14 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.muscletracking.common.ApiResult
 import com.example.muscletracking.model.user.User
 import com.example.muscletracking.model.user.UserResponse
 import com.example.muscletracking.repository.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
@@ -20,6 +22,8 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     val mUserInfo: MutableLiveData<UserResponse> = MutableLiveData()
     val mUserInfoUpdate: MutableLiveData<UserResponse> = MutableLiveData()
     val isUserRegistered: MutableLiveData<Boolean> = MutableLiveData()
+
+    val loginTest = MutableLiveData<ApiResult<UserResponse>>(ApiResult.Proceeding)
 
     // TODO:　共通用のViewModelを作成し、継承させる
     // TODO:　API実行時のコルーチンの使用について確認
@@ -60,6 +64,10 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     fun login(userid: String, password: String) = scope.launch(Dispatchers.IO) {
         val user = repository.login(userid, password)
         mUserInfo.postValue(user)
+    }
+
+    fun login2(userId: String, password: String) = scope.launch {
+        repository.login2(userId, password).collectLatest { loginTest.value = it }
     }
 
     /**

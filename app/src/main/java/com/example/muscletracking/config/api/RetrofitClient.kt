@@ -1,5 +1,7 @@
 package com.example.muscletracking.config.api
 
+import com.example.muscletracking.BuildConfig
+import com.example.muscletracking.BuildConfig.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
@@ -11,8 +13,6 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private var apiService: ApiService
-    // TODO:今後設定ファイルに移管
-    private const val BASE_URL: String = "http://10.0.2.2:8080/api/"
 
     init {
         // moshiの初期設定
