@@ -42,15 +42,8 @@ class UserRepository(app: Application) {
     /**
      * loginAPI
      */
-    @WorkerThread
-    suspend fun login(userid: String, password: String): UserResponse? {
-        val response = retrofitClient.login(userid, password).execute()
-        Log.d("test", response.code().toString())
-        return response.body()
-    }
-
-    fun login2(userId:String,password: String) : Flow<ApiResult<UserResponse>> =
-        apiCall { retrofitClient.login2(userId,password) }
+    fun login(userId:String, password: String) : Flow<ApiResult<UserResponse>> =
+        apiCall { retrofitClient.login(userId,password) }
 
     /**
      * registerAPI

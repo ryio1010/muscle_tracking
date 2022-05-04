@@ -28,17 +28,7 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("user/login")
-    fun login(
-        @Field("userId") userid: String,
-        @Field("password") password: String
-    ): Call<UserResponse>
-
-    /**
-     * ユーザーログインAPI
-     */
-    @FormUrlEncoded
-    @POST("user/login")
-    suspend fun login2(
+    suspend fun login(
         @Field("userId") userid: String,
         @Field("password") password: String
     ): Response<UserResponse>

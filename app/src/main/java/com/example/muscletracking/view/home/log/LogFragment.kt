@@ -91,7 +91,6 @@ class LogFragment : Fragment(), DatePickerFragment.OnselectedListener {
 
         dateForView = sdfForView.format(today)
         dateForApi = sdfForApi.format(today)
-
         tvDate = view.findViewById(R.id.tvTrainingDate)
         tvDate.text = dateForView
 

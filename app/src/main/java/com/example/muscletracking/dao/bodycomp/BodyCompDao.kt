@@ -9,6 +9,9 @@ interface BodyCompDao {
     @Query("SELECT * FROM bodycomp order by date desc limit 1")
     fun getLatestBodyComp(): BodyComp
 
+    @Query("SELECT * FROM bodycomp WHERE date = :bodyCompDate")
+    fun getBodyCompByDate(bodyCompDate: String): BodyComp
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(bodyComp: BodyComp)
 

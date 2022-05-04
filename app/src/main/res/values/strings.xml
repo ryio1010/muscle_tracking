@@ -6,7 +6,7 @@
     <string name="label_register_user">新規登録</string>
     <string name="label_input_height_and_weight">身長体重入力</string>
     <string name="label_top">Welcome To MuscleTracking!</string>
-    <string name="label_body_comp">体組成</string>
+    <string name="label_body_comp">体組成データ</string>
     <string name="label_home">ホーム</string>
     <string name="label_log">ログ追加</string>
     <string name="label_log_history">ログ履歴</string>
@@ -56,6 +56,7 @@
     <string name="txt_to_login_highlight">Log In</string>
     <string name="txt_register_user_complete">ユーザー登録ありがとうございます！</string>
     <string name="txt_no_find_log_history">検索結果がありません。</string>
+    <string name="txt_no_find_data">データはありません。</string>
     <string name="txt_hint_log_memo">メモを入力</string>
     <string name="txt_select">選択してください</string>
 
@@ -81,7 +82,7 @@
     <string name="msg_no_input_training_count">回数を入力してください</string>
     <string name="msg_no_input_training_menu">メニューを選択してください</string>
     <string name="msg_can_not_login">ユーザーIDとパスワードが一致しません</string>
-    <string name="msg_can_not_find_user">ユーザーIDが存在しません。新規登録してください。</string>
+    <string name="msg_can_not_find_user">ユーザーIDが存在しません。\n新規登録してください。</string>
     <string name="msg_can_not_register">このユーザーIDはすでに使われています。</string>
     <string name="msg_can_not_update">更新ができませんでした</string>
     <string name="msg_can_not_login_error">ログインに失敗しました。\n時間をおいて再実行してください。</string>

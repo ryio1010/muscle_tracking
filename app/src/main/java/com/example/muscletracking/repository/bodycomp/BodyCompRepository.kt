@@ -20,6 +20,11 @@ class BodyCompRepository(app: Application) {
     }
 
     @WorkerThread
+    suspend fun getBodyCompByDate(bodyCompDate: String): BodyComp {
+        return bodyCompDao.getBodyCompByDate(bodyCompDate)
+    }
+
+    @WorkerThread
     suspend fun insertBodyCompDb(bodyComp: BodyComp) {
         return bodyCompDao.insert(bodyComp)
     }

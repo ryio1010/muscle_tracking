@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private var inputMethodManager: InputMethodManager? = null
 
-    // viewModel設定
     private val userViewModel: UserViewModel by lazy {
         ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(
             UserViewModel::class.java
@@ -55,24 +54,7 @@ class MainActivity : AppCompatActivity() {
         // observer登録
         // ログインAPI実行時
         userViewModel.mUserInfo.observe(this, Observer {
-            if (it == null) {
-                // TODO:　ログインAPIのレスポンスでの処理分岐
-            } else {
-                // ローカルDBにユーザー情報を登録
-                val userInfoForDB = User(it.userId, it.userName, it.password)
-                userViewModel.insertUser(userInfoForDB)
-
-                // トップ画面へ遷移
-                val intent = Intent(this@MainActivity, HomeActivity::class.java)
-                intent.putExtra("userId", it.userId)
-                startActivity(intent)
-            }
-        })
-
-        userViewModel.loginTest.observe(this, Observer {
             when (it) {
-                is ApiResult.Proceeding -> {
-                }
                 is ApiResult.Success -> {
                     hideProgressDialog()
 
@@ -84,13 +66,32 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this@MainActivity, HomeActivity::class.java)
                     intent.putExtra("userId", it.value.userId)
                     startActivity(intent)
+                    finish()
                 }
                 is ApiResult.Error -> {
-                    // http statusで分岐
                     hideProgressDialog()
 
-                    Toast.makeText(this, R.string.msg_can_not_login_error, Toast.LENGTH_SHORT)
-                        .show()
+                    // statusで分岐
+                    if (it.exception is HttpException) {
+                        Log.d("debug",it.exception.code().toString())
+                        when (it.exception.code()) {
+                            401 -> Toast.makeText(
+                                this,
+                                R.string.msg_can_not_login,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            404 -> Toast.makeText(
+                                this,
+                                R.string.msg_can_not_find_user,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            else -> Toast.makeText(
+                                this,
+                                R.string.msg_can_not_login_error,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
             }
         })
@@ -105,11 +106,11 @@ class MainActivity : AppCompatActivity() {
 
             val canLogin = checkValidation(userId, password)
             if (canLogin) {
-                // loginAPI実行
-                //userViewModel.login(userId.text.toString(), password.text.toString())
-                userViewModel.login2(userId.text.toString(), password.text.toString())
-
                 showProgressDialog()
+                // loginAPI実行
+                userViewModel.login(userId.text.toString(), password.text.toString())
+
+
             }
         }
     }
