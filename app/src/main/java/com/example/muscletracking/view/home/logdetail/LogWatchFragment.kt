@@ -112,6 +112,7 @@ class LogWatchFragment : Fragment(), DatePickerFragment.OnselectedListener {
                 it.logId,
                 it.menuId,
                 it.menuName,
+                it.musclePart,
                 it.trainingWeight,
                 it.trainingCount,
                 it.trainingDate,

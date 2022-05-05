@@ -3,6 +3,7 @@ package com.example.muscletracking.view.home.top
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.muscletracking.R
@@ -24,6 +25,18 @@ class TrainingTodayLogViewAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val imageView = holder.itemView.findViewById<ImageView>(R.id.ivTrainingDateLog)
+        val resId = when (list[position].musclePart) {
+            "胸" -> R.drawable.chest
+            "背中" -> R.drawable.back
+            "腕" -> R.drawable.arm
+            "肩" -> R.drawable.shoulder
+            "脚" -> R.drawable.leg
+            else -> R.drawable.others
+        }
+        imageView.setImageResource(resId)
+
+
         holder.itemView.findViewById<TextView>(R.id.tvLogIdTodayInvisible).text =
             list[position].logId.toString()
         holder.itemView.findViewById<TextView>(R.id.tvTrainingWeightOfTodayLog).text =

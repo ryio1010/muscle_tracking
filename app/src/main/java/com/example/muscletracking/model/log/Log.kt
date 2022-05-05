@@ -16,6 +16,9 @@ data class Log(
     @ColumnInfo(name = "menuname")
     val menuName: String,
 
+    @ColumnInfo(name = "musclepart")
+    val musclePart : String,
+
     @ColumnInfo(name = "trainingweight")
     val trainingWeight: Double,
 

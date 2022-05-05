@@ -112,6 +112,7 @@ class HomeActivity : AppCompatActivity() {
                     log.logId,
                     log.menuId,
                     log.menuName,
+                    log.musclePart,
                     log.trainingWeight,
                     log.trainingCount,
                     log.trainingDate,

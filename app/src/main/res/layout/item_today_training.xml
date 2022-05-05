@@ -21,7 +21,7 @@
             android:layout_marginBottom="5dp">
 
             <ImageView
-                android:id="@+id/ivTrainingLog"
+                android:id="@+id/ivTrainingDateLog"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/ivTrainingLog"
+                android:layout_toRightOf="@+id/ivTrainingDateLog"
                 android:orientation="horizontal">
 
                 <TextView
