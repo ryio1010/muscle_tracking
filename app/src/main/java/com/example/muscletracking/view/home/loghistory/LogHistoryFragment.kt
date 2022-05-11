@@ -38,6 +38,7 @@ class LogHistoryFragment : Fragment() {
     private var trainingLogList = mutableListOf<Log>()
 
     private lateinit var searchTrainingMenuContainer: TextView
+    private lateinit var tvError : TextView
 
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -58,7 +59,7 @@ class LogHistoryFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_log_history, container, false)
-        val tvError = view.findViewById<TextView>(R.id.tvNoResult)
+        tvError = view.findViewById<TextView>(R.id.tvNoResult)
         searchTrainingMenuContainer = view.findViewById<EditText>(R.id.etSearchTrainingMenu)
         tvError.visibility = TextView.INVISIBLE
 
@@ -130,6 +131,8 @@ class LogHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        tvError.visibility = TextView.INVISIBLE
 
         val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
         titleTextView.text = getString(R.string.label_log_history)

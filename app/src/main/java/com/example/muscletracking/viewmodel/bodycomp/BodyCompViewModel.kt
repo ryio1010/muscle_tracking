@@ -18,6 +18,7 @@ class BodyCompViewModel(app: Application) : AndroidViewModel(app) {
     private val repository: BodyCompRepository = BodyCompRepository(app)
 
     val latestBodyComp: MutableLiveData<BodyComp> = MutableLiveData()
+    val bodyCompByDate: MutableLiveData<BodyComp> = MutableLiveData()
     val bodyCompList: MutableLiveData<List<BodyCompResponse>> = MutableLiveData()
     val insertedBodyComp: MutableLiveData<BodyCompResponse> = MutableLiveData()
     val updatedBodyComp: MutableLiveData<BodyCompResponse> = MutableLiveData()
@@ -38,6 +39,11 @@ class BodyCompViewModel(app: Application) : AndroidViewModel(app) {
     fun getLatestBodyCompOfDb() = scope.launch(Dispatchers.IO) {
         val bodyComp = repository.getLatestBodyComp()
         latestBodyComp.postValue(bodyComp)
+    }
+
+    fun getBodyCompByDateOfDb(bodyCompDate: String) = scope.launch(Dispatchers.IO) {
+        val bodyComp = repository.getBodyCompByDate(bodyCompDate)
+        bodyCompByDate.postValue(bodyComp)
     }
 
     fun insertBodyCompDb(bodyComp: BodyComp) = scope.launch(Dispatchers.IO) {
