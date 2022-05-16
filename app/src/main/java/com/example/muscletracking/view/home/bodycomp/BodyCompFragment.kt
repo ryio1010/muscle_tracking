@@ -229,21 +229,4 @@ class BodyCompFragment : Fragment() {
     private fun calculateLbm(weight: Double, bfp: Double): Double {
         return (weight * (100 - bfp) / 100 * 100.0).roundToLong() / 100.0
     }
-
-    private fun showProgressDialog() {
-        if (!ProcessDialogFragment.getInstance().isAdded) {
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(
-                ProcessDialogFragment.getInstance(),
-                ProcessDialogFragment::class.java.name
-            )
-            transaction.commit()
-        }
-    }
-
-    private fun hideProgressDialog() {
-        val processDialogFragment =
-            parentFragmentManager.findFragmentByTag(ProcessDialogFragment::class.java.name)
-        (processDialogFragment as? DialogFragment)?.dismiss()
-    }
 }
