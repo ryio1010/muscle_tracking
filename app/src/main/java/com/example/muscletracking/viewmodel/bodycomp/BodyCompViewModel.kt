@@ -36,11 +36,6 @@ class BodyCompViewModel(app: Application) : AndroidViewModel(app) {
         parentJob.cancel()
     }
 
-    fun getLatestBodyCompOfDb() = scope.launch(Dispatchers.IO) {
-        val bodyComp = repository.getLatestBodyComp()
-        latestBodyComp.postValue(bodyComp)
-    }
-
     fun getBodyCompByDateOfDb(bodyCompDate: String) = scope.launch(Dispatchers.IO) {
         val bodyComp = repository.getBodyCompByDate(bodyCompDate)
         bodyCompByDate.postValue(bodyComp)
@@ -61,10 +56,6 @@ class BodyCompViewModel(app: Application) : AndroidViewModel(app) {
     fun getAllBodyComp(userId: String) = scope.launch(Dispatchers.IO) {
         val allBodyComp = repository.getAllBodyComp(userId)
         bodyCompList.postValue(allBodyComp)
-    }
-
-    fun getLatestBodyComp(userId: String) = scope.launch {
-        repository.getLatestBodyComp(userId).collectLatest { latestBodyComp2.value = it }
     }
 
     fun insertBodyComp(

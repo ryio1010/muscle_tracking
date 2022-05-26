@@ -132,6 +132,8 @@ class LogHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // エラー文言の初期化
+        tvError.text = ""
         tvError.visibility = TextView.INVISIBLE
 
         val titleTextView = activity!!.findViewById<TextView>(R.id.tvToolBarTitle)
