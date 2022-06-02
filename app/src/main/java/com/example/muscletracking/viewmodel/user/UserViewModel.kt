@@ -18,7 +18,6 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
     private val repository: UserRepository = UserRepository(app)
 
     var selectUser: MutableLiveData<User> = MutableLiveData<User>()
-    val mUserInfoUpdate: MutableLiveData<UserResponse> = MutableLiveData()
     val isUserRegistered: MutableLiveData<Boolean> = MutableLiveData()
 
     val mUserInfo = MutableLiveData<ApiResult<UserResponse>>(ApiResult.Proceeding)
@@ -70,18 +69,5 @@ class UserViewModel(app: Application) : AndroidViewModel(app) {
         scope.launch(Dispatchers.IO) {
             val registerFlag = repository.register(userId, userName, password)
             isUserRegistered.postValue(registerFlag)
-        }
-
-    /**
-     * updateAPI実行
-     */
-    fun updateUserInfo(
-        userId: String,
-        userName: String,
-        password: String
-    ) =
-        scope.launch(Dispatchers.IO) {
-            val user = repository.updateUserInfo(userId, userName, password)
-            mUserInfoUpdate.postValue(user)
         }
 }
