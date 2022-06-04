@@ -18,48 +18,52 @@ jobs:
         cache: gradle
     - name: Unit Test
       run: ./gradlew test --stacktrace
-      
   build:
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        compile-sdk: [32]
-        build-tools: [30.0.3]
-    
     steps:
     - uses: actions/checkout@v3
-    - name: setup ubuntu
-      run: |
-        sudo apt-get --quiet update --yes
-        sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
     - name: set up JDK 11
       uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'temurin'
-        cache: gradle 
-    - name: download Android SDK
-      working-directory: ./Android
-      run: |
-        wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-        unzip -d android-sdk-linux android-sdk.zip
-        sudo mkdir -p /root/.android
-        sudo touch /root/.android/repositories.cfg
-        echo y | android-sdk-linux/cmdline-tools/bin/sdkmanager --sdk_root=. "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
-        echo y | android-sdk-linux/cmdline-tools/bin/sdkmanager --sdk_root=. "platform-tools" >/dev/null
-        echo y | android-sdk-linux/cmdline-tools/bin/sdkmanager --sdk_root=. "build-tools;${{ matrix.build-tools }}" >/dev/null
-        export ANDROID_SDK_ROOT=$PWD
-        export PATH=$PATH:$PWD/platform-tools/
-        chmod +x ./gradlew
-        set +o pipefail
-        yes | android-sdk-linux/cmdline-tools/bin/sdkmanager --sdk_root=. --licenses
-        set -o pipefail
-    - name: Build with Gradle
-      working-directory: ./Android
+        cache: gradle
+    - name: Build
       run: ./gradlew assembleDebug
-    - name: Upload apk file
+      
+  generate-aab:
+    runs-on: ubuntu-latest
+    steps:
+    # チェックアウト
+    - uses: actions/checkout@v3
+
+    # JDKのセットアップ
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    # 依存関係の出力
+    - name: Displays the Android dependencies of the project
+      run: ./gradlew androidDependencies
+
+    # キーストアのデコード
+    - name: Decode Keystore
+      run: echo ${{ secrets.ENCODED_RELEASE_KEYSTORE }} | base64 --decode > ./app/release.keystore
+
+    # AABの生成
+    - name: Generate AAB
+      run: ./gradlew :app:bundleRelease
+      env:
+        RELEASE_KEYSTORE_STORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_STORE_PASSWORD }}
+        RELEASE_KEYSTORE_KEY_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_KEY_PASSWORD }}
+
+    # AABのアップロード
+    - name: Upload AAB Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: apk
-        path: Android/app/build/outputs/
+        name: mt-aab
+        path: app/build/outputs/bundle/release/app-release.aab
+        if-no-files-found: error
