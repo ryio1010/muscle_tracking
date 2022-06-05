@@ -1,4 +1,4 @@
-name: Android CI
+name: Android CICD
 
 on:
   pull_request:
@@ -65,5 +65,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: mt-aab
-        path: app/build/outputs/bundle/release/app-release.aab
+        path: app/build/outputs/bundle/productionRelease/app-production-release.aab
         if-no-files-found: error
